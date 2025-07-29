@@ -10,6 +10,8 @@ import Testimonials from "@/components/landing/Testimonials";
 import CtaTwo from "@/components/landing/CtaTwo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import TrustedBy from "@/components/landing/TrustedBy";
+import Partners from "@/components/landing/Partners";
 
 
 export default function Home() {
@@ -22,6 +24,8 @@ export default function Home() {
         <Features />
         <Testimonials />
         <Gamification />
+        <TrustedBy />
+        <Partners />
         <Comparison />
         <Pricing />
         <CtaTwo />
