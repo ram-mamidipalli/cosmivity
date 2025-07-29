@@ -44,7 +44,7 @@ export default function Header() {
                 </SheetTrigger>
                 <SheetContent side="right">
                   <div className="flex flex-col space-y-4 p-4">
-                    <Link href="/" className="flex items-center space-x-2">
+                    <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
                        <span className="font-bold text-2xl text-primary">Cosmivity</span>
                     </Link>
                     <div className="flex flex-col space-y-2">
