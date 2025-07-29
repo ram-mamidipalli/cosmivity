@@ -106,7 +106,7 @@ export default function DashboardSidebar() {
   return (
     <aside
       className={cn(
-        "hidden md:flex flex-col justify-between p-4 bg-background/80 backdrop-blur-lg border-r transition-all duration-300 ease-in-out",
+        "hidden md:flex flex-col justify-between p-4 bg-background/80 backdrop-blur-lg border-r transition-all duration-300 ease-in-out relative",
         isCollapsed ? "w-20" : "w-64"
       )}
     >
@@ -154,7 +154,7 @@ export default function DashboardSidebar() {
         </Button>
         
 
-        <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-16">
+        <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-1/2 -translate-y-1/2">
             <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
         </Button>
       </div>
