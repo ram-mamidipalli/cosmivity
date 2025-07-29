@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight, Settings, LogOut, Flame, Trophy, Calendar, CheckCircle, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronDown } from "lucide-react";
+import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight, Settings, LogOut, Flame, Trophy, Calendar, CheckCircle, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronDown, ClipboardCheck, Timer } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
@@ -148,6 +148,25 @@ export default function DashboardPage() {
       
       <main className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         <div className="xl:col-span-2 flex flex-col gap-8">
+            <Card className="glassmorphic neon-glow">
+                <CardHeader className="flex-row items-center gap-4">
+                     <div className="p-3 bg-primary/10 rounded-full">
+                        <ClipboardCheck className="h-8 w-8 text-primary"/>
+                    </div>
+                    <div>
+                        <CardTitle>Daily Quick Test</CardTitle>
+                        <CardDescription>A quick 10-question revision to keep you sharp.</CardDescription>
+                    </div>
+                </CardHeader>
+                <CardContent className="flex items-center justify-between">
+                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Timer className="h-4 w-4"/>
+                        <span>Est. time: 5 mins</span>
+                    </div>
+                    <Button>Start Test</Button>
+                </CardContent>
+            </Card>
+
             <Card className="glassmorphic">
                 <CardHeader>
                     <CardTitle>Today's Goals</CardTitle>
