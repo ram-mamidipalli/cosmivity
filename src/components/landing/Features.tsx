@@ -57,7 +57,7 @@ export default function Features() {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary">
+          <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
             Meet Cosmivity — Your Career Launchpad
           </h2>
         </div>
@@ -71,7 +71,7 @@ export default function Features() {
                 <div className="p-4 bg-primary/10 rounded-full">
                   {feature.icon}
                 </div>
-                <CardTitle className="mt-4 text-xl">{feature.title}</CardTitle>
+                <CardTitle className="mt-4 text-xl font-headline">{feature.title}</CardTitle>
               </CardHeader>
               <CardDescription className="text-base">{feature.description}</CardDescription>
             </Card>

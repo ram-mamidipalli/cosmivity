@@ -21,14 +21,14 @@ export default function Pricing() {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary">
+          <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
             Simple Pricing, Built for Students
           </h2>
         </div>
         <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <Card className="p-6 shadow-lg flex flex-col">
             <CardHeader>
-              <CardTitle className="text-2xl">Free</CardTitle>
+              <CardTitle className="text-2xl font-headline">Free</CardTitle>
               <CardDescription>Get started for free</CardDescription>
             </CardHeader>
             <CardContent className="flex-grow">
@@ -49,7 +49,7 @@ export default function Pricing() {
                 <div className="bg-primary text-primary-foreground text-sm font-semibold px-4 py-1 rounded-full">Most Popular</div>
             </div>
             <CardHeader>
-              <CardTitle className="text-2xl text-primary">Pro</CardTitle>
+              <CardTitle className="text-2xl text-primary font-headline">Pro</CardTitle>
               <CardDescription>Unlock your full potential</CardDescription>
             </CardHeader>
             <CardContent className="flex-grow">

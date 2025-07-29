@@ -27,7 +27,7 @@ export default function Gamification() {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary">
+            <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
               Track Your Progress, Skill by Skill
             </h2>
             <div className="space-y-6">
@@ -35,7 +35,7 @@ export default function Gamification() {
                 <div key={i} className="flex items-start gap-4">
                   <div className="p-3 bg-primary/10 rounded-full">{feature.icon}</div>
                   <div>
-                    <h3 className="text-xl font-semibold">{feature.title}</h3>
+                    <h3 className="text-xl font-semibold font-headline">{feature.title}</h3>
                     <p className="text-muted-foreground">{feature.description}</p>
                   </div>
                 </div>

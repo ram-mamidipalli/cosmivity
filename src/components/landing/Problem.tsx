@@ -13,7 +13,7 @@ export default function Problem() {
     <section className="py-20 bg-secondary/50">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12 max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary">
+          <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
             You’ve got the degree. But not the confidence.
           </h2>
         </div>
@@ -29,7 +29,7 @@ export default function Problem() {
             </ul>
           </div>
            <div className="glassmorphic p-8 rounded-lg">
-             <h3 className="text-2xl font-bold text-center text-primary">“7 out of 10 students feel unprepared — until they try Cosmivity.”</h3>
+             <h3 className="text-2xl font-bold text-center text-primary font-headline">“7 out of 10 students feel unprepared — until they try Cosmivity.”</h3>
            </div>
         </div>
       </div>
