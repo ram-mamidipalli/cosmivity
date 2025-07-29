@@ -104,10 +104,25 @@ export default function DashboardSidebar() {
       )}
     >
       <div>
-        <div className="flex items-center gap-2 px-4 pb-4 border-b mb-4">
+        <div className="flex items-center justify-center gap-2 px-4 pb-4 border-b mb-4">
           <Link href="/" className="font-bold text-2xl text-primary relative">
-            {!isCollapsed && "Cosmivity"}
-            {isCollapsed && "C"}
+            <span className="relative">
+              {!isCollapsed && "Cosmivity"}
+              {isCollapsed && "C"}
+              <svg
+                  viewBox="0 0 285 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute -bottom-1 left-0 w-full"
+                  preserveAspectRatio="none"
+              >
+                  <path
+                  d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  />
+              </svg>
+            </span>
           </Link>
         </div>
         <nav className="flex flex-col gap-2">
@@ -144,4 +159,3 @@ export default function DashboardSidebar() {
     </aside>
   );
 }
-
