@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function CtaTwo() {
   return (
-    <section className="py-20 text-center">
+    <section id="cta" className="py-20 text-center">
       <div className="container mx-auto px-4 relative">
          <div className="absolute inset-0 animated-gradient -z-10 rounded-lg opacity-50"></div>
         <div className="relative p-10">
