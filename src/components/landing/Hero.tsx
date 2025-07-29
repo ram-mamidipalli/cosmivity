@@ -6,7 +6,7 @@ export default function Hero() {
        <div className="absolute inset-0 animated-gradient -z-10"></div>
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-5xl mx-auto glassmorphic p-8 rounded-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tighter leading-tight font-headline">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tighter leading-snug font-headline">
             Struggling with Aptitude, Interviews, and English? <span className="relative inline-block">
               <span className="text-primary">Cosmivity</span>
               <svg
