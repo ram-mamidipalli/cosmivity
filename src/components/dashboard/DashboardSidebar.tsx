@@ -143,7 +143,7 @@ export default function DashboardSidebar() {
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
                     <Avatar>
-                        <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
+                        <AvatarImage src="https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Aakash" data-ai-hint="man portrait"/>
                         <AvatarFallback>A</AvatarFallback>
                     </Avatar>
                     {!isCollapsed && (
