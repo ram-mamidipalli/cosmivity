@@ -10,6 +10,8 @@ const painPoints = [
   "Poor spoken English",
   "No real-time mentorship",
   "No structured practice",
+  "Generic feedback",
+  "Resume not shortlisted",
 ];
 
 export default function Problem() {
