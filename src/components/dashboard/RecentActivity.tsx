@@ -3,8 +3,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Award, MessageSquare, UserCheck, BarChart, CheckCircle, ChevronDown } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 
 const activityData = [
   {
@@ -53,14 +51,14 @@ export default function RecentActivity() {
             <ul className="space-y-4">
                 {activityData.map((activity, index) => (
                     <li key={index} className="flex items-start gap-4">
-                        <div className="p-2 bg-background/50 rounded-full mt-1">
+                        <div className="flex-shrink-0 p-2 bg-background/50 rounded-full mt-1">
                             {activity.icon}
                         </div>
-                        <div className="flex-grow">
+                        <div className="flex-grow min-w-0">
                             <p className="font-semibold">{activity.text}</p>
-                            <p className="text-sm text-muted-foreground">{activity.details}</p>
+                            <p className="text-sm text-muted-foreground break-words">{activity.details}</p>
                         </div>
-                        <p className="text-xs text-muted-foreground whitespace-nowrap">{activity.time}</p>
+                        <p className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">{activity.time}</p>
                     </li>
                 ))}
             </ul>
