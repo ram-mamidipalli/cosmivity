@@ -23,7 +23,7 @@ export default function TrustedBy() {
             {[...companies, ...companies].map((company, index) => (
               <div key={index} className="mx-8 flex-shrink-0 flex items-center justify-center">
                 <Image 
-                  src={`https://placehold.co/120x60.png`} 
+                  src={`https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3`}
                   alt={`${company.name} logo`}
                   width={120}
                   height={60}
