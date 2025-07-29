@@ -7,7 +7,26 @@ export default function Hero() {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-5xl mx-auto glassmorphic p-8 rounded-2xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tighter leading-tight font-headline">
-            Struggling with Aptitude, Interviews, and English? <span className="text-primary">Cosmivity</span> Gets You Job-Ready — Fast.
+            Struggling with Aptitude, Interviews, and English? <span className="relative inline-block">
+              <span className="text-primary">Cosmivity</span>
+              <svg
+                viewBox="0 0 285 20"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute -bottom-4 left-0 w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M266.021 3.16113L275.526 1.73926L276.948 11.244L267.443 12.6659L266.021 3.16113Z"
+                  fill="hsl(var(--primary))"
+                />
+              </svg>
+            </span> Gets You Job-Ready — Fast.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-foreground/80">
             AI-driven preparation for aptitude tests, communication, and interviews — with personalized daily practice and instant feedback.
