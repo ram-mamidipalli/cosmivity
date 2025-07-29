@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -140,21 +139,44 @@ export default function DashboardSidebar() {
       </div>
       <div className="flex flex-col gap-4 border-t pt-4">
         
-        <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
-            <Avatar>
-                <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
-                <AvatarFallback>A</AvatarFallback>
-            </Avatar>
-            {!isCollapsed && (
-                <div className="text-left">
-                <p className="font-semibold text-sm">Aakash</p>
-                <p className="text-xs text-muted-foreground">1,250 XP</p>
-                </div>
-            )}
-        </Button>
-        
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
+                    <Avatar>
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
+                        <AvatarFallback>A</AvatarFallback>
+                    </Avatar>
+                    {!isCollapsed && (
+                        <div className="text-left">
+                        <p className="font-semibold text-sm">Aakash</p>
+                        <p className="text-xs text-muted-foreground">1,250 XP</p>
+                        </div>
+                    )}
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 mb-2" align="end" forceMount>
+                 <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">Aakash</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                        aakash@example.com
+                        </p>
+                    </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push('/auth')}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
 
-        <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-1/2 -translate-y-1/2">
+        <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-8">
             <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
         </Button>
       </div>
