@@ -205,7 +205,7 @@ export default function DashboardPage() {
 
             <div>
                 <CardTitle className="mb-4">Quick Access</CardTitle>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                     {quickAccessItems.map(item => (
                         <Button key={item.label} variant="outline" className="flex flex-col h-28 gap-2 p-2 items-center justify-center glassmorphic hover:neon-glow">
                            <div className="p-2 bg-primary/10 rounded-full">{item.icon}</div>
