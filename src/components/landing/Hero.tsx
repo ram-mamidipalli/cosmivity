@@ -13,7 +13,7 @@ export default function Hero() {
             AI-driven preparation for aptitude tests, communication, and interviews — with personalized daily practice and instant feedback.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-             <Button size="lg" className="neon-glow text-lg px-8 py-6">Start Free</Button>
+             <Button size="lg" className="neon-glow text-lg px-8 py-6 transition-transform duration-300 hover:scale-105">Start Free</Button>
           </div>
            <p className="mt-4 text-sm text-foreground/60">
             No credit card required. First 100 users get 7 days Pro access.
