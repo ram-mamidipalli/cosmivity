@@ -56,7 +56,7 @@ export default function Pricing() {
               <CardDescription>Flexible monthly access</CardDescription>
             </CardHeader>
             <CardContent className="flex-grow">
-              <p className="text-4xl font-bold mb-4">₹49 <span className="text-lg font-normal text-muted-foreground">/ month</span></p>
+              <p className="text-4xl font-bold mb-4">₹79 <span className="text-lg font-normal text-muted-foreground">/ month</span></p>
               <ul className="space-y-3">
                 {monthlyFeatures.map((feature, i) => (
                   <li key={i} className="flex items-center">
@@ -78,7 +78,7 @@ export default function Pricing() {
               <CardDescription>Best value for serious learners</CardDescription>
             </CardHeader>
             <CardContent className="flex-grow">
-              <p className="text-4xl font-bold mb-4">₹399 <span className="text-lg font-normal text-muted-foreground">/ year</span></p>
+              <p className="text-4xl font-bold mb-4">₹499 <span className="text-lg font-normal text-muted-foreground">/ year</span></p>
               <ul className="space-y-3">
                 {yearlyFeatures.map((feature, i) => (
                   <li key={i} className="flex items-center">
