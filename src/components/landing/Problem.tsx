@@ -8,7 +8,6 @@ const painPoints = [
   "Weak aptitude & reasoning",
   "Nervous in interviews",
   "Poor spoken English",
-  "No real-time mentorship",
   "No structured practice",
   "Generic feedback",
   "Resume not shortlisted",
@@ -33,7 +32,7 @@ export default function Problem() {
         </div>
         <div className="flex flex-col items-center gap-12">
           <div className="max-w-5xl">
-            <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {painPoints.map((point, i) => (
                 <li key={i} className="flex items-center text-center justify-center text-lg p-3 rounded-lg glassmorphic h-full">
                   <XCircle className="w-6 h-6 text-destructive mr-3 flex-shrink-0" />
