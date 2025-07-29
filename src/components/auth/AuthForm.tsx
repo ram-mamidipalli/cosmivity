@@ -30,8 +30,7 @@ const GoogleIcon = () => (
     </svg>
 );
 
-
-export default function AuthForm() {
+function AuthFormContent() {
   const [isSignUp, setIsSignUp] = useState(false);
   const router = useRouter();
 
@@ -42,8 +41,8 @@ export default function AuthForm() {
   }
 
   return (
-    <Card className="w-full max-w-sm glassmorphic">
-       <CardHeader className="text-center">
+    <>
+      <CardHeader className="text-center">
         <div className="flex justify-center mb-4">
             <Link href="/" className="font-bold text-2xl text-primary relative">
                 Cosmivity
@@ -102,6 +101,14 @@ export default function AuthForm() {
           </button>
         </div>
       </CardContent>
+    </>
+  );
+}
+
+export default function AuthForm() {
+  return (
+    <Card className="w-full max-w-sm glassmorphic">
+      <AuthFormContent />
     </Card>
   );
 }
