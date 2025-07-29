@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function CtaTwo() {
   return (
@@ -28,8 +29,8 @@ export default function CtaTwo() {
             Stop guessing. Start growing with AI.
             </p>
             <div className="mt-8">
-            <Button size="lg" className="neon-glow text-lg px-8 py-6 transition-transform duration-300 hover:scale-105">
-                Start Free
+            <Button size="lg" className="neon-glow text-lg px-8 py-6 transition-transform duration-300 hover:scale-105" asChild>
+                <Link href="/auth">Start Free</Link>
             </Button>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 const freeFeatures = [
   "Limited daily challenges",
@@ -47,7 +48,9 @@ export default function Pricing() {
                 ))}
               </ul>
             </CardContent>
-            <Button variant="outline" className="w-full mt-6">Get Started</Button>
+            <Button variant="outline" className="w-full mt-6" asChild>
+              <Link href="/auth">Get Started</Link>
+            </Button>
           </Card>
           
           <Card className="p-6 shadow-lg flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-xl">
@@ -66,7 +69,9 @@ export default function Pricing() {
                 ))}
               </ul>
             </CardContent>
-            <Button variant="outline" className="w-full mt-6">Choose Monthly</Button>
+            <Button variant="outline" className="w-full mt-6" asChild>
+              <Link href="/auth">Choose Monthly</Link>
+            </Button>
           </Card>
 
           <Card className="p-6 shadow-xl flex flex-col border-primary border-2 relative neon-glow transition-all duration-300 hover:scale-105 hover:shadow-2xl">
@@ -88,7 +93,9 @@ export default function Pricing() {
                 ))}
               </ul>
             </CardContent>
-            <Button className="w-full mt-6 neon-glow">Join Now</Button>
+            <Button className="w-full mt-6 neon-glow" asChild>
+              <Link href="/auth">Join Now</Link>
+            </Button>
           </Card>
         </div>
       </div>

@@ -47,8 +47,8 @@ export default function Header() {
               ))}
             </nav>
             <div className="hidden md:flex items-center space-x-2">
-              <Button variant="ghost">Login</Button>
-              <Button>Start Free</Button>
+              <Button variant="ghost" asChild><Link href="/auth">Login</Link></Button>
+              <Button asChild><Link href="/auth">Start Free</Link></Button>
             </div>
             <div className="md:hidden">
               <Sheet>
@@ -89,8 +89,8 @@ export default function Header() {
                         ))}
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <Button variant="ghost">Login</Button>
-                        <Button>Start Free</Button>
+                        <Button variant="ghost" asChild><Link href="/auth">Login</Link></Button>
+                        <Button asChild><Link href="/auth">Start Free</Link></Button>
                     </div>
                   </div>
                 </SheetContent>
