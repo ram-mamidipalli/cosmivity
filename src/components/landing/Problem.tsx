@@ -30,10 +30,10 @@ export default function Problem() {
           </h2>
         </div>
         <div className="flex flex-col items-center gap-12">
-          <div className="space-y-4 max-w-md">
-            <ul className="space-y-3">
+          <div className="max-w-5xl">
+            <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {painPoints.map((point, i) => (
-                <li key={i} className="flex items-center text-lg p-3 rounded-lg glassmorphic">
+                <li key={i} className="flex items-center text-center justify-center text-lg p-3 rounded-lg glassmorphic h-full">
                   <XCircle className="w-6 h-6 text-destructive mr-3 flex-shrink-0" />
                   <span>{point}</span>
                 </li>
