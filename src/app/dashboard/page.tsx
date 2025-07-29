@@ -1,12 +1,21 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight } from "lucide-react";
+import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight, Settings, LogOut } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const chartData = [
   { name: "Week 1", communication: 65, aptitude: 72, projects: 45 },
@@ -17,6 +26,7 @@ const chartData = [
 
 export default function DashboardPage() {
   const [currentDate, setCurrentDate] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
@@ -37,10 +47,36 @@ export default function DashboardPage() {
           <Button variant="ghost" size="icon">
             <Bell className="h-6 w-6" />
           </Button>
-          <Avatar>
-            <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
-            <AvatarFallback>A</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Avatar>
+                  <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">Aakash</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                        aakash@example.com
+                        </p>
+                    </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push('/auth')}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
         </div>
       </header>
 
