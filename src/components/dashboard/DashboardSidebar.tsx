@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   BrainCircuit,
@@ -14,9 +14,18 @@ import {
   Trophy,
   Settings,
   ChevronLeft,
+  LogOut,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -71,11 +80,8 @@ const SidebarSkeleton = ({ isCollapsed }: { isCollapsed: boolean }) => (
                 ))}
             </div>
         </div>
-        <div className="flex flex-col gap-4">
-            <div className="border-t pt-4">
-                 <Skeleton className={cn("h-10 w-full", isCollapsed ? "w-12 mx-auto" : "w-full")} />
-            </div>
-            <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary">
+        <div className="flex flex-col gap-4 border-t pt-4">
+            <div className="flex items-center gap-3 p-2 rounded-lg">
                 <Skeleton className="h-10 w-10 rounded-full" />
                 {!isCollapsed && <div className="space-y-2"><Skeleton className="h-4 w-16" /><Skeleton className="h-3 w-12" /></div>}
             </div>
@@ -87,6 +93,7 @@ const SidebarSkeleton = ({ isCollapsed }: { isCollapsed: boolean }) => (
 export default function DashboardSidebar() {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -131,27 +138,44 @@ export default function DashboardSidebar() {
           ))}
         </nav>
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="border-t pt-4">
-            <Link href="/dashboard/settings" passHref>
-                <Button variant="ghost" className={cn("w-full justify-start gap-3", isCollapsed ? "px-2" : "px-4")}>
-                    <Settings className="h-5 w-5" />
-                    {!isCollapsed && "Settings"}
+      <div className="flex flex-col gap-4 border-t pt-4">
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
+                    <Avatar>
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
+                        <AvatarFallback>A</AvatarFallback>
+                    </Avatar>
+                    {!isCollapsed && (
+                        <div className="text-left">
+                        <p className="font-semibold text-sm">Aakash</p>
+                        <p className="text-xs text-muted-foreground">1,250 XP</p>
+                        </div>
+                    )}
                 </Button>
-            </Link>
-        </div>
-        <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary">
-          <Avatar>
-            <AvatarImage src="https://placehold.co/100x100.png" alt="Aakash" data-ai-hint="man portrait"/>
-            <AvatarFallback>A</AvatarFallback>
-          </Avatar>
-          {!isCollapsed && (
-            <div>
-              <p className="font-semibold text-sm">Aakash</p>
-              <p className="text-xs text-muted-foreground">1,250 XP</p>
-            </div>
-          )}
-        </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">Aakash</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                        aakash@example.com
+                        </p>
+                    </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => router.push('/auth')}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+
         <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-16">
             <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
         </Button>
