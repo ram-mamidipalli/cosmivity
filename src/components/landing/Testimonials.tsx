@@ -9,7 +9,7 @@ const testimonials = [
     quote: "I got into Wipro after 3 rejections — Cosmivity changed everything!",
     name: "Priya Sharma",
     title: "Placed at Wipro",
-    avatar: "https://placehold.co/100x100.png",
+    avatar: "https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
     aiHint: "woman smiling"
   },
   {
