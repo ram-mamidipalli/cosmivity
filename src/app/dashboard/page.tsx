@@ -61,6 +61,11 @@ const leaderboardData = [
     { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait", isCurrentUser: true },
     { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/flagged/photo-1571367034861-e6729ad9c2d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man headshot" },
     { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1648183185045-7a5592e66e9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
+    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://placehold.co/40x40.png", hint: "man portrait" },
+    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://placehold.co/40x40.png", hint: "woman smiling" },
+    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://placehold.co/40x40.png", hint: "man headshot" },
+    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://placehold.co/40x40.png", hint: "woman headshot" },
+    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://placehold.co/40x40.png", hint: "man portrait" },
 ];
 
 const achievements = [
@@ -232,22 +237,24 @@ export default function DashboardPage() {
                     <CardDescription>Weekly XP Rankings</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ul className="space-y-4">
-                        {leaderboardData.map((user, index) => (
-                            <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${user.isCurrentUser ? 'bg-primary/10 neon-glow' : ''}`}>
-                                <span className="font-bold text-sm w-4">#{index + 1}</span>
-                                <Avatar className="h-10 w-10">
-                                    <AvatarImage src={user.avatar} data-ai-hint={user.hint} />
-                                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div className="flex-grow">
-                                    <p className="font-semibold">{user.name}</p>
-                                    <p className="text-xs text-muted-foreground">{user.school}</p>
-                                </div>
-                                <span className="font-bold text-primary">{user.xp}</span>
-                            </li>
-                        ))}
-                    </ul>
+                    <ScrollArea className="h-80">
+                        <ul className="space-y-4 pr-4">
+                            {leaderboardData.map((user, index) => (
+                                <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${user.isCurrentUser ? 'bg-primary/10 neon-glow' : ''}`}>
+                                    <span className="font-bold text-sm w-4">#{index + 1}</span>
+                                    <Avatar className="h-10 w-10">
+                                        <AvatarImage src={user.avatar} data-ai-hint={user.hint} />
+                                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-grow">
+                                        <p className="font-semibold">{user.name}</p>
+                                        <p className="text-xs text-muted-foreground">{user.school}</p>
+                                    </div>
+                                    <span className="font-bold text-primary">{user.xp}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </ScrollArea>
                 </CardContent>
             </Card>
 
@@ -306,5 +313,4 @@ export default function DashboardPage() {
   );
 }
 
-    
     
