@@ -26,7 +26,7 @@ export default function Pricing() {
           </h2>
         </div>
         <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Card className="p-6 shadow-lg flex flex-col">
+          <Card className="p-6 shadow-lg flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-xl">
             <CardHeader>
               <CardTitle className="text-2xl font-headline">Free</CardTitle>
               <CardDescription>Get started for free</CardDescription>
@@ -44,7 +44,7 @@ export default function Pricing() {
             </CardContent>
             <Button variant="outline" className="w-full mt-6">Get Started</Button>
           </Card>
-          <Card className="p-6 shadow-xl flex flex-col border-primary border-2 relative neon-glow">
+          <Card className="p-6 shadow-xl flex flex-col border-primary border-2 relative neon-glow transition-all duration-300 hover:scale-105 hover:shadow-2xl">
              <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
                 <div className="bg-primary text-primary-foreground text-sm font-semibold px-4 py-1 rounded-full">Most Popular</div>
             </div>
