@@ -8,6 +8,8 @@ import Pricing from "@/components/landing/Pricing";
 import Problem from "@/components/landing/Problem";
 import Testimonials from "@/components/landing/Testimonials";
 import CtaTwo from "@/components/landing/CtaTwo";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 
 export default function Home() {
