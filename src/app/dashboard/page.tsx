@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,12 +16,18 @@ const chartData = [
 ];
 
 export default function DashboardPage() {
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+  }, []);
+
   return (
     <div className="flex flex-col gap-8">
       <header className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold font-headline">Welcome back, Aakash 👋</h1>
-          <p className="text-muted-foreground">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p className="text-muted-foreground">{currentDate}</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative">
