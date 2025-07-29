@@ -23,7 +23,7 @@ const testimonials = [
     quote: "Loved the team challenges and the feedback loop. It's like a gym for your career skills.",
     name: "Aisha Khan",
     title: "Recent Graduate",
-    avatar: "https://placehold.co/100x100.png",
+    avatar: "https://images.unsplash.com/photo-1616002851413-ebcc9611139d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
     aiHint: "woman portrait"
   },
 ];
