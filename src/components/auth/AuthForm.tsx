@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,6 +32,15 @@ const GoogleIcon = () => (
 
 
 export default function AuthForm() {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const router = useRouter();
+
+  const handleAuthAction = () => {
+    // In a real app, you'd handle Firebase auth here.
+    // For now, we'll just redirect to the dashboard.
+    router.push("/dashboard");
+  }
+
   return (
     <Card className="w-full max-w-sm glassmorphic">
        <CardHeader className="text-center">
@@ -51,12 +62,12 @@ export default function AuthForm() {
                 </svg>
             </Link>
         </div>
-        <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
-        <CardDescription>Enter your credentials to access your account</CardDescription>
+        <CardTitle className="text-2xl font-headline">{isSignUp ? 'Create an Account' : 'Welcome Back'}</CardTitle>
+        <CardDescription>{isSignUp ? 'Enter your details to get started' : 'Enter your credentials to access your account'}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full" onClick={handleAuthAction}>
             <GoogleIcon />
             Continue with Google
           </Button>
@@ -65,7 +76,7 @@ export default function AuthForm() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="bg-card px-2 text-muted-foreground">
                 Or continue with
               </span>
             </div>
@@ -74,15 +85,21 @@ export default function AuthForm() {
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="m@example.com" required />
           </div>
-          <Button type="submit" className="w-full">
-            Continue with Email
+           {isSignUp && (
+            <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" type="password" required />
+            </div>
+           )}
+          <Button type="submit" className="w-full" onClick={handleAuthAction}>
+            {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">
-          By continuing, you agree to our{" "}
-          <Link href="#" className="underline">
-            Terms of Service
-          </Link>
+          {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
+          <button onClick={() => setIsSignUp(!isSignUp)} className="underline">
+            {isSignUp ? 'Sign In' : 'Sign Up'}
+          </button>
         </div>
       </CardContent>
     </Card>
