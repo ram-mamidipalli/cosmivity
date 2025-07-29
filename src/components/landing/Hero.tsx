@@ -5,7 +5,7 @@ export default function Hero() {
     <section className="relative overflow-hidden py-24 md:py-32">
        <div className="absolute inset-0 animated-gradient -z-10"></div>
       <div className="container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto glassmorphic p-8 rounded-2xl">
+        <div className="max-w-5xl mx-auto glassmorphic p-8 rounded-2xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tighter leading-tight font-headline">
             Struggling with Aptitude, Interviews, and English? Cosmivity Gets You Job-Ready — Fast.
           </h1>
