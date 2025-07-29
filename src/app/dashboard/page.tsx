@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import RecentActivity from "@/components/dashboard/RecentActivity";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const learningPath = [
     {
@@ -205,16 +206,19 @@ export default function DashboardPage() {
 
             <div>
                 <CardTitle className="mb-4">Quick Access</CardTitle>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-                    {quickAccessItems.map(item => (
-                        <Button key={item.label} variant="outline" className="flex flex-col h-28 gap-2 p-2 items-center justify-center glassmorphic hover:neon-glow">
-                           <div className="p-2 bg-primary/10 rounded-full">{item.icon}</div>
-                            <div className="text-center">
-                                <p className="font-semibold text-sm">{item.label}</p>
-                            </div>
-                        </Button>
-                    ))}
-                </div>
+                <ScrollArea className="w-full whitespace-nowrap rounded-lg">
+                    <div className="flex w-max space-x-4 pb-4">
+                        {quickAccessItems.map(item => (
+                            <Button key={item.label} variant="outline" className="flex flex-col h-28 w-32 gap-2 p-2 items-center justify-center text-center glassmorphic hover:neon-glow">
+                               <div className="p-2 bg-primary/10 rounded-full">{item.icon}</div>
+                                <div className="text-center">
+                                    <p className="font-semibold text-sm whitespace-normal">{item.label}</p>
+                                </div>
+                            </Button>
+                        ))}
+                    </div>
+                    <ScrollBar orientation="horizontal" />
+                </ScrollArea>
             </div>
 
             <RecentActivity />
