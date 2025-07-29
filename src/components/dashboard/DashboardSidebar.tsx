@@ -14,20 +14,22 @@ import {
   Settings,
   Moon,
   Sun,
+  ChevronLeft,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import React from "react";
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "#", label: "Aptitude Practice", icon: BrainCircuit },
-  { href: "#", label: "Mock Interviews (AI)", icon: MessageSquare },
-  { href: "#", label: "Communication Lab", icon: Mic },
-  { href: "#", label: "Team Challenges", icon: Users },
-  { href: "#", label: "Resume & LinkedIn Coach", icon: FileText },
-  { href: "#", label: "Skill Passport", icon: Award },
-  { href: "#", label: "Leaderboard", icon: Trophy },
+  { href: "/dashboard/aptitude", label: "Aptitude Practice", icon: BrainCircuit },
+  { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
+  { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
+  { href: "/dashboard/challenges", label: "Team Challenges", icon: Users },
+  { href: "/dashboard/coach", label: "Resume & LinkedIn Coach", icon: FileText },
+  { href: "/dashboard/passport", label: "Skill Passport", icon: Award },
+  { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
 ];
 
 const SidebarMenuItem = ({ item, isCollapsed }: { item: any; isCollapsed: boolean }) => {
@@ -52,7 +54,7 @@ const SidebarMenuItem = ({ item, isCollapsed }: { item: any; isCollapsed: boolea
 };
 
 export default function DashboardSidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   return (
     <aside
@@ -76,7 +78,7 @@ export default function DashboardSidebar() {
       </div>
       <div className="flex flex-col gap-4">
         <div className="border-t pt-4">
-            <Link href="#" passHref>
+            <Link href="/dashboard/settings" passHref>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3", isCollapsed ? "px-2" : "px-4")}>
                     <Settings className="h-5 w-5" />
                     {!isCollapsed && "Settings"}
@@ -102,15 +104,3 @@ export default function DashboardSidebar() {
     </aside>
   );
 }
-
-// Dummy state for sidebar collapse - in a real app, you'd use React state
-let isCollapsedState = false;
-function useState(initial: boolean): [boolean, (val: boolean) => void] {
-    // This is a dummy implementation for the purpose of this example.
-    // In a real React component, you would use React.useState.
-    const setState = (newState: boolean) => {
-        isCollapsedState = newState;
-    }
-    return [isCollapsedState, setState];
-}
-const ChevronLeft = (props:any) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
