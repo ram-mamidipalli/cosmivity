@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -12,14 +13,14 @@ import {
   Award,
   Trophy,
   Settings,
-  Moon,
-  Sun,
   ChevronLeft,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -53,8 +54,47 @@ const SidebarMenuItem = ({ item, isCollapsed }: { item: any; isCollapsed: boolea
   );
 };
 
+const SidebarSkeleton = ({ isCollapsed }: { isCollapsed: boolean }) => (
+    <aside
+      className={cn(
+        "hidden md:flex flex-col justify-between p-4 bg-background/80 backdrop-blur-lg border-r transition-all duration-300 ease-in-out",
+        isCollapsed ? "w-20" : "w-64"
+      )}
+    >
+        <div>
+            <div className="flex items-center gap-2 px-4 pb-4 border-b mb-4">
+                <Skeleton className="h-8 w-24" />
+            </div>
+            <div className="flex flex-col gap-2">
+                {[...Array(8)].map((_, i) => (
+                    <Skeleton key={i} className={cn("h-10 w-full", isCollapsed ? "w-12 mx-auto" : "w-full")} />
+                ))}
+            </div>
+        </div>
+        <div className="flex flex-col gap-4">
+            <div className="border-t pt-4">
+                 <Skeleton className={cn("h-10 w-full", isCollapsed ? "w-12 mx-auto" : "w-full")} />
+            </div>
+            <div className="flex items-center gap-3 p-2 rounded-lg bg-secondary">
+                <Skeleton className="h-10 w-10 rounded-full" />
+                {!isCollapsed && <div className="space-y-2"><Skeleton className="h-4 w-16" /><Skeleton className="h-3 w-12" /></div>}
+            </div>
+        </div>
+    </aside>
+);
+
+
 export default function DashboardSidebar() {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <SidebarSkeleton isCollapsed={isCollapsed} />;
+  }
 
   return (
     <aside
@@ -104,3 +144,4 @@ export default function DashboardSidebar() {
     </aside>
   );
 }
+
