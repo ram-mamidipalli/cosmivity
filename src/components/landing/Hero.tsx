@@ -6,8 +6,8 @@ export default function Hero() {
        <div className="absolute inset-0 animated-gradient -z-10"></div>
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-5xl mx-auto glassmorphic p-8 rounded-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tighter leading-tight font-headline">
-            Struggling with Aptitude, Interviews, and English? Cosmivity Gets You Job-Ready — Fast.
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tighter leading-tight font-headline">
+            Struggling with Aptitude, Interviews, and English? <span className="text-primary">Cosmivity</span> Gets You Job-Ready — Fast.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-foreground/80">
             AI-driven preparation for aptitude tests, communication, and interviews — with personalized daily practice and instant feedback.
