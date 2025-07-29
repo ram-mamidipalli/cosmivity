@@ -27,34 +27,36 @@ export default function Comparison() {
             Why Cosmivity Beats the Old Way
           </h2>
         </div>
-        <Card className="glassmorphic overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-1/2 text-lg font-semibold text-foreground">Feature</TableHead>
-                <TableHead className="text-center text-lg font-semibold text-foreground">Cosmivity</TableHead>
-                <TableHead className="text-center text-lg font-semibold text-foreground">YouTube</TableHead>
-                <TableHead className="text-center text-lg font-semibold text-foreground">Coaching</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {comparisonData.map((item) => (
-                <TableRow key={item.feature}>
-                  <TableCell className="font-medium text-base">{item.feature}</TableCell>
-                  <TableCell className="text-center">
-                    {item.cosmivity ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.youtube ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.coaching ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
-                  </TableCell>
+        <div className="max-w-5xl mx-auto">
+          <Card className="glassmorphic overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-1/2 text-lg font-semibold text-foreground">Feature</TableHead>
+                  <TableHead className="text-center text-lg font-semibold text-foreground">Cosmivity</TableHead>
+                  <TableHead className="text-center text-lg font-semibold text-foreground">YouTube</TableHead>
+                  <TableHead className="text-center text-lg font-semibold text-foreground">Coaching</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Card>
+              </TableHeader>
+              <TableBody>
+                {comparisonData.map((item) => (
+                  <TableRow key={item.feature}>
+                    <TableCell className="font-medium text-base">{item.feature}</TableCell>
+                    <TableCell className="text-center">
+                      {item.cosmivity ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.youtube ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.coaching ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Card>
+        </div>
       </div>
     </section>
   );
