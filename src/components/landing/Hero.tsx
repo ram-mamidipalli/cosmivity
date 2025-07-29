@@ -1,32 +1,23 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   return (
-    <section className="py-20 md:py-32">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tighter leading-tight">
-              Empowering Students with Skills That Get Jobs
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              Master English, Aptitude, and Interview Skills through AI-powered
-              practice.
-            </p>
-            <Button size="lg">Take Free Diagnostic Test</Button>
+    <section className="relative overflow-hidden py-24 md:py-32">
+       <div className="absolute inset-0 animated-gradient -z-10"></div>
+      <div className="container mx-auto px-4 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tighter leading-tight">
+            Struggling with Aptitude, Interviews, and English? Cosmivity Gets You Job-Ready — Fast.
+          </h1>
+          <p className="mt-6 text-lg md:text-xl text-foreground/80">
+            AI-driven preparation for aptitude tests, communication, and interviews — with personalized daily practice and instant feedback.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+             <Button size="lg" className="neon-glow text-lg px-8 py-6">Start Free</Button>
           </div>
-          <div className="flex justify-center">
-            <Image
-              src="https://placehold.co/600x450.png"
-              alt="Students preparing for a job"
-              width={600}
-              height={450}
-              className="rounded-lg shadow-xl"
-              data-ai-hint="students job preparation"
-              priority
-            />
-          </div>
+           <p className="mt-4 text-sm text-foreground/60">
+            No credit card required. First 100 users get 7 days Pro access.
+          </p>
         </div>
       </div>
     </section>
