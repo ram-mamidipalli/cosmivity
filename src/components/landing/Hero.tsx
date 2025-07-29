@@ -12,7 +12,7 @@ export default function Hero() {
               <svg
                 viewBox="0 0 285 20"
                 xmlns="http://www.w3.org/2000/svg"
-                className="absolute -bottom-4 left-0 w-full"
+                className="absolute -bottom-2 left-0 w-full"
                 preserveAspectRatio="none"
               >
                 <path
