@@ -1,14 +1,14 @@
 import Image from 'next/image';
 
 const companies = [
-  { name: 'Google', hint: 'google logo' },
-  { name: 'Microsoft', hint: 'microsoft logo' },
-  { name: 'Wipro', hint: 'wipro logo' },
-  { name: 'Infosys', hint: 'infosys logo' },
-  { name: 'TCS', hint: 'tcs logo' },
-  { name: 'Accenture', hint: 'accenture logo' },
-  { name: 'Amazon', hint: 'amazon logo' },
-  { name: 'Deloitte', hint: 'deloitte logo' },
+  { name: 'Google', hint: 'google logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Microsoft', hint: 'microsoft logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Wipro', hint: 'wipro logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Infosys', hint: 'infosys logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'TCS', hint: 'tcs logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Accenture', hint: 'accenture logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Amazon', hint: 'amazon logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Deloitte', hint: 'deloitte logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
 export default function TrustedBy() {
@@ -23,7 +23,7 @@ export default function TrustedBy() {
             {[...companies, ...companies].map((company, index) => (
               <div key={index} className="mx-8 flex-shrink-0 flex items-center justify-center">
                 <Image 
-                  src={`https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3`}
+                  src={company.src}
                   alt={`${company.name} logo`}
                   width={120}
                   height={60}
@@ -38,6 +38,3 @@ export default function TrustedBy() {
     </section>
   );
 }
-
-// Simple animation for the marquee effect in globals.css or a style tag
-// I'll add it to globals.css for wider use
