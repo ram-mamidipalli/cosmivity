@@ -18,7 +18,22 @@ export default function Header() {
         <header className="glassmorphic rounded-2xl p-2 md:p-3">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
-              <span className="font-bold text-2xl text-primary">Cosmivity</span>
+              <span className="font-bold text-2xl text-primary relative">
+                Cosmivity
+                <svg
+                  viewBox="0 0 285 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute -bottom-1 left-0 w-full"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
             </Link>
             <nav className="hidden md:flex items-center space-x-4">
               {navLinks.map((link) => (
@@ -45,7 +60,22 @@ export default function Header() {
                 <SheetContent side="right">
                   <div className="flex flex-col space-y-4 p-4">
                     <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
-                       <span className="font-bold text-2xl text-primary">Cosmivity</span>
+                       <span className="font-bold text-2xl text-primary relative">
+                        Cosmivity
+                        <svg
+                          viewBox="0 0 285 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="absolute -bottom-1 left-0 w-full"
+                          preserveAspectRatio="none"
+                        >
+                          <path
+                            d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
+                            stroke="hsl(var(--primary))"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                       </span>
                     </Link>
                     <div className="flex flex-col space-y-2">
                         {navLinks.map((link) => (
