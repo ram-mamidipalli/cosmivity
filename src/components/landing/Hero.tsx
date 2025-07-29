@@ -21,10 +21,6 @@ export default function Hero() {
                   strokeWidth="4"
                   strokeLinecap="round"
                 />
-                <path
-                  d="M266.021 3.16113L275.526 1.73926L276.948 11.244L267.443 12.6659L266.021 3.16113Z"
-                  fill="hsl(var(--primary))"
-                />
               </svg>
             </span> Gets You Job-Ready — Fast.
           </h1>
