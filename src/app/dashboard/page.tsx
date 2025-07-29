@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -56,10 +57,10 @@ const quickAccessItems = [
 
 const leaderboardData = [
     { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://placehold.co/40x40.png", hint: "man portrait" },
-    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://placehold.co/40x40.png", hint: "woman smiling" },
+    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://images.unsplash.com/photo-1591980896142-4e36328411ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman smiling" },
     { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait", isCurrentUser: true },
-    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://placehold.co/40x40.png", hint: "man headshot" },
-    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://placehold.co/40x40.png", hint: "woman headshot" },
+    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/flagged/photo-1571367034861-e6729ad9c2d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man headshot" },
+    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1648183185045-7a5592e66e9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
 ];
 
 const achievements = [
@@ -304,3 +305,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
