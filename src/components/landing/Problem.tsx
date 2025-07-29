@@ -1,4 +1,4 @@
-import { XCircle, CheckCircle2 } from "lucide-react";
+import { XCircle } from "lucide-react";
 
 const painPoints = [
   "Weak aptitude & reasoning",
@@ -17,19 +17,19 @@ export default function Problem() {
             You’ve got the degree. But not the confidence.
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="space-y-4">
+        <div className="flex flex-col items-center gap-12">
+          <div className="space-y-4 max-w-md">
             <ul className="space-y-3">
               {painPoints.map((point, i) => (
-                <li key={i} className="flex items-center text-lg">
+                <li key={i} className="flex items-center text-lg p-3 rounded-lg glassmorphic">
                   <XCircle className="w-6 h-6 text-destructive mr-3 flex-shrink-0" />
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
           </div>
-           <div className="glassmorphic p-8 rounded-lg">
-             <h3 className="text-2xl font-bold text-center text-primary font-headline">“7 out of 10 students feel unprepared — until they try Cosmivity.”</h3>
+           <div className="glassmorphic p-8 rounded-lg max-w-2xl text-center">
+             <h3 className="text-2xl font-bold text-primary font-headline">“7 out of 10 students feel unprepared — until they try Cosmivity.”</h3>
            </div>
         </div>
       </div>
