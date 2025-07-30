@@ -36,13 +36,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
+  { href: "/dashboard/challenges", label: "Team Challenges", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
-  { href: "/dashboard/challenges", label: "Team Challenges", icon: Users },
-  { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
-  { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/coach", label: "Resume & LinkedIn Coach", icon: FileText },
   { href: "/dashboard/passport", label: "Skill Passport", icon: Award },
+  { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
+  { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
 ];
 
