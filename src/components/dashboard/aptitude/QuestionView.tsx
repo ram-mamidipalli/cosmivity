@@ -11,8 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Lightbulb, MessageCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-export default function QuestionView({ question }: { question: any }) {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+export default function QuestionView({ question, selectedOption, onAnswerChange }: { question: any, selectedOption: string | null, onAnswerChange: (option: string) => void }) {
   const [showExplanation, setShowExplanation] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(question.comments || []);
@@ -31,7 +30,7 @@ export default function QuestionView({ question }: { question: any }) {
         <CardDescription className="text-lg text-foreground">{question.question}</CardDescription>
       </CardHeader>
       <CardContent>
-        <RadioGroup onValueChange={setSelectedOption} value={selectedOption || ""}>
+        <RadioGroup onValueChange={onAnswerChange} value={selectedOption || ""}>
           {question.options.map((option: string, index: number) => (
             <div key={index} className="flex items-center space-x-2 my-2">
               <RadioGroupItem value={option} id={`option-${index}`} />

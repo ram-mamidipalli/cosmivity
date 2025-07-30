@@ -4,10 +4,11 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, Lightbulb, MessageCircle } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import QuestionView from "@/components/dashboard/aptitude/QuestionView";
+import { cn } from "@/lib/utils";
 
 const questionsData: { [key: string]: any[] } = {
   "arithmetic-aptitude": [
@@ -42,18 +43,31 @@ export default function TestPage() {
   const testName = test.replace(/-/g, " ");
   const questions = questionsData[test] || [];
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<{ [key: number]: string }>({});
+  const [visited, setVisited] = useState<number[]>([0]);
+
+  const handleSetCurrentQuestion = (index: number) => {
+    setCurrentQuestionIndex(index);
+    if (!visited.includes(index)) {
+      setVisited([...visited, index]);
+    }
+  };
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      handleSetCurrentQuestion(currentQuestionIndex + 1);
     }
   };
 
   const handlePrev = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      handleSetCurrentQuestion(currentQuestionIndex - 1);
     }
   };
+  
+  const handleAnswerChange = (questionId: number, option: string) => {
+    setAnswers(prev => ({...prev, [questionId]: option}));
+  }
 
   return (
     <div className="flex flex-col gap-8">
@@ -68,7 +82,11 @@ export default function TestPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
             {questions.length > 0 ? (
-                 <QuestionView question={questions[currentQuestionIndex]} />
+                 <QuestionView 
+                    question={questions[currentQuestionIndex]}
+                    selectedOption={answers[questions[currentQuestionIndex].id]}
+                    onAnswerChange={(option) => handleAnswerChange(questions[currentQuestionIndex].id, option)}
+                 />
             ) : (
                 <Card className="glassmorphic">
                     <CardHeader>
@@ -83,7 +101,7 @@ export default function TestPage() {
                 <Button onClick={handlePrev} disabled={currentQuestionIndex === 0}>
                 Previous
                 </Button>
-                <Button onClick={handleNext} disabled={currentQuestionIndex === questions.length - 1}>
+                <Button onClick={handleNext} disabled={currentQuestionIndex >= questions.length - 1}>
                 Next
                 </Button>
             </div>
@@ -98,9 +116,12 @@ export default function TestPage() {
                         {questions.map((q, index) => (
                             <Button 
                                 key={q.id}
-                                variant={index === currentQuestionIndex ? 'secondary' : 'outline'}
-                                className="w-full h-10"
-                                onClick={() => setCurrentQuestionIndex(index)}
+                                variant={'outline'}
+                                className={cn("w-full h-10", 
+                                    index === currentQuestionIndex ? 'bg-primary/80 text-primary-foreground' : '',
+                                    answers[q.id] ? 'bg-green-500 text-white hover:bg-green-600' : (visited.includes(index) ? 'bg-muted' : ''),
+                                )}
+                                onClick={() => handleSetCurrentQuestion(index)}
                             >
                                 {index + 1}
                             </Button>
