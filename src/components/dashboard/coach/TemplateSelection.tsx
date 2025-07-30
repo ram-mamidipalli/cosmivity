@@ -23,20 +23,20 @@ export default function TemplateSelection({ isOpen, onClose, selectedTemplate, o
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl h-[80vh] flex flex-col p-0">
+      <DialogContent className="max-w-6xl h-[90vh] md:h-[80vh] flex flex-col p-0">
         <DialogHeader className="p-6 pb-0">
           <DialogTitle className="text-2xl font-bold font-headline">Choose Resume Template</DialogTitle>
           <DialogDescription>Select a template that matches your industry and style.</DialogDescription>
         </DialogHeader>
-        <div className="flex-grow grid grid-cols-3 gap-6 p-6 min-h-0">
-            <div className="col-span-2 flex flex-col gap-4">
-                <div className="flex items-center gap-2">
+        <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 min-h-0">
+            <div className="lg:col-span-2 flex flex-col gap-4">
+                <div className="flex items-center gap-2 flex-wrap">
                     {categories.map(cat => (
                         <Button key={cat} variant={cat === "All" ? "secondary" : "ghost"} size="sm">{cat}</Button>
                     ))}
                 </div>
                 <ScrollArea className="flex-grow pr-4 -mr-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {templates.map(template => (
                             <Card 
                                 key={template.name} 
@@ -58,7 +58,7 @@ export default function TemplateSelection({ isOpen, onClose, selectedTemplate, o
                     </div>
                 </ScrollArea>
             </div>
-            <div className="col-span-1 bg-muted rounded-lg flex flex-col">
+            <div className="lg:col-span-1 bg-muted rounded-lg flex-col hidden lg:flex">
                  <div className="p-4 border-b">
                     <h3 className="font-semibold">Template Preview</h3>
                  </div>
@@ -78,3 +78,4 @@ export default function TemplateSelection({ isOpen, onClose, selectedTemplate, o
     </Dialog>
   );
 }
+
