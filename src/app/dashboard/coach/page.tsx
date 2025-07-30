@@ -7,18 +7,16 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Upload, Download, RefreshCw, Save, CheckCircle } from "lucide-react";
 import ResumeStepper from "@/components/dashboard/coach/ResumeStepper";
-import TemplateSelection from "@/components/dashboard/coach/TemplateSelection";
 import ResumeForm from "@/components/dashboard/coach/ResumeForm";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function CoachPage() {
-  const [isTemplateSelectorOpen, setTemplateSelectorOpen] = useState(true);
-  const [selectedTemplate, setSelectedTemplate] = useState("Modern Professional");
+  const [isTemplateSelectorOpen, setTemplateSelectorOpen] = useState(false);
 
   return (
     <div className="flex flex-col gap-8">
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-                <p className="text-sm text-muted-foreground">Dashboard &gt; Resume Builder</p>
                 <h1 className="text-3xl font-bold font-headline">Resume Builder</h1>
                 <p className="text-muted-foreground">Create a professional resume that stands out to employers</p>
             </div>
@@ -33,7 +31,7 @@ export default function CoachPage() {
             <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
                 <CheckCircle className="h-5 w-5" />
                 All changes saved
-                <span className="text-muted-foreground text-xs">Last saved just now</span>
+                <span className="text-muted-foreground text-xs ml-2">Last saved just now</span>
             </div>
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
@@ -51,16 +49,24 @@ export default function CoachPage() {
                 <ResumeForm />
             </div>
             <div className="lg:col-span-1">
-                {/* This will be the resume preview */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Live Preview</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="bg-muted p-4 rounded-lg aspect-[8.5/11] flex flex-col items-center justify-center">
+                           <div className="w-full h-32 bg-primary rounded-t-lg flex flex-col items-center justify-center text-primary-foreground p-4">
+                               <h3 className="text-2xl font-bold">Your Name</h3>
+                               <p>Professional Title</p>
+                           </div>
+                           <div className="flex-grow bg-card w-full p-4">
+                                <p className="text-sm text-muted-foreground text-center mt-4">Preview updates automatically as you type</p>
+                           </div>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
         </div>
-
-        <TemplateSelection 
-            isOpen={isTemplateSelectorOpen} 
-            onClose={() => setTemplateSelectorOpen(false)}
-            selectedTemplate={selectedTemplate}
-            onSelectTemplate={setSelectedTemplate}
-        />
     </div>
   );
 }
