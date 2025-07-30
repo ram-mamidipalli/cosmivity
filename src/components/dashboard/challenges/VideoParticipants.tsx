@@ -4,7 +4,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mic, MicOff, Video, VideoOff, Hand, ThumbsUp, Heart, Laugh, Wow, HandPlatter } from "lucide-react";
+import { Mic, MicOff, Video, VideoOff, Hand, ThumbsUp, Heart, Laugh, Wow, HandPlatter, LogOut } from "lucide-react";
 
 interface Participant {
   name: string;
