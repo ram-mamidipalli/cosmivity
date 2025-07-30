@@ -16,7 +16,8 @@ export default function SetupInterviewPage() {
   const handleStart = () => {
     // We will navigate to a dynamic session ID.
     // In a real app, you would create a session and get an ID from the backend.
-    router.push('/dashboard/interviews/session-123');
+    const sessionId = `session-${Date.now()}`;
+    router.push(`/dashboard/interviews/${sessionId}`);
   }
 
   return (

@@ -3,11 +3,11 @@
 
 import InterviewSession from "@/components/dashboard/interviews/InterviewSession";
 
-export default function InterviewSessionPage() {
+export default function InterviewSessionPage({ params }: { params: { sessionId: string } }) {
     // In a real app, you would fetch session details based on sessionId
     // For now, we'll use mock data.
     const mockSession = {
-        id: '123',
+        id: params.sessionId,
         type: 'Technical',
         questions: [
             { id: 1, text: "Tell me about a challenging project you've worked on. What was your role?", expertTip: "Structure your answer using the STAR method: Situation, Task, Action, and Result. Start by briefly describing the project and its goal." },
