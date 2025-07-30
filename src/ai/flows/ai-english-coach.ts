@@ -25,24 +25,24 @@ const AiEnglishCoachOutputSchema = z.object({
 export type AiEnglishCoachOutput = z.infer<typeof AiEnglishCoachOutputSchema>;
 
 export async function aiEnglishCoach(input: AiEnglishCoachInput): Promise<AiEnglishCoachOutput> {
+  const prompt = ai.definePrompt({
+    name: 'aiEnglishCoachPrompt',
+    input: {schema: AiEnglishCoachInputSchema},
+    output: {schema: AiEnglishCoachOutputSchema},
+    prompt: `You are an AI English coach specializing in providing personalized feedback and suggestions to students to improve their English proficiency, especially regarding interview techniques and strategies.\n\nYou will analyze the student's text and provide specific, actionable feedback on grammar, vocabulary, style, and clarity. If the student provided interview context, make sure to tailor the feedback towards effective communication in an interview setting. Use your knowledge of effective interview strategies to guide your feedback.\n\nText: {{{text}}}\n\nInterview Context: {{{interviewContext}}}`,
+  });
+
+  const aiEnglishCoachFlow = ai.defineFlow(
+    {
+      name: 'aiEnglishCoachFlow',
+      inputSchema: AiEnglishCoachInputSchema,
+      outputSchema: AiEnglishCoachOutputSchema,
+    },
+    async input => {
+      const {output} = await prompt(input);
+      return output!;
+    }
+  );
+  
   return aiEnglishCoachFlow(input);
 }
-
-const prompt = ai.definePrompt({
-  name: 'aiEnglishCoachPrompt',
-  input: {schema: AiEnglishCoachInputSchema},
-  output: {schema: AiEnglishCoachOutputSchema},
-  prompt: `You are an AI English coach specializing in providing personalized feedback and suggestions to students to improve their English proficiency, especially regarding interview techniques and strategies.\n\nYou will analyze the student's text and provide specific, actionable feedback on grammar, vocabulary, style, and clarity. If the student provided interview context, make sure to tailor the feedback towards effective communication in an interview setting. Use your knowledge of effective interview strategies to guide your feedback.\n\nText: {{{text}}}\n\nInterview Context: {{{interviewContext}}}`,
-});
-
-const aiEnglishCoachFlow = ai.defineFlow(
-  {
-    name: 'aiEnglishCoachFlow',
-    inputSchema: AiEnglishCoachInputSchema,
-    outputSchema: AiEnglishCoachOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
-  }
-);

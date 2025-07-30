@@ -11,12 +11,6 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const GenerateTestQuestionsInputSchema = z.object({
-  topic: z.string().describe('The topic for which to generate test questions.'),
-  numberOfQuestions: z.number().describe('The number of questions to generate.'),
-});
-export type GenerateTestQuestionsInput = z.infer<typeof GenerateTestQuestionsInputSchema>;
-
 const QuestionSchema = z.object({
     id: z.number().describe("A unique ID for the question."),
     question: z.string().describe("The question text."),
@@ -29,20 +23,23 @@ const QuestionSchema = z.object({
     })).optional().describe("An optional array for user comments, which should be empty by default.")
 });
 
-export const GenerateTestQuestionsOutputSchema = z.object({
+const GenerateTestQuestionsInputSchema = z.object({
+  topic: z.string().describe('The topic for which to generate test questions.'),
+  numberOfQuestions: z.number().describe('The number of questions to generate.'),
+});
+export type GenerateTestQuestionsInput = z.infer<typeof GenerateTestQuestionsInputSchema>;
+
+const GenerateTestQuestionsOutputSchema = z.object({
     questions: z.array(QuestionSchema)
 });
 export type GenerateTestQuestionsOutput = z.infer<typeof GenerateTestQuestionsOutputSchema>;
 
 export async function generateTestQuestions(input: GenerateTestQuestionsInput): Promise<GenerateTestQuestionsOutput> {
-  return generateTestQuestionsFlow(input);
-}
-
-const prompt = ai.definePrompt({
-  name: 'generateTestQuestionsPrompt',
-  input: { schema: GenerateTestQuestionsInputSchema },
-  output: { schema: GenerateTestQuestionsOutputSchema },
-  prompt: `You are an expert in creating aptitude tests for job preparation. Generate a list of {{numberOfQuestions}} multiple-choice questions for the topic: {{{topic}}}.
+  const prompt = ai.definePrompt({
+    name: 'generateTestQuestionsPrompt',
+    input: { schema: GenerateTestQuestionsInputSchema },
+    output: { schema: GenerateTestQuestionsOutputSchema },
+    prompt: `You are an expert in creating aptitude tests for job preparation. Generate a list of {{numberOfQuestions}} multiple-choice questions for the topic: {{{topic}}}.
 
 Each question must have:
 - A unique ID, starting from 1.
@@ -53,16 +50,19 @@ Each question must have:
 - An empty array for comments.
 
 Return the questions in the specified JSON format.`,
-});
+  });
 
-const generateTestQuestionsFlow = ai.defineFlow(
-  {
-    name: 'generateTestQuestionsFlow',
-    inputSchema: GenerateTestQuestionsInputSchema,
-    outputSchema: GenerateTestQuestionsOutputSchema,
-  },
-  async (input) => {
-    const { output } = await prompt(input);
-    return output!;
-  }
-);
+  const generateTestQuestionsFlow = ai.defineFlow(
+    {
+      name: 'generateTestQuestionsFlow',
+      inputSchema: GenerateTestQuestionsInputSchema,
+      outputSchema: GenerateTestQuestionsOutputSchema,
+    },
+    async (input) => {
+      const { output } = await prompt(input);
+      return output!;
+    }
+  );
+  
+  return generateTestQuestionsFlow(input);
+}
