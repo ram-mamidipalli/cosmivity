@@ -43,14 +43,14 @@ export default function TemplateSelection({ isOpen, onClose, selectedTemplate, o
                                 onClick={() => onSelectTemplate(template.name)}
                                 className={cn("cursor-pointer transition-all", selectedTemplate === template.name && "ring-2 ring-primary")}
                             >
-                                <CardContent className="p-4 flex flex-col items-center justify-center text-center gap-4 relative">
+                                <CardContent className="p-4 flex flex-col items-center justify-center text-center gap-2 relative">
                                     {selectedTemplate === template.name && (
                                         <CheckCircle className="absolute top-2 right-2 h-5 w-5 text-primary"/>
                                     )}
-                                    <div className="p-6 bg-muted rounded-lg">
-                                        <FileText className="h-16 w-16 text-muted-foreground" />
+                                    <div className="p-4 bg-muted rounded-lg">
+                                        <FileText className="h-12 w-12 text-muted-foreground" />
                                     </div>
-                                    <h3 className="font-semibold">{template.name}</h3>
+                                    <h3 className="font-semibold text-base">{template.name}</h3>
                                     <p className="text-xs text-muted-foreground">{template.desc}</p>
                                 </CardContent>
                             </Card>
@@ -78,4 +78,3 @@ export default function TemplateSelection({ isOpen, onClose, selectedTemplate, o
     </Dialog>
   );
 }
-
