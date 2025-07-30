@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -111,7 +112,7 @@ export default function PassportPage() {
                     </div>
                 </div>
                 <div>
-                     <Avatar className="w-full h-auto max-w-sm mx-auto rounded-lg shadow-lg">
+                     <Avatar className="w-full h-auto max-w-sm mx-auto shadow-lg">
                         <AvatarImage src="https://placehold.co/400x400.png" alt="Sagar" data-ai-hint="man portrait"/>
                         <AvatarFallback>S</AvatarFallback>
                     </Avatar>
