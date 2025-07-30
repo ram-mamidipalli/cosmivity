@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import ConversationTopics from "@/components/dashboard/communication/ConversationTopics";
 import ChatInterface from "@/components/dashboard/communication/ChatInterface";
@@ -17,6 +18,11 @@ const lessons = [
 
 export default function CommunicationPage() {
     const [topic, setTopic] = useState<string>("Job Interview");
+    const router = useRouter();
+
+    const handleEndSession = () => {
+        router.push("/dashboard");
+    }
     
     return (
         <div className="flex flex-col gap-8">
@@ -27,7 +33,7 @@ export default function CommunicationPage() {
                 </div>
                 <div className="flex items-center gap-2">
                     <span className="font-code text-sm">Session: 00:00</span>
-                    <Button variant="outline">End Session</Button>
+                    <Button variant="outline" onClick={handleEndSession}>End Session</Button>
                 </div>
             </header>
             
