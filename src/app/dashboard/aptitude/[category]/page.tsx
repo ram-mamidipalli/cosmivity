@@ -126,11 +126,11 @@ export default function AptitudeCategoryPage() {
                                 <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
                                     <div className="flex items-center gap-1.5">
                                         <HelpCircle className="h-4 w-4" />
-                                        <span>{test.questions} Questions</span>
+                                        <span className="font-code">{test.questions} Questions</span>
                                     </div>
                                     <div className="flex items-center gap-1.5">
                                         <Clock className="h-4 w-4" />
-                                        <span>{test.time} Minutes</span>
+                                        <span className="font-code">{test.time} Minutes</span>
                                     </div>
                                 </div>
                             </div>

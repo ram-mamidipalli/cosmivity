@@ -33,7 +33,7 @@ export default function TestReportPage() {
                      <ul className="space-y-2">
                         {Object.entries(answers).map(([questionId, answer]) => (
                             <li key={questionId} className="p-2 border rounded-md">
-                                <span className="font-semibold">Question {questionId}:</span> You selected <span className="font-mono p-1 bg-muted rounded-sm">{answer}</span>
+                                <span className="font-semibold">Question {questionId}:</span> You selected <span className="font-code p-1 bg-muted rounded-sm">{answer}</span>
                             </li>
                         ))}
                     </ul>

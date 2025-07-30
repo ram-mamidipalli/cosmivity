@@ -94,15 +94,15 @@ export default function DashboardPage() {
         <div className="flex items-center gap-4 sm:gap-6 text-sm">
             <div className="flex items-center gap-2 font-semibold">
                 <Award className="h-5 w-5 text-yellow-500" />
-                <span>2,650 XP</span>
+                <span className="font-code">2,650 XP</span>
             </div>
             <div className="flex items-center gap-2 font-semibold">
                 <Flame className="h-5 w-5 text-orange-500" />
-                <span>7-day streak</span>
+                <span className="font-code">7-day streak</span>
             </div>
             <div className="flex items-center gap-2 font-semibold">
                 <Trophy className="h-5 w-5 text-slate-500" />
-                <span>Rank #3</span>
+                <span className="font-code">Rank #3</span>
             </div>
         </div>
         <div className="flex items-center gap-2">
@@ -161,7 +161,7 @@ export default function DashboardPage() {
                 <CardContent className="flex items-center justify-between">
                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Timer className="h-4 w-4"/>
-                        <span>Est. time: 5 mins</span>
+                        <span className="font-code">Est. time: 5 mins</span>
                     </div>
                     <Button>Start Test</Button>
                 </CardContent>
@@ -180,7 +180,7 @@ export default function DashboardPage() {
                             <p className="text-xs text-muted-foreground">Solve 10 quantitative questions</p>
                         </div>
                         <Progress value={70} className="w-24 h-2"/>
-                        <span className="text-sm font-semibold">7/10</span>
+                        <span className="text-sm font-semibold font-code">7/10</span>
                     </div>
                      <div className="flex items-center gap-4">
                         <div className="p-2 bg-primary/10 rounded-lg"><Mic className="h-6 w-6 text-primary"/></div>
@@ -189,7 +189,7 @@ export default function DashboardPage() {
                             <p className="text-xs text-muted-foreground">15 minutes conversation</p>
                         </div>
                         <Progress value={40} className="w-24 h-2"/>
-                        <span className="text-sm font-semibold">6/15</span>
+                        <span className="text-sm font-semibold font-code">6/15</span>
                     </div>
                      <div className="flex items-center gap-4">
                         <div className="p-2 bg-primary/10 rounded-lg"><BookOpen className="h-6 w-6 text-primary"/></div>
@@ -201,7 +201,7 @@ export default function DashboardPage() {
                         <CheckCircle className="h-5 w-5 text-green-500"/>
                     </div>
                     <div className="border-t pt-4 mt-4 flex items-center justify-end text-sm font-semibold text-yellow-600">
-                        <Flame className="h-4 w-4 mr-1"/> 7-day streak <span className="text-muted-foreground mx-2">|</span> +150 XP today
+                        <Flame className="h-4 w-4 mr-1"/> <span className="font-code">7-day streak</span> <span className="text-muted-foreground mx-2">|</span> <span className="font-code">+150 XP today</span>
                     </div>
                 </CardContent>
             </Card>
@@ -221,7 +221,7 @@ export default function DashboardPage() {
                             </div>
                             <div>
                                 <p className="text-xs text-muted-foreground">Next: {path.nextActivity}</p>
-                                <p className="text-xs text-muted-foreground">Est. Time: {path.estTime}</p>
+                                <p className="text-xs text-muted-foreground font-code">Est. Time: {path.estTime}</p>
                                 <Button variant="link" className="p-0 h-auto mt-2 text-primary font-bold">Continue Learning <ChevronRight className="h-4 w-4 ml-1"/></Button>
                             </div>
                         </Card>
@@ -260,7 +260,7 @@ export default function DashboardPage() {
                         <ul className="space-y-4 pr-4">
                             {leaderboardData.map((user, index) => (
                                 <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${user.isCurrentUser ? 'bg-primary/10 neon-glow' : ''}`}>
-                                    <span className="font-bold text-sm w-4">#{index + 1}</span>
+                                    <span className="font-bold text-sm w-4 font-code">#{index + 1}</span>
                                     <Avatar className="h-10 w-10">
                                         <AvatarImage src={user.avatar} data-ai-hint={user.hint} />
                                         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
@@ -269,7 +269,7 @@ export default function DashboardPage() {
                                         <p className="font-semibold">{user.name}</p>
                                         <p className="text-xs text-muted-foreground">{user.school}</p>
                                     </div>
-                                    <span className="font-bold text-primary">{user.xp}</span>
+                                    <span className="font-bold text-primary font-code">{user.xp}</span>
                                 </li>
                             ))}
                         </ul>
@@ -292,7 +292,7 @@ export default function DashboardPage() {
                                  <Badge variant="outline" className="text-xs border-current">{ach.rarity}</Badge>
                                 </div>
                                  <p className="text-xs">{ach.desc}</p>
-                                 <p className="text-xs font-bold mt-1">{ach.xp}</p>
+                                 <p className="text-xs font-bold mt-1 font-code">{ach.xp}</p>
                              </div>
                          </div>
                     ))}
@@ -306,14 +306,14 @@ export default function DashboardPage() {
                     <div>
                         <div className="flex justify-between items-center mb-1">
                             <p className="text-sm font-semibold">Interview Ace</p>
-                            <p className="text-xs text-muted-foreground">7/10</p>
+                            <p className="text-xs text-muted-foreground font-code">7/10</p>
                         </div>
                         <Progress value={70} />
                     </div>
                      <div>
                         <div className="flex justify-between items-center mb-1">
                             <p className="text-sm font-semibold">Community Leader</p>
-                            <p className="text-xs text-muted-foreground">10/25</p>
+                            <p className="text-xs text-muted-foreground font-code">10/25</p>
                         </div>
                         <Progress value={40} />
                     </div>

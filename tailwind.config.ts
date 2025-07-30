@@ -12,7 +12,7 @@ export default {
       fontFamily: {
         body: ['"Syne"', 'sans-serif'],
         headline: ['"Syne"', 'sans-serif'],
-        code: ['monospace'],
+        code: ['"Roboto Mono"', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',

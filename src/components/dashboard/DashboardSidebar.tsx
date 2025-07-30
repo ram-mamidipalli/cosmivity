@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -149,7 +150,7 @@ export default function DashboardSidebar() {
                     {!isCollapsed && (
                         <div className="text-left">
                         <p className="font-semibold text-sm">Aakash</p>
-                        <p className="text-xs text-muted-foreground">1,250 XP</p>
+                        <p className="text-xs text-muted-foreground font-code">2,650 XP</p>
                         </div>
                     )}
                 </Button>

@@ -27,7 +27,7 @@ export default function QuestionView({ question, selectedOption, onAnswerChange 
   return (
     <Card className="glassmorphic">
       <CardHeader>
-        <CardTitle>Question {question.id}</CardTitle>
+        <CardTitle className="font-code">Question {question.id}</CardTitle>
         <CardDescription className="text-lg text-foreground">{question.question}</CardDescription>
       </CardHeader>
       <CardContent>
