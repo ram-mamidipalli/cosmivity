@@ -3,7 +3,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Lightbulb, MessageCircle, Trophy, Code } from "lucide-react";
+import { Calculator, Lightbulb, MessageCircle, Trophy, Code, Users, Brain, FileText, Puzzle, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 const modules = [
@@ -11,22 +11,50 @@ const modules = [
     title: "Quantitative Aptitude",
     description: "Practice numerical problems, data interpretation, and mathematical concepts.",
     icon: <Calculator className="h-10 w-10 text-primary" />,
-    buttonText: "Start Practice",
+    buttonText: "View Tests",
     href: "/dashboard/aptitude/quantitative",
   },
   {
     title: "Logical Reasoning",
     description: "Sharpen your analytical and critical thinking skills with puzzles and scenarios.",
     icon: <Lightbulb className="h-10 w-10 text-primary" />,
-    buttonText: "Start Practice",
+    buttonText: "View Tests",
     href: "/dashboard/aptitude/logical",
   },
     {
     title: "Verbal Ability",
     description: "Improve your grammar, vocabulary, and reading comprehension.",
     icon: <MessageCircle className="h-10 w-10 text-primary" />,
-    buttonText: "Start Practice",
+    buttonText: "View Tests",
     href: "/dashboard/aptitude/verbal",
+  },
+  {
+    title: "Interview Prep",
+    description: "Prepare for HR interviews, group discussions, and review placement papers.",
+    icon: <Users className="h-10 w-10 text-primary" />,
+    buttonText: "View Topics",
+    href: "/dashboard/aptitude/interview",
+  },
+  {
+    title: "Programming",
+    description: "Practice coding questions in C, C++, Java, and other languages.",
+    icon: <Code className="h-10 w-10 text-primary" />,
+    buttonText: "View Languages",
+    href: "/dashboard/aptitude/programming",
+  },
+  {
+    title: "General Knowledge",
+    description: "Stay updated with current affairs and general science knowledge.",
+    icon: <BookOpen className="h-10 w-10 text-primary" />,
+    buttonText: "View Quizzes",
+    href: "/dashboard/aptitude/gk",
+  },
+   {
+    title: "Technical MCQs",
+    description: "Test your knowledge on networking, databases, and electronics.",
+    icon: <Brain className="h-10 w-10 text-primary" />,
+    buttonText: "View MCQs",
+    href: "/dashboard/aptitude/technical",
   },
   {
     title: "Daily Challenges",
@@ -35,12 +63,12 @@ const modules = [
     buttonText: "View Challenges",
     href: "/dashboard/challenges",
   },
-  {
-    title: "Technical Practice",
-    description: "Hone your coding skills with practice problems in various languages.",
-    icon: <Code className="h-10 w-10 text-primary" />,
-    buttonText: "Start Coding",
-    href: "/dashboard/aptitude/technical",
+   {
+    title: "Puzzles",
+    description: "Solve Sudoku, number puzzles, and other logical brain-teasers.",
+    icon: <Puzzle className="h-10 w-10 text-primary" />,
+    buttonText: "Solve Puzzles",
+    href: "/dashboard/aptitude/puzzles",
   },
 ];
 

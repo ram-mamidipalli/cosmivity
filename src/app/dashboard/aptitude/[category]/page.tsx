@@ -11,9 +11,10 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   quantitative: {
     title: "Quantitative Aptitude Tests",
     tests: [
-      { name: "Aptitude Test (Random Questions)", questions: 20, time: 30 },
-      ...Array.from({ length: 10 }, (_, i) => ({
-        name: `Aptitude Test ${i + 1}`,
+      { name: "Arithmetic Aptitude", questions: 20, time: 30 },
+      { name: "Data Interpretation", questions: 15, time: 25 },
+      ...Array.from({ length: 8 }, (_, i) => ({
+        name: `Quantitative Test ${i + 1}`,
         questions: 20,
         time: 30,
       })),
@@ -22,33 +23,71 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   logical: {
     title: "Logical Reasoning Tests",
     tests: [
-        ...Array.from({ length: 10 }, (_, i) => ({
-            name: `Logical Reasoning Test ${i + 1}`,
-            questions: 15,
-            time: 25,
-        })),
+      { name: "Logical Reasoning Test 1", questions: 15, time: 25 },
+      { name: "Verbal Reasoning", questions: 20, time: 20 },
+      { name: "Non-Verbal Reasoning", questions: 20, time: 20 },
+      ...Array.from({ length: 7 }, (_, i) => ({
+        name: `Logical Reasoning Test ${i + 2}`,
+        questions: 15,
+        time: 25,
+      })),
     ],
   },
   verbal: {
     title: "Verbal Ability Tests",
     tests: [
-        ...Array.from({ length: 10 }, (_, i) => ({
-            name: `Verbal Ability Test ${i + 1}`,
-            questions: 25,
-            time: 20,
-        })),
+      ...Array.from({ length: 10 }, (_, i) => ({
+        name: `Verbal Ability Test ${i + 1}`,
+        questions: 25,
+        time: 20,
+      })),
     ],
   },
   technical: {
-    title: "Technical Practice Tests",
+    title: "Technical MCQs",
     tests: [
-        { name: "Data Structures & Algorithms", questions: 20, time: 45 },
-        { name: "C Programming", questions: 20, time: 30 },
-        { name: "Java Programming", questions: 20, time: 30 },
-        { name: "Python Programming", questions: 20, time: 30 },
-        { name: "Databases", questions: 15, time: 20 },
+      { name: "Networking Questions", questions: 20, time: 30 },
+      { name: "Database Questions", questions: 20, time: 30 },
+      { name: "Basic Electronics", questions: 15, time: 20 },
+      { name: "Digital Electronics", questions: 15, time: 20 },
     ],
   },
+  interview: {
+      title: "Interview Prep",
+      tests: [
+        { name: "HR Interview Questions", questions: 30, time: 45 },
+        { name: "Group Discussion Topics", questions: 10, time: 60 },
+        { name: "Placement Papers Analysis", questions: 15, time: 30 },
+      ]
+  },
+  programming: {
+      title: "Programming Language Tests",
+      tests: [
+        { name: "C Programming", questions: 20, time: 30 },
+        { name: "C++ Programming", questions: 20, time: 30 },
+        { name: "Java Programming", questions: 20, time: 30 },
+        { name: "Python Programming", questions: 20, time: 30 },
+        { name: "C# Programming", questions: 20, time: 30 },
+      ]
+  },
+  gk: {
+      title: "General Knowledge & Current Affairs",
+      tests: [
+        { name: "Current Affairs Quiz", questions: 25, time: 15 },
+        { name: "General Science Quiz", questions: 25, time: 15 },
+        { name: "Basic General Knowledge", questions: 25, time: 15 },
+      ]
+  },
+  puzzles: {
+      title: "Puzzles",
+      tests: [
+          { name: "Sudoku", questions: 5, time: 20 },
+          { name: "Number Puzzles", questions: 10, time: 15 },
+          { name: "Missing Letters Puzzles", questions: 10, time: 10 },
+          { name: "Logical Puzzles", questions: 10, time: 20 },
+          { name: "Clock Puzzles", questions: 10, time: 15 },
+      ]
+  }
 };
 
 export default function AptitudeCategoryPage() {
