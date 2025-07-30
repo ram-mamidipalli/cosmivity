@@ -5,15 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, Clock, HelpCircle } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   quantitative: {
     title: "Quantitative Aptitude Tests",
     tests: [
-      { name: "Arithmetic Aptitude", questions: 20, time: 30 },
-      { name: "Data Interpretation", questions: 15, time: 25 },
+      { id: "arithmetic-aptitude", name: "Arithmetic Aptitude", questions: 20, time: 30 },
+      { id: "data-interpretation", name: "Data Interpretation", questions: 15, time: 25 },
       ...Array.from({ length: 8 }, (_, i) => ({
+        id: `quantitative-test-${i + 1}`,
         name: `Quantitative Test ${i + 1}`,
         questions: 20,
         time: 30,
@@ -23,10 +24,11 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   logical: {
     title: "Logical Reasoning Tests",
     tests: [
-      { name: "Logical Reasoning Test 1", questions: 15, time: 25 },
-      { name: "Verbal Reasoning", questions: 20, time: 20 },
-      { name: "Non-Verbal Reasoning", questions: 20, time: 20 },
+      { id: "logical-reasoning-1", name: "Logical Reasoning Test 1", questions: 15, time: 25 },
+      { id: "verbal-reasoning", name: "Verbal Reasoning", questions: 20, time: 20 },
+      { id: "non-verbal-reasoning", name: "Non-Verbal Reasoning", questions: 20, time: 20 },
       ...Array.from({ length: 7 }, (_, i) => ({
+        id: `logical-reasoning-${i + 2}`,
         name: `Logical Reasoning Test ${i + 2}`,
         questions: 15,
         time: 25,
@@ -37,6 +39,7 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
     title: "Verbal Ability Tests",
     tests: [
       ...Array.from({ length: 10 }, (_, i) => ({
+        id: `verbal-ability-${i + 1}`,
         name: `Verbal Ability Test ${i + 1}`,
         questions: 25,
         time: 20,
@@ -46,54 +49,59 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   technical: {
     title: "Technical MCQs",
     tests: [
-      { name: "Networking Questions", questions: 20, time: 30 },
-      { name: "Database Questions", questions: 20, time: 30 },
-      { name: "Basic Electronics", questions: 15, time: 20 },
-      { name: "Digital Electronics", questions: 15, time: 20 },
+      { id: 'networking', name: "Networking Questions", questions: 20, time: 30 },
+      { id: 'database', name: "Database Questions", questions: 20, time: 30 },
+      { id: 'basic-electronics', name: "Basic Electronics", questions: 15, time: 20 },
+      { id: 'digital-electronics', name: "Digital Electronics", questions: 15, time: 20 },
     ],
   },
   interview: {
       title: "Interview Prep",
       tests: [
-        { name: "HR Interview Questions", questions: 30, time: 45 },
-        { name: "Group Discussion Topics", questions: 10, time: 60 },
-        { name: "Placement Papers Analysis", questions: 15, time: 30 },
+        { id: 'hr-interview', name: "HR Interview Questions", questions: 30, time: 45 },
+        { id: 'group-discussion', name: "Group Discussion Topics", questions: 10, time: 60 },
+        { id: 'placement-papers', name: "Placement Papers Analysis", questions: 15, time: 30 },
       ]
   },
   programming: {
       title: "Programming Language Tests",
       tests: [
-        { name: "C Programming", questions: 20, time: 30 },
-        { name: "C++ Programming", questions: 20, time: 30 },
-        { name: "Java Programming", questions: 20, time: 30 },
-        { name: "Python Programming", questions: 20, time: 30 },
-        { name: "C# Programming", questions: 20, time: 30 },
+        { id: 'c-programming', name: "C Programming", questions: 20, time: 30 },
+        { id: 'c-plus-plus', name: "C++ Programming", questions: 20, time: 30 },
+        { id: 'java', name: "Java Programming", questions: 20, time: 30 },
+        { id: 'python', name: "Python Programming", questions: 20, time: 30 },
+        { id: 'c-sharp', name: "C# Programming", questions: 20, time: 30 },
       ]
   },
   gk: {
       title: "General Knowledge & Current Affairs",
       tests: [
-        { name: "Current Affairs Quiz", questions: 25, time: 15 },
-        { name: "General Science Quiz", questions: 25, time: 15 },
-        { name: "Basic General Knowledge", questions: 25, time: 15 },
+        { id: 'current-affairs', name: "Current Affairs Quiz", questions: 25, time: 15 },
+        { id: 'general-science', name: "General Science Quiz", questions: 25, time: 15 },
+        { id: 'basic-gk', name: "Basic General Knowledge", questions: 25, time: 15 },
       ]
   },
   puzzles: {
       title: "Puzzles",
       tests: [
-          { name: "Sudoku", questions: 5, time: 20 },
-          { name: "Number Puzzles", questions: 10, time: 15 },
-          { name: "Missing Letters Puzzles", questions: 10, time: 10 },
-          { name: "Logical Puzzles", questions: 10, time: 20 },
-          { name: "Clock Puzzles", questions: 10, time: 15 },
+          { id: 'sudoku', name: "Sudoku", questions: 5, time: 20 },
+          { id: 'number-puzzles', name: "Number Puzzles", questions: 10, time: 15 },
+          { id: 'missing-letters', name: "Missing Letters Puzzles", questions: 10, time: 10 },
+          { id: 'logical-puzzles', name: "Logical Puzzles", questions: 10, time: 20 },
+          { id: 'clock-puzzles', name: "Clock Puzzles", questions: 10, time: 15 },
       ]
   }
 };
 
 export default function AptitudeCategoryPage() {
   const params = useParams();
+  const router = useRouter();
   const category = Array.isArray(params.category) ? params.category[0] : params.category;
   const details = categoryDetails[category] || { title: "Practice Tests", tests: [] };
+
+  const handleStartTest = (testId: string) => {
+    router.push(`/dashboard/aptitude/${category}/${testId}`);
+  }
 
   return (
     <div className="flex flex-col gap-8">
@@ -127,7 +135,7 @@ export default function AptitudeCategoryPage() {
                                 </div>
                             </div>
                         </div>
-                        <Button className="w-full sm:w-auto neon-glow">Start Test</Button>
+                        <Button className="w-full sm:w-auto neon-glow" onClick={() => handleStartTest(test.id)}>Start Test</Button>
                     </li>
                 ))}
             </ul>
