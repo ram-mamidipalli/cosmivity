@@ -34,12 +34,14 @@ export default function ChatInterface({ topic }: { topic: string }) {
     const [isCameraOn, setIsCameraOn] = useState(true);
     const [isMicOn, setIsMicOn] = useState(true);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const streamRef = useRef<MediaStream | null>(null);
     const { toast } = useToast();
 
     useEffect(() => {
         const getCameraPermission = async () => {
           try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            streamRef.current = stream;
             setHasCameraPermission(true);
     
             if (videoRef.current) {
@@ -57,6 +59,12 @@ export default function ChatInterface({ topic }: { topic: string }) {
         };
     
         getCameraPermission();
+
+        return () => {
+            if (streamRef.current) {
+                streamRef.current.getTracks().forEach(track => track.stop());
+            }
+        }
       }, [toast]);
 
     const handleSend = async () => {
@@ -86,17 +94,15 @@ export default function ChatInterface({ topic }: { topic: string }) {
     };
     
     const toggleCamera = () => {
-        if (videoRef.current && videoRef.current.srcObject) {
-            const stream = videoRef.current.srcObject as MediaStream;
-            stream.getVideoTracks().forEach(track => track.enabled = !isCameraOn);
+        if (streamRef.current) {
+            streamRef.current.getVideoTracks().forEach(track => track.enabled = !isCameraOn);
             setIsCameraOn(!isCameraOn);
         }
     }
 
     const toggleMic = () => {
-        if (videoRef.current && videoRef.current.srcObject) {
-            const stream = videoRef.current.srcObject as MediaStream;
-            stream.getAudioTracks().forEach(track => track.enabled = !isMicOn);
+        if (streamRef.current) {
+            streamRef.current.getAudioTracks().forEach(track => track.enabled = !isMicOn);
             setIsMicOn(!isMicOn);
         }
     }
