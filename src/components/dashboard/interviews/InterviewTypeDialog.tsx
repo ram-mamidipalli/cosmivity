@@ -12,6 +12,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Code, User, Briefcase, UserCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const interviewTypes = [
   {
@@ -38,6 +39,12 @@ const interviewTypes = [
 ];
 
 export default function InterviewTypeDialog({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  const handleStartInterview = () => {
+    router.push('/dashboard/interviews/setup');
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -62,7 +69,7 @@ export default function InterviewTypeDialog({ children }: { children: React.Reac
                         <span>{type.questions} questions</span>
                         <span>{type.time}</span>
                     </div>
-                    <Button className="w-full mt-4 neon-glow">Start Interview</Button>
+                    <Button className="w-full mt-4 neon-glow" onClick={handleStartInterview}>Start Interview</Button>
                 </Card>
             ))}
         </div>
