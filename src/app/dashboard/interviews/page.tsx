@@ -13,7 +13,7 @@ import {
   Code,
   Users,
   User,
-  Case,
+  Briefcase,
 } from "lucide-react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -68,7 +68,7 @@ const interviewTypes = [
         description: "Background, motivation, and cultural fit assessment"
     },
     {
-        icon: <Case className="w-8 h-8 text-primary" />,
+        icon: <Briefcase className="w-8 h-8 text-primary" />,
         title: "Case Study",
         description: "Problem-solving with real business scenarios"
     }
