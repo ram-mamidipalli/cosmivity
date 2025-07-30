@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Users, Search, PlusCircle, RefreshCw, Clock, Eye, TrendingUp, MessageSquare, Hourglass } from "lucide-react";
+import CreateRoomDialog from "@/components/dashboard/challenges/CreateRoomDialog";
 
 const stats = [
     { label: "Active Users", value: "156", icon: <Users className="text-primary"/> },
@@ -125,7 +126,9 @@ export default function ChallengesPage() {
                             <SelectItem value="popular">Popular</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Button className="neon-glow"><PlusCircle className="mr-2"/>Create Room</Button>
+                    <CreateRoomDialog>
+                        <Button className="neon-glow"><PlusCircle className="mr-2"/>Create Room</Button>
+                    </CreateRoomDialog>
                 </div>
             </div>
         </header>
@@ -203,7 +206,9 @@ export default function ChallengesPage() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <Button variant="outline">Join Room</Button>
-                                <Button className="neon-glow flex-1"><PlusCircle className="mr-2"/>Create Room</Button>
+                                <CreateRoomDialog>
+                                    <Button className="neon-glow flex-1"><PlusCircle className="mr-2"/>Create Room</Button>
+                                </CreateRoomDialog>
                             </div>
                          </CardContent>
                     </Card>
