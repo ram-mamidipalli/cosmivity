@@ -15,6 +15,8 @@ import {
   Settings,
   ChevronLeft,
   LogOut,
+  Briefcase,
+  Calendar,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -37,6 +39,8 @@ const menuItems = [
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
   { href: "/dashboard/challenges", label: "Team Challenges", icon: Users },
+  { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
+  { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/coach", label: "Resume & LinkedIn Coach", icon: FileText },
   { href: "/dashboard/passport", label: "Skill Passport", icon: Award },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
@@ -75,7 +79,7 @@ const SidebarSkeleton = ({ isCollapsed }: { isCollapsed: boolean }) => (
                 <Skeleton className="h-8 w-24" />
             </div>
             <div className="flex flex-col gap-2">
-                {[...Array(8)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                     <Skeleton key={i} className={cn("h-10 w-full", isCollapsed ? "w-12 mx-auto" : "w-full")} />
                 ))}
             </div>
