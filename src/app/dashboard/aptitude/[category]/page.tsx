@@ -11,7 +11,7 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   quantitative: {
     title: "Quantitative Aptitude Tests",
     tests: [
-      { id: "arithmetic-aptitude", name: "Arithmetic Aptitude", questions: 20, time: 30 },
+      { id: "arithmetic-aptitude", name: "Arithmetic Aptitude", questions: 10, time: 30 },
       { id: "data-interpretation", name: "Data Interpretation", questions: 15, time: 25 },
       ...Array.from({ length: 8 }, (_, i) => ({
         id: `quantitative-test-${i + 1}`,
@@ -99,8 +99,8 @@ export default function AptitudeCategoryPage() {
   const category = Array.isArray(params.category) ? params.category[0] : params.category;
   const details = categoryDetails[category] || { title: "Practice Tests", tests: [] };
 
-  const handleStartTest = (testId: string) => {
-    router.push(`/dashboard/aptitude/${category}/${testId}`);
+  const handleStartTest = (testId: string, questions: number) => {
+    router.push(`/dashboard/aptitude/${category}/${testId}?questions=${questions}`);
   }
 
   return (
@@ -135,7 +135,7 @@ export default function AptitudeCategoryPage() {
                                 </div>
                             </div>
                         </div>
-                        <Button className="w-full sm:w-auto neon-glow" onClick={() => handleStartTest(test.id)}>Start Test</Button>
+                        <Button className="w-full sm:w-auto neon-glow" onClick={() => handleStartTest(test.id, test.questions)}>Start Test</Button>
                     </li>
                 ))}
             </ul>

@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
@@ -9,43 +9,44 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import QuestionView from "@/components/dashboard/aptitude/QuestionView";
 import { cn } from "@/lib/utils";
-
-const questionsData: { [key: string]: any[] } = {
-  "arithmetic-aptitude": [
-    {
-      id: 1,
-      question: "The average of first 50 natural numbers is .............",
-      options: ["25.30", "25.5", "25.00", "25.20"],
-      answer: "25.5",
-      explanation: "The average of first n natural numbers is (n+1)/2. So, the average of first 50 natural numbers is (50+1)/2 = 25.5.",
-      comments: [
-        { user: "Priya", text: "This was a tricky one, but the explanation helped!" },
-        { user: "Rahul", text: "I always forget this formula. Thanks for the reminder." },
-      ],
-    },
-    {
-      id: 2,
-      question: "A number when divided by 296 gives a remainder 75. When the same number is divided by 37, the remainder will be:",
-      options: ["1", "2", "8", "11"],
-      answer: "1",
-      explanation: "Let the number be x. Then, x = 296q + 75. Since 296 is a multiple of 37, we can write 296 = 37 * 8. So, x = (37 * 8)q + 75. When x is divided by 37, the remainder is the same as when 75 is divided by 37, which is 1.",
-      comments: [],
-    },
-  ],
-  // Add more questions for other tests
-};
+import { generateTestQuestions } from "@/ai/flows/generate-test-questions";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TestPage() {
   const params = useParams();
   const router = useRouter();
   const category = Array.isArray(params.category) ? params.category[0] : params.category;
   const test = Array.isArray(params.test) ? params.test[0] : params.test;
+  const searchParams = new URLSearchParams(window.location.search);
+  const numberOfQuestions = parseInt(searchParams.get('questions') || '10', 10);
+
 
   const testName = test.replace(/-/g, " ");
-  const questions = questionsData[test] || [];
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
   const [visited, setVisited] = useState<number[]>([0]);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        setLoading(true);
+        const response = await generateTestQuestions({ topic: testName, numberOfQuestions });
+        setQuestions(response.questions);
+      } catch (error) {
+        console.error("Failed to generate test questions:", error);
+        // Optionally, set some error state to show in the UI
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if(testName) {
+        fetchQuestions();
+    }
+  }, [testName, numberOfQuestions]);
+
 
   const handleSetCurrentQuestion = (index: number) => {
     setCurrentQuestionIndex(index);
@@ -90,7 +91,20 @@ export default function TestPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-            {questions.length > 0 ? (
+            {loading ? (
+                 <Card className="glassmorphic">
+                    <CardHeader>
+                        <Skeleton className="h-6 w-1/4" />
+                        <Skeleton className="h-5 w-3/4 mt-2" />
+                    </CardHeader>
+                    <CardContent className="space-y-4 mt-4">
+                        <Skeleton className="h-8 w-full" />
+                        <Skeleton className="h-8 w-full" />
+                        <Skeleton className="h-8 w-full" />
+                        <Skeleton className="h-8 w-full" />
+                    </CardContent>
+                 </Card>
+            ) : questions.length > 0 ? (
                  <QuestionView 
                     question={questions[currentQuestionIndex]}
                     selectedOption={answers[questions[currentQuestionIndex].id]}
@@ -107,15 +121,15 @@ export default function TestPage() {
                 </Card>
             )}
             <div className="flex justify-between mt-8">
-                <Button onClick={handlePrev} disabled={currentQuestionIndex === 0}>
+                <Button onClick={handlePrev} disabled={currentQuestionIndex === 0 || loading}>
                 Previous
                 </Button>
                 {isLastQuestion ? (
-                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white">
+                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading}>
                         Submit Test
                     </Button>
                 ) : (
-                    <Button onClick={handleNext} disabled={currentQuestionIndex >= questions.length - 1}>
+                    <Button onClick={handleNext} disabled={currentQuestionIndex >= questions.length - 1 || loading}>
                         Next
                     </Button>
                 )}
@@ -140,7 +154,7 @@ export default function TestPage() {
                                     className={cn("w-full h-10", 
                                         isCurrent && 'bg-primary/80 text-primary-foreground',
                                         isAnswered && 'bg-green-500 text-white hover:bg-green-600',
-                                        !isCurrent && !isAnswered && isVisited && 'bg-muted'
+                                        !isAnswered && isVisited && 'bg-muted'
                                     )}
                                     onClick={() => handleSetCurrentQuestion(index)}
                                 >
