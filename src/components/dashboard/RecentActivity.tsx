@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,7 +40,7 @@ const activityData = [
 
 export default function RecentActivity() {
   return (
-    <Card className="glassmorphic">
+    <Card>
         <CardHeader className="flex flex-row items-center justify-between">
             <div>
                 <CardTitle>Recent Activity</CardTitle>

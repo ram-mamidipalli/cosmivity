@@ -92,7 +92,7 @@ export default function TestPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
             {loading ? (
-                 <Card className="glassmorphic">
+                 <Card>
                     <CardHeader>
                         <Skeleton className="h-6 w-1/4" />
                         <Skeleton className="h-5 w-3/4 mt-2" />
@@ -111,7 +111,7 @@ export default function TestPage() {
                     onAnswerChange={(option) => handleAnswerChange(questions[currentQuestionIndex].id, option)}
                  />
             ) : (
-                <Card className="glassmorphic">
+                <Card>
                     <CardHeader>
                         <CardTitle>No Questions Yet</CardTitle>
                     </CardHeader>
@@ -136,7 +136,7 @@ export default function TestPage() {
             </div>
         </div>
         <div className="lg:col-span-1">
-            <Card className="glassmorphic">
+            <Card>
                 <CardHeader>
                     <CardTitle>Questions</CardTitle>
                 </CardHeader>

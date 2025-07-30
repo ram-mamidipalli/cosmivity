@@ -28,7 +28,7 @@ export default function Comparison() {
           </h2>
         </div>
         <div className="max-w-5xl mx-auto">
-          <Card className="glassmorphic overflow-hidden">
+          <Card className="overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>

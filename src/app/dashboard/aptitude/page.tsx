@@ -83,7 +83,7 @@ export default function AptitudePage() {
       </header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {modules.map((module, index) => (
-          <Card key={index} className="flex flex-col glassmorphic hover:shadow-lg transition-shadow">
+          <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center gap-4">
               <div className="p-3 bg-primary/10 rounded-full">
                 {module.icon}

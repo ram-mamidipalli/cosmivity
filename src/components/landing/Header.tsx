@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -15,7 +16,7 @@ export default function Header() {
   return (
     <div className="w-full sticky top-0 z-50">
       <div className="container mx-auto px-4 py-2">
-        <header className="glassmorphic rounded-2xl p-2 md:p-3">
+        <header className="rounded-2xl p-2 md:p-3 border bg-background/80 backdrop-blur-lg">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
               <span className="font-bold text-2xl text-primary relative">

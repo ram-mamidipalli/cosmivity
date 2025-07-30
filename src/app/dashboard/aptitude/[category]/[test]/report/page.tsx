@@ -23,7 +23,7 @@ export default function TestReportPage() {
                 <h1 className="text-3xl font-bold font-headline capitalize">Test Report: {testName}</h1>
                 <p className="text-muted-foreground">Here is a summary of your test performance.</p>
             </header>
-            <Card className="glassmorphic">
+            <Card>
                 <CardHeader>
                     <CardTitle>Your Answers</CardTitle>
                     <CardDescription>Review the answers you submitted.</CardDescription>

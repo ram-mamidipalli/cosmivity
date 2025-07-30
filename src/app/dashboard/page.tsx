@@ -148,7 +148,7 @@ export default function DashboardPage() {
       
       <main className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         <div className="xl:col-span-2 flex flex-col gap-8">
-            <Card className="glassmorphic neon-glow">
+            <Card className="neon-glow">
                 <CardHeader className="flex-row items-center gap-4">
                      <div className="p-3 bg-primary/10 rounded-full">
                         <ClipboardCheck className="h-8 w-8 text-primary"/>
@@ -167,7 +167,7 @@ export default function DashboardPage() {
                 </CardContent>
             </Card>
 
-            <Card className="glassmorphic">
+            <Card>
                 <CardHeader>
                     <CardTitle>Today's Goals</CardTitle>
                     <CardDescription>Keep up the momentum! You're doing great.</CardDescription>
@@ -234,7 +234,7 @@ export default function DashboardPage() {
                 <ScrollArea className="w-full whitespace-nowrap rounded-lg">
                     <div className="flex w-max space-x-4 pb-4">
                         {quickAccessItems.map(item => (
-                            <Button key={item.label} variant="outline" className="flex flex-col h-28 w-32 gap-2 p-2 items-center justify-center text-center glassmorphic hover:neon-glow">
+                            <Button key={item.label} variant="outline" className="flex flex-col h-28 w-32 gap-2 p-2 items-center justify-center text-center hover:neon-glow">
                                <div className="p-2 bg-primary/10 rounded-full">{item.icon}</div>
                                 <div className="text-center">
                                     <p className="font-semibold text-sm whitespace-normal">{item.label}</p>
@@ -250,7 +250,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="xl:col-span-1 flex flex-col gap-8">
-            <Card className="glassmorphic">
+            <Card>
                 <CardHeader>
                     <CardTitle>Leaderboard</CardTitle>
                     <CardDescription>Weekly XP Rankings</CardDescription>
@@ -277,7 +277,7 @@ export default function DashboardPage() {
                 </CardContent>
             </Card>
 
-            <Card className="glassmorphic">
+            <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>Achievements</CardTitle>
                     <Button variant="link" size="sm">View All</Button>
@@ -298,7 +298,7 @@ export default function DashboardPage() {
                     ))}
                 </CardContent>
             </Card>
-             <Card className="glassmorphic">
+             <Card>
                 <CardHeader>
                     <CardTitle>Upcoming Milestones</CardTitle>
                 </CardHeader>
@@ -319,7 +319,7 @@ export default function DashboardPage() {
                     </div>
                 </CardContent>
             </Card>
-             <Card className="glassmorphic text-center p-6">
+             <Card className="text-center p-6">
                 <CardContent className="p-0">
                     <Quote className="h-8 w-8 text-primary mx-auto mb-2" />
                     <p className="font-semibold italic">"Success is not final, failure is not fatal: it is the courage to continue that counts."</p>

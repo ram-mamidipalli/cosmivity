@@ -64,7 +64,7 @@ export default function Testimonials() {
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <Card
-                    className="p-6 glassmorphic transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl neon-glow h-full flex flex-col justify-between"
+                    className="p-6 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl neon-glow h-full flex flex-col justify-between"
                   >
                     <CardContent className="p-0 flex-grow">
                       <p className="text-lg text-foreground/80 mb-6">"{testimonial.quote}"</p>

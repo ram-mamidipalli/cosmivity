@@ -65,7 +65,7 @@ export default function Features() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="text-center p-6 glassmorphic transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl"
+              className="text-center p-6 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl"
             >
               <CardHeader className="items-center">
                 <div className="p-4 bg-primary/10 rounded-full">

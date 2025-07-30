@@ -112,7 +112,7 @@ export default function AptitudeCategoryPage() {
         <h1 className="text-3xl font-bold font-headline mt-2">{details.title}</h1>
         <p className="text-muted-foreground">Select a test to begin your practice session.</p>
       </header>
-      <Card className="glassmorphic">
+      <Card>
         <CardContent className="p-0">
             <ul className="divide-y divide-border">
                 {details.tests.map((test, index) => (

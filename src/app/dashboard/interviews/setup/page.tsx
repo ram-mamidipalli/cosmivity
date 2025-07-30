@@ -12,7 +12,7 @@ import { Upload, Video, Mic, BrainCircuit, Play } from "lucide-react";
 export default function SetupInterviewPage() {
   return (
     <div className="flex justify-center items-center min-h-full p-4">
-      <Card className="w-full max-w-2xl glassmorphic">
+      <Card className="w-full max-w-2xl">
         <CardHeader className="text-center items-center">
             <div className="p-3 bg-primary/10 rounded-full mb-2">
                 <Video className="w-8 h-8 text-primary" />

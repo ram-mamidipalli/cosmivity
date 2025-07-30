@@ -106,7 +106,7 @@ export default function InterviewsPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {features.map((feature, index) => (
-                    <Card key={index} className="glassmorphic p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <Card key={index} className="p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center gap-4">
                             <div className="p-2 bg-primary/10 rounded-lg">
                                 {feature.icon}
@@ -128,7 +128,7 @@ export default function InterviewsPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {interviewTypes.map((type, index) => (
-                    <Card key={index} className="glassmorphic p-4 text-center flex flex-col items-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <Card key={index} className="p-4 text-center flex flex-col items-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <CardHeader className="items-center">
                             <div className="p-3 bg-primary/10 rounded-full mb-4">
                                 {type.icon}

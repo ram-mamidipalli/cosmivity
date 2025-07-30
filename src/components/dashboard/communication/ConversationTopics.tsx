@@ -20,7 +20,7 @@ export default function ConversationTopics({ selectedTopic, onSelectTopic }: { s
                     <Card 
                         key={topic.id} 
                         onClick={() => onSelectTopic(topic.name)}
-                        className={cn("p-4 flex items-center gap-4 cursor-pointer transition-all glassmorphic", 
+                        className={cn("p-4 flex items-center gap-4 cursor-pointer transition-all", 
                             selectedTopic === topic.name ? "ring-2 ring-primary neon-glow" : "hover:shadow-md"
                         )}
                     >

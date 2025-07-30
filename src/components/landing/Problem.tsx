@@ -1,3 +1,4 @@
+
 "use client";
 
 import { XCircle } from "lucide-react";
@@ -34,14 +35,14 @@ export default function Problem() {
           <div className="max-w-5xl">
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {painPoints.map((point, i) => (
-                <li key={i} className="flex items-center text-center justify-center text-lg p-3 rounded-lg glassmorphic h-full">
+                <li key={i} className="flex items-center text-center justify-center text-lg p-3 rounded-lg h-full border bg-card text-card-foreground shadow-sm">
                   <XCircle className="w-6 h-6 text-destructive mr-3 flex-shrink-0" />
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="glassmorphic p-8 rounded-lg max-w-2xl text-center">
+          <div className="p-8 rounded-lg max-w-2xl text-center border bg-card text-card-foreground shadow-sm">
             <h3 className="text-2xl font-bold text-primary font-headline">“7 out of 10 students feel unprepared — until they try Cosmivity.”</h3>
           </div>
         </div>

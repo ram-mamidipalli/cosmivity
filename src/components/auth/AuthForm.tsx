@@ -159,7 +159,7 @@ function AuthFormContent() {
 
 export default function AuthForm() {
   return (
-    <Card className="w-full max-w-sm glassmorphic">
+    <Card className="w-full max-w-sm">
       <AuthFormContent />
     </Card>
   );

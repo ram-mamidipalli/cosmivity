@@ -50,7 +50,7 @@ export default function InterviewTypeDialog({ children }: { children: React.Reac
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="glassmorphic sm:max-w-4xl p-8">
+      <DialogContent className="sm:max-w-4xl p-8">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold font-headline text-center">Mock Interview</DialogTitle>
           <DialogDescription className="text-center text-lg">
