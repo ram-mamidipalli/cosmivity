@@ -10,7 +10,7 @@ import { Lightbulb, Mic, Send, Volume2, Video, VideoOff, MicOff } from "lucide-r
 import { aiEnglishCoach } from "@/ai/flows/ai-english-coach";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 const suggestions = [
     "Hello, how are you today?",
