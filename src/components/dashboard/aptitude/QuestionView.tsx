@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 
 export default function QuestionView({ question, selectedOption, onAnswerChange }: { question: any, selectedOption: string | null, onAnswerChange: (option: string) => void }) {
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(question.comments || []);
 
@@ -40,45 +41,53 @@ export default function QuestionView({ question, selectedOption, onAnswerChange 
         </RadioGroup>
       </CardContent>
       <CardFooter className="flex-col items-start gap-4">
-        <Button onClick={() => setShowExplanation(!showExplanation)} variant="outline">
-          <Lightbulb className="mr-2 h-4 w-4" />
-          {showExplanation ? "Hide" : "Show"} Answer & Explanation
-        </Button>
+        <div className="flex items-center gap-2">
+            <Button onClick={() => setShowExplanation(!showExplanation)} variant="outline">
+                <Lightbulb className="mr-2 h-4 w-4" />
+                {showExplanation ? "Hide" : "Show"} Answer & Explanation
+            </Button>
+            <Button onClick={() => setShowComments(!showComments)} variant="outline" size="icon">
+                <MessageCircle className="h-4 w-4" />
+            </Button>
+        </div>
         {showExplanation && (
           <div className="w-full p-4 bg-primary/5 rounded-lg border-l-4 border-primary">
             <p className="font-semibold">Answer: {question.answer}</p>
             <p className="mt-2">{question.explanation}</p>
           </div>
         )}
-        <Separator className="my-4" />
-        <div className="w-full">
-            <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
-                <MessageCircle className="h-5 w-5" />
-                Community Discussion
-            </h3>
-            <div className="space-y-4">
-                {comments.map((comment: any, index: number) => (
-                    <div key={index} className="flex items-start gap-3">
-                        <Avatar>
-                            <AvatarImage data-ai-hint="person" />
-                            <AvatarFallback>{comment.user.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                            <p className="font-semibold">{comment.user}</p>
-                            <p className="text-muted-foreground">{comment.text}</p>
-                        </div>
+        {showComments && (
+            <>
+                <Separator className="my-4" />
+                <div className="w-full">
+                    <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
+                        Community Discussion
+                    </h3>
+                    <div className="space-y-4">
+                        {comments.map((comment: any, index: number) => (
+                            <div key={index} className="flex items-start gap-3">
+                                <Avatar>
+                                    <AvatarImage data-ai-hint="person" />
+                                    <AvatarFallback>{comment.user.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    <p className="font-semibold">{comment.user}</p>
+                                    <p className="text-muted-foreground">{comment.text}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            <div className="mt-6 flex flex-col gap-2">
-                <Textarea 
-                    placeholder="Add your comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                />
-                <Button onClick={handlePostComment} className="self-end">Post Comment</Button>
-            </div>
-        </div>
+                    <div className="mt-6 flex flex-col gap-2">
+                        <Textarea 
+                            placeholder="Add your comment..."
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                        />
+                        <Button onClick={handlePostComment} className="self-end">Post Comment</Button>
+                    </div>
+                </div>
+            </>
+        )}
       </CardFooter>
     </Card>
   );
