@@ -111,7 +111,7 @@ export default function DashboardPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <input placeholder="Search courses, debates..." className="pl-10 pr-4 py-2 rounded-full border bg-background w-64" />
           </div>
-          <Button variant="ghost" asChild>
+          <Button variant="outline" asChild>
             <Link href="/dashboard/teams">
                 Teams
             </Link>
@@ -337,5 +337,7 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
 
     
