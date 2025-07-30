@@ -5,8 +5,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma, Edit, Copy } from "lucide-react";
 import Image from 'next/image';
+import { useToast } from "@/hooks/use-toast";
 
 const skills = [
     { name: "JavaScript", icon: "https://placehold.co/48x48.png", hint: "javascript logo" },
@@ -88,6 +89,16 @@ const testimonials = [
 ]
 
 export default function PassportPage() {
+  const { toast } = useToast();
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: "Link Copied!",
+      description: "Your Skill Passport link has been copied to your clipboard.",
+    });
+  };
+
   return (
     <div className="bg-background text-foreground font-body">
         <div className="container mx-auto p-4 md:p-8">
@@ -95,7 +106,12 @@ export default function PassportPage() {
             {/* Header */}
             <header className="flex justify-between items-center py-4">
                 <h2 className="text-xl font-bold font-code text-primary">{"<Sagar/>"}</h2>
-                <Button>Contact Me</Button>
+                <div className="flex items-center gap-2">
+                    <Button><Edit className="mr-2 h-4 w-4" /> Edit Profile</Button>
+                    <Button variant="outline" size="icon" onClick={handleCopyLink}>
+                        <Copy className="h-4 w-4" />
+                    </Button>
+                </div>
             </header>
 
             {/* Hero Section */}
