@@ -256,7 +256,7 @@ export default function PassportPage() {
 
             {/* Footer */}
             <footer className="text-center text-sm text-muted-foreground py-8">
-                <p>2024 | Designed and coded with ❤️️ by Sagar</p>
+                <p>Powered by Cosmivity</p>
             </footer>
         </div>
     </div>
