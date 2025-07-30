@@ -43,7 +43,7 @@ export default function AptitudePage() {
     <div className="flex flex-col gap-8">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Aptitude Practice</h1>
+          <h1 className="text-3xl font-bold font-headline">Practice</h1>
           <p className="text-muted-foreground">Select a module to sharpen your skills.</p>
         </div>
       </header>
