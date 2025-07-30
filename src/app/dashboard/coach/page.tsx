@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -9,9 +9,28 @@ import { Upload, Download, RefreshCw, Save, CheckCircle } from "lucide-react";
 import ResumeStepper from "@/components/dashboard/coach/ResumeStepper";
 import ResumeForm from "@/components/dashboard/coach/ResumeForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function CoachPage() {
   const [isTemplateSelectorOpen, setTemplateSelectorOpen] = useState(false);
+  const resumePreviewRef = useRef<HTMLDivElement>(null);
+
+  const handleExportPdf = () => {
+    if (resumePreviewRef.current) {
+        html2canvas(resumePreviewRef.current, { scale: 2 }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'pt',
+                format: [canvas.width, canvas.height]
+            });
+            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.save('resume.pdf');
+        });
+    }
+  };
+
 
   return (
     <div className="flex flex-col gap-8">
@@ -23,7 +42,7 @@ export default function CoachPage() {
             <div className="flex items-center gap-2">
                 <Button variant="outline"><Upload className="mr-2"/> Import Resume</Button>
                 <Button variant="outline" onClick={() => setTemplateSelectorOpen(true)}><RefreshCw className="mr-2"/> Change Template</Button>
-                <Button className="neon-glow"><Download className="mr-2"/> Export PDF</Button>
+                <Button className="neon-glow" onClick={handleExportPdf}><Download className="mr-2"/> Export PDF</Button>
             </div>
         </header>
 
@@ -54,7 +73,7 @@ export default function CoachPage() {
                         <CardTitle>Live Preview</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="bg-muted p-4 rounded-lg aspect-[8.5/11] flex flex-col items-center justify-center">
+                        <div ref={resumePreviewRef} className="bg-card p-4 rounded-lg aspect-[8.5/11] flex flex-col items-center justify-center border">
                            <div className="w-full h-32 bg-primary rounded-t-lg flex flex-col items-center justify-center text-primary-foreground p-4">
                                <h3 className="text-2xl font-bold">Your Name</h3>
                                <p>Professional Title</p>
