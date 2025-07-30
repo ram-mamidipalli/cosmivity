@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const GoogleIcon = () => (
     <svg className="h-5 w-5" viewBox="0 0 24 24">
@@ -33,7 +34,7 @@ const GoogleIcon = () => (
 );
 
 function AuthFormContent() {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
@@ -93,6 +94,21 @@ function AuthFormContent() {
                     <Label htmlFor="last-name">Last Name</Label>
                     <Input id="last-name" placeholder="Robinson" required />
                 </div>
+            </div>
+          )}
+          {isSignUp && (
+            <div className="grid gap-2">
+              <Label htmlFor="role">I am a...</Label>
+              <Select>
+                <SelectTrigger id="role" aria-label="Select role">
+                  <SelectValue placeholder="Select your role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="student">Student</SelectItem>
+                  <SelectItem value="professional">Professional</SelectItem>
+                  <SelectItem value="admin">College Admin</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           )}
           <div className="grid gap-2">
