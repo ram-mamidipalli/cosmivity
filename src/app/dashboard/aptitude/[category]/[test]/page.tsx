@@ -113,19 +113,26 @@ export default function TestPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-5 gap-2">
-                        {questions.map((q, index) => (
-                            <Button 
-                                key={q.id}
-                                variant={'outline'}
-                                className={cn("w-full h-10", 
-                                    index === currentQuestionIndex ? 'bg-primary/80 text-primary-foreground' : '',
-                                    answers[q.id] ? 'bg-green-500 text-white hover:bg-green-600' : (visited.includes(index) ? 'bg-muted' : ''),
-                                )}
-                                onClick={() => handleSetCurrentQuestion(index)}
-                            >
-                                {index + 1}
-                            </Button>
-                        ))}
+                        {questions.map((q, index) => {
+                            const isCurrent = index === currentQuestionIndex;
+                            const isAnswered = answers[q.id];
+                            const isVisited = visited.includes(index);
+
+                            return (
+                                <Button 
+                                    key={q.id}
+                                    variant={'outline'}
+                                    className={cn("w-full h-10", 
+                                        isCurrent && 'bg-primary/80 text-primary-foreground',
+                                        isAnswered && 'bg-green-500 text-white hover:bg-green-600',
+                                        !isCurrent && !isAnswered && isVisited && 'bg-muted'
+                                    )}
+                                    onClick={() => handleSetCurrentQuestion(index)}
+                                >
+                                    {index + 1}
+                                </Button>
+                            );
+                        })}
                     </div>
                 </CardContent>
             </Card>
