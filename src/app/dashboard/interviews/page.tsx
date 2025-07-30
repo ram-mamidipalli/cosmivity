@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import InterviewTypeDialog from "@/components/dashboard/interviews/InterviewTypeDialog";
+
 
 const features = [
     {
@@ -88,7 +90,9 @@ export default function InterviewsPage() {
                 </p>
             </div>
             <div className="flex items-center gap-4">
-                <Button size="lg" className="neon-glow">Start Mock Interview</Button>
+                <InterviewTypeDialog>
+                    <Button size="lg" className="neon-glow">Start Mock Interview</Button>
+                </InterviewTypeDialog>
                 <Button size="lg" variant="outline">
                     <History className="mr-2 h-4 w-4" /> View History
                 </Button>
@@ -144,7 +148,9 @@ export default function InterviewsPage() {
                 <h2 className="text-3xl font-bold font-headline">Ready to Ace Your Next Interview?</h2>
                 <p className="text-muted-foreground mt-3">Join thousands of students who have improved their interview skills with our AI-powered simulator.</p>
                 <div className="flex items-center justify-center gap-4 mt-8">
-                    <Button size="lg" className="neon-glow">Start Practicing Now</Button>
+                    <InterviewTypeDialog>
+                        <Button size="lg" className="neon-glow">Start Practicing Now</Button>
+                    </InterviewTypeDialog>
                     <Button size="lg" variant="ghost" asChild>
                         <Link href="/dashboard/communication">
                             Try AI Chat First <ChevronRight className="ml-2 h-4 w-4" />
