@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -80,16 +81,32 @@ function AuthFormContent() {
               </span>
             </div>
           </div>
+          {isSignUp && (
+             <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                    <Label htmlFor="first-name">First Name</Label>
+                    <Input id="first-name" placeholder="Max" required />
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="last-name">Last Name</Label>
+                    <Input id="last-name" placeholder="Robinson" required />
+                </div>
+            </div>
+          )}
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="m@example.com" required />
           </div>
-           {isSignUp && (
+          {isSignUp && (
             <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" required />
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input id="phone" type="tel" placeholder="+91 12345 67890" required />
             </div>
-           )}
+          )}
+          <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" required />
+          </div>
           <Button type="submit" className="w-full" onClick={handleAuthAction}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
