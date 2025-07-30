@@ -12,6 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Badge } from "@/components/ui/badge";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 const learningPath = [
     {
@@ -110,6 +111,11 @@ export default function DashboardPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <input placeholder="Search courses, debates..." className="pl-10 pr-4 py-2 rounded-full border bg-background w-64" />
           </div>
+          <Button variant="ghost" asChild>
+            <Link href="/dashboard/teams">
+                Teams
+            </Link>
+          </Button>
           <Button variant="ghost" size="icon">
             <Bell className="h-6 w-6" />
           </Button>
@@ -331,3 +337,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
