@@ -8,8 +8,17 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Upload, Video, Mic, BrainCircuit, Play } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SetupInterviewPage() {
+  const router = useRouter();
+
+  const handleStart = () => {
+    // We will navigate to a dynamic session ID.
+    // In a real app, you would create a session and get an ID from the backend.
+    router.push('/dashboard/interviews/session-123');
+  }
+
   return (
     <div className="flex justify-center items-center min-h-full p-4">
       <Card className="w-full max-w-2xl">
@@ -132,7 +141,7 @@ export default function SetupInterviewPage() {
                 </div>
             </div>
 
-            <Button size="lg" className="w-full text-lg neon-glow">
+            <Button size="lg" className="w-full text-lg neon-glow" onClick={handleStart}>
                 <Play className="mr-2 h-5 w-5"/>
                 Start Mock Interview
             </Button>
