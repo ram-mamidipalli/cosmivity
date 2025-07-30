@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Users, Search, PlusCircle } from "lucide-react";
+import CreateCommunityDialog from "@/components/dashboard/teams/CreateCommunityDialog";
 
 const communities = [
   {
@@ -59,9 +60,11 @@ export default function TeamsPage() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input placeholder="Search communities..." className="pl-10 pr-4 py-2 w-full" />
                 </div>
-                 <Button className="neon-glow flex-shrink-0">
-                    <PlusCircle className="mr-2"/> Create Community
-                </Button>
+                <CreateCommunityDialog>
+                    <Button className="neon-glow flex-shrink-0">
+                        <PlusCircle className="mr-2"/> Create Community
+                    </Button>
+                </CreateCommunityDialog>
             </div>
         </header>
 
