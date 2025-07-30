@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -37,6 +37,7 @@ const questionsData: { [key: string]: any[] } = {
 
 export default function TestPage() {
   const params = useParams();
+  const router = useRouter();
   const category = Array.isArray(params.category) ? params.category[0] : params.category;
   const test = Array.isArray(params.test) ? params.test[0] : params.test;
 
@@ -68,6 +69,14 @@ export default function TestPage() {
   const handleAnswerChange = (questionId: number, option: string) => {
     setAnswers(prev => ({...prev, [questionId]: option}));
   }
+
+  const handleSubmit = () => {
+    // Navigate to report page, passing answers in query params for now
+    const query = new URLSearchParams(answers as any).toString();
+    router.push(`/dashboard/aptitude/${category}/${test}/report?${query}`);
+  }
+
+  const isLastQuestion = currentQuestionIndex >= questions.length - 1;
 
   return (
     <div className="flex flex-col gap-8">
@@ -101,9 +110,15 @@ export default function TestPage() {
                 <Button onClick={handlePrev} disabled={currentQuestionIndex === 0}>
                 Previous
                 </Button>
-                <Button onClick={handleNext} disabled={currentQuestionIndex >= questions.length - 1}>
-                Next
-                </Button>
+                {isLastQuestion ? (
+                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white">
+                        Submit Test
+                    </Button>
+                ) : (
+                    <Button onClick={handleNext} disabled={currentQuestionIndex >= questions.length - 1}>
+                        Next
+                    </Button>
+                )}
             </div>
         </div>
         <div className="lg:col-span-1">
