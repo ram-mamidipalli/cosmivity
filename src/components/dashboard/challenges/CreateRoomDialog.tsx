@@ -24,6 +24,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function CreateRoomDialog({ children }: { children: React.ReactNode }) {
   const [isPrivate, setIsPrivate] = useState(false);
@@ -31,6 +32,7 @@ export default function CreateRoomDialog({ children }: { children: React.ReactNo
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [roomCreated, setRoomCreated] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleCreateRoom = () => {
     // In a real app, you'd handle room creation logic here
@@ -41,7 +43,8 @@ export default function CreateRoomDialog({ children }: { children: React.ReactNo
     });
   };
 
-  const roomLink = "https://cosmivity.com/room/xyz-123";
+  const roomLink = `https://cosmivity.com/dashboard/challenges/room-${Date.now()}`;
+  const roomId = roomLink.split('/').pop();
 
   const copyToClipboard = () => {
       navigator.clipboard.writeText(roomLink);
@@ -54,6 +57,10 @@ export default function CreateRoomDialog({ children }: { children: React.ReactNo
       setRoomCreated(false);
       setIsPrivate(false);
       setSchedule(false);
+  }
+
+  const goToRoom = () => {
+    if(roomId) router.push(`/dashboard/challenges/${roomId}`);
   }
 
   return (
@@ -157,7 +164,7 @@ export default function CreateRoomDialog({ children }: { children: React.ReactNo
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button onClick={() => window.open(roomLink, '_blank')} variant="outline">
+                    <Button onClick={goToRoom} variant="outline">
                         Go to Room
                     </Button>
                      <DialogClose asChild>

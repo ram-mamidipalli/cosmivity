@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,6 +10,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Users, Search, PlusCircle, RefreshCw, Clock, Eye, TrendingUp, MessageSquare, Hourglass, KeyRound } from "lucide-react";
 import CreateRoomDialog from "@/components/dashboard/challenges/CreateRoomDialog";
 import JoinRoomDialog from "@/components/dashboard/challenges/JoinRoomDialog";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 const stats = [
     { label: "Active Users", value: "156", icon: <Users className="text-primary"/> },
@@ -20,6 +23,7 @@ const stats = [
 
 const activeRooms = [
     { 
+        id: "room-1",
         title: "AI in Education Debate", 
         status: "Live", 
         question: "Should AI replace human teachers in education?", 
@@ -30,6 +34,7 @@ const activeRooms = [
         hints: ["woman portrait", "man portrait", "woman headshot"]
     },
     { 
+        id: "room-2",
         title: "Remote Work Discussion", 
         status: "Waiting", 
         question: "Is remote work better than office work?", 
@@ -40,6 +45,7 @@ const activeRooms = [
         hints: ["man headshot", "woman smiling"]
     },
     { 
+        id: "room-3",
         title: "Social Media Regulation", 
         status: "Full", 
         question: "Should social media platforms be regulated by government?", 
@@ -93,6 +99,12 @@ const getStatusBadgeVariant = (status: string) => {
 
 
 export default function ChallengesPage() {
+    const router = useRouter();
+
+    const handleJoinRoom = (roomId: string) => {
+        router.push(`/dashboard/challenges/${roomId}`);
+    };
+
   return (
     <div className="flex flex-col gap-8">
         <header className="flex flex-col gap-4">
@@ -181,10 +193,12 @@ export default function ChallengesPage() {
                              <span>{room.host}</span>
                            </div>
                         </CardContent>
-                        <CardContent className="flex items-center gap-2">
-                            <Button variant="outline" className="w-full"><Eye className="mr-2"/>Preview</Button>
-                            <Button className="w-full neon-glow" disabled={room.status === 'Full'}>Join</Button>
-                        </CardContent>
+                        <CardFooter className="flex items-center gap-2">
+                            <Button variant="outline" className="w-full" asChild>
+                                <Link href={`/dashboard/challenges/${room.id}`}><Eye className="mr-2"/>Preview</Link>
+                            </Button>
+                             <Button className="w-full neon-glow" disabled={room.status === 'Full'} onClick={() => handleJoinRoom(room.id)}>Join</Button>
+                        </CardFooter>
                     </Card>
                 ))}
              </div>
@@ -209,7 +223,9 @@ export default function ChallengesPage() {
                                 <span className="flex items-center gap-1.5 font-semibold text-primary"><TrendingUp className="h-4 w-4"/>Trending</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Button variant="outline">Join Room</Button>
+                                <JoinRoomDialog>
+                                    <Button variant="outline">Join Room</Button>
+                                </JoinRoomDialog>
                                 <CreateRoomDialog>
                                     <Button className="neon-glow flex-1"><PlusCircle className="mr-2"/>Create Room</Button>
                                 </CreateRoomDialog>
