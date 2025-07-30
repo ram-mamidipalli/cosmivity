@@ -4,6 +4,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calculator, Lightbulb, MessageCircle, Trophy, Code } from "lucide-react";
+import Link from "next/link";
 
 const modules = [
   {
@@ -11,30 +12,35 @@ const modules = [
     description: "Practice numerical problems, data interpretation, and mathematical concepts.",
     icon: <Calculator className="h-10 w-10 text-primary" />,
     buttonText: "Start Practice",
+    href: "/dashboard/aptitude/quantitative",
   },
   {
     title: "Logical Reasoning",
     description: "Sharpen your analytical and critical thinking skills with puzzles and scenarios.",
     icon: <Lightbulb className="h-10 w-10 text-primary" />,
     buttonText: "Start Practice",
+    href: "/dashboard/aptitude/logical",
   },
     {
     title: "Verbal Ability",
     description: "Improve your grammar, vocabulary, and reading comprehension.",
     icon: <MessageCircle className="h-10 w-10 text-primary" />,
     buttonText: "Start Practice",
+    href: "/dashboard/aptitude/verbal",
   },
   {
     title: "Daily Challenges",
     description: "Take on daily timed quizzes to test your speed and accuracy under pressure.",
     icon: <Trophy className="h-10 w-10 text-primary" />,
     buttonText: "View Challenges",
+    href: "/dashboard/challenges",
   },
   {
     title: "Technical Practice",
     description: "Hone your coding skills with practice problems in various languages.",
     icon: <Code className="h-10 w-10 text-primary" />,
     buttonText: "Start Coding",
+    href: "/dashboard/aptitude/technical",
   },
 ];
 
@@ -62,7 +68,9 @@ export default function AptitudePage() {
               <CardDescription>{module.description}</CardDescription>
             </CardContent>
             <CardFooter>
-              <Button className="w-full neon-glow">{module.buttonText}</Button>
+              <Button className="w-full neon-glow" asChild>
+                <Link href={module.href}>{module.buttonText}</Link>
+              </Button>
             </CardFooter>
           </Card>
         ))}
