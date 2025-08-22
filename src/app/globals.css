@@ -72,7 +72,7 @@
     @apply shadow-[0_0_15px_rgba(30,58,138,0.5),_0_0_5px_rgba(30,58,138,0.3)];
   }
   .animated-gradient {
-    background: linear-gradient(300deg, #1e3a8a, #3a5ba3, #d8e2ef, #ffffff);
+    background: linear-gradient(300deg, #D8E2EF, #add8e6, #ffffff, #87ceeb);
     background-size: 240% 240%;
     animation: gradient-animation 16s ease infinite;
   }
