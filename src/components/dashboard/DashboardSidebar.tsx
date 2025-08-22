@@ -41,7 +41,7 @@ const menuItems = [
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
   { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },
-  { href: "/dashboard/passport", label: "Skill Passport", icon: Award },
+  { href: "/dashboard/passport", label: "Portfolio", icon: Award },
   { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
