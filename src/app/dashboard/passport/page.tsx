@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma, Edit, Copy, Upload, Trash2, Save, PlusCircle } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma, Edit, Copy, Upload, Trash2, Save, PlusCircle, Share2 } from "lucide-react";
 import Image from 'next/image';
 import { useToast } from "@/hooks/use-toast";
 import VideoIntroDialog from "@/components/dashboard/passport/VideoIntroDialog";
@@ -135,6 +135,28 @@ export default function PassportPage() {
     });
   };
 
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "My Skill Passport",
+          text: "Check out my professional portfolio on Cosmivity!",
+          url: window.location.href,
+        });
+        toast({
+          title: "Portfolio Shared!",
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+        // Fallback to copy link if sharing fails
+        handleCopyLink();
+      }
+    } else {
+      // Fallback for browsers that don't support the Share API
+      handleCopyLink();
+    }
+  };
+
   const handleSave = () => {
     setIsEditing(false);
     toast({
@@ -192,6 +214,9 @@ export default function PassportPage() {
                         </Button>
                         <Button variant="outline" size="icon" onClick={handleCopyLink}>
                             <Copy className="h-4 w-4" />
+                        </Button>
+                        <Button variant="outline" size="icon" onClick={handleShare}>
+                            <Share2 className="h-4 w-4" />
                         </Button>
                     </div>
                 </header>
