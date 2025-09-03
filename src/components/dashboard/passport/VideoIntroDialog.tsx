@@ -47,7 +47,7 @@ export default function VideoIntroDialog({ isOpen, onClose, onVideoEnd, videoSrc
                         playsInline
                     />
                      <div className="absolute top-4 right-4 flex items-center gap-2">
-                        <Button variant="outline" size="sm" onClick={handleSkip}>
+                        <Button variant="outline" size="sm" onClick={handleSkip} className="bg-transparent text-white hover:bg-white/10 hover:text-white">
                             Skip Intro <SkipForward className="ml-2 h-4 w-4"/>
                         </Button>
                      </div>
