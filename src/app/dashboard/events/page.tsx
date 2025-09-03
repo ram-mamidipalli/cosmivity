@@ -1,22 +1,154 @@
 
 "use client";
 
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, MapPin, Briefcase, PlusCircle, Filter, Calendar, Users, Video } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EventCard from "@/components/dashboard/events/EventCard";
+
+const events = [
+    {
+        title: "Advanced React Patterns Workshop",
+        date: "2024-08-15",
+        format: "Online",
+        type: "Workshop",
+        speaker: "Siddharth Kshetrapal",
+        image: "https://placehold.co/600x400.png",
+        hint: "coding workshop",
+        tags: ["React", "Frontend", "Advanced"],
+    },
+    {
+        title: "Data Science Bootcamp",
+        date: "2024-09-01",
+        format: "Offline",
+        location: "Bangalore, India",
+        type: "Bootcamp",
+        speaker: "AI Society of India",
+        image: "https://placehold.co/600x400.png",
+        hint: "data science students",
+        tags: ["Data Science", "Python", "Machine Learning"],
+    },
+    {
+        title: "Webinar: The Future of UX/UI",
+        date: "2024-08-20",
+        format: "Online",
+        type: "Webinar",
+        speaker: "Jane Doe",
+        image: "https://placehold.co/600x400.png",
+        hint: "ui design screen",
+        tags: ["UX", "UI", "Design"],
+    },
+    {
+        title: "Annual Developers Conference",
+        date: "2024-10-10",
+        format: "Offline",
+        location: "New Delhi, India",
+        type: "Conference",
+        speaker: "Various",
+        image: "https://placehold.co/600x400.png",
+        hint: "conference hall",
+        tags: ["Tech", "Networking", "Software"],
+    },
+     {
+        title: "Interview Skills Masterclass",
+        date: "2024-08-25",
+        format: "Online",
+        type: "Workshop",
+        speaker: "HR Professionals Inc.",
+        image: "https://placehold.co/600x400.png",
+        hint: "job interview",
+        tags: ["Career", "Interview", "Soft Skills"],
+    },
+    {
+        title: "Cybersecurity Essentials Bootcamp",
+        date: "2024-09-15",
+        format: "Offline",
+        location: "Mumbai, India",
+        type: "Bootcamp",
+        speaker: "CyberSafe Org",
+        image: "https://placehold.co/600x400.png",
+        hint: "cybersecurity code",
+        tags: ["Security", "Networking", "Cyber"],
+    },
+];
 
 export default function EventsPage() {
   return (
     <div className="flex flex-col gap-8">
-        <header className="flex items-center justify-between">
+        <header className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-            <h1 className="text-3xl font-bold font-headline">Events</h1>
-            <p className="text-muted-foreground">Stay updated with the latest events.</p>
+                <h1 className="text-3xl font-bold font-headline">Events & Workshops</h1>
+                <p className="text-muted-foreground">Discover opportunities to learn, grow, and connect.</p>
             </div>
+            <Button className="w-full sm:w-auto neon-glow"><PlusCircle className="mr-2"/>Create Event</Button>
         </header>
+
         <Card>
-            <CardHeader>
-                <CardTitle>Upcoming Events</CardTitle>
-                <CardDescription>This is the page for Events. Content coming soon!</CardDescription>
-            </CardHeader>
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 border-b">
+                <div className="relative lg:col-span-2">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input placeholder="Search events..." className="pl-10 pr-4 py-2 w-full" />
+                </div>
+                 <Select>
+                    <SelectTrigger>
+                        <div className="flex items-center gap-2">
+                            <Briefcase className="h-5 w-5 text-muted-foreground" />
+                            <SelectValue placeholder="Event Type" />
+                        </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        <SelectItem value="workshop">Workshop</SelectItem>
+                        <SelectItem value="bootcamp">Bootcamp</SelectItem>
+                        <SelectItem value="webinar">Webinar</SelectItem>
+                        <SelectItem value="conference">Conference</SelectItem>
+                    </SelectContent>
+                </Select>
+                 <Select>
+                    <SelectTrigger>
+                         <div className="flex items-center gap-2">
+                            <Video className="h-5 w-5 text-muted-foreground" />
+                            <SelectValue placeholder="Format" />
+                        </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Formats</SelectItem>
+                        <SelectItem value="online">Online</SelectItem>
+                        <SelectItem value="offline">Offline</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Button className="w-full lg:w-auto"><Filter className="mr-2"/>Filter</Button>
+            </div>
+             <div className="p-4">
+                <Tabs defaultValue="all">
+                    <TabsList>
+                        <TabsTrigger value="all">All Events</TabsTrigger>
+                        <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+                        <TabsTrigger value="past">Past Events</TabsTrigger>
+                        <TabsTrigger value="registered">My Registrations</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="all" className="mt-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {events.map((event, index) => (
+                                <EventCard key={index} event={event} />
+                            ))}
+                        </div>
+                    </TabsContent>
+                     <TabsContent value="upcoming" className="mt-6">
+                        <p className="text-muted-foreground text-center py-8">No upcoming events match your filters.</p>
+                     </TabsContent>
+                     <TabsContent value="past" className="mt-6">
+                        <p className="text-muted-foreground text-center py-8">No past events match your filters.</p>
+                     </TabsContent>
+                      <TabsContent value="registered" className="mt-6">
+                        <p className="text-muted-foreground text-center py-8">You haven't registered for any events yet.</p>
+                     </TabsContent>
+                </Tabs>
+            </div>
         </Card>
     </div>
   );
