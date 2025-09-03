@@ -42,7 +42,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
-  { href: "/dashboard/challenges", label: "Challenges", icon: Gamepad2 },
+  { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
   { href: "/dashboard/teams", label: "Teams", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
