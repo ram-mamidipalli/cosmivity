@@ -33,7 +33,7 @@ export default function RoomPage() {
     ];
 
     return (
-        <div className="flex flex-col h-screen bg-background text-foreground p-4 gap-4">
+        <div className="flex flex-col min-h-[calc(100vh-theme(spacing.16))] bg-background text-foreground gap-4">
             <RoomHeader {...roomDetails} />
             <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0">
                 <div className="lg:col-span-2">

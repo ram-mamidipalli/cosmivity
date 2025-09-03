@@ -18,7 +18,7 @@ export default function DashboardLayout({
     <div className="flex min-h-screen bg-secondary/50">
       <DashboardSidebar />
       <div className="flex flex-col flex-1">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-background px-6 md:hidden">
+        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-background px-6 sticky top-0 z-30 md:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
                     <Button variant="outline" size="icon" className="shrink-0">
@@ -31,7 +31,7 @@ export default function DashboardLayout({
                 </SheetContent>
             </Sheet>
         </header>
-        <main className="flex-1 p-4 sm:p-6 md:p-8">{children}</main>
+        <main className="flex-1">{children}</main>
       </div>
     </div>
   );
