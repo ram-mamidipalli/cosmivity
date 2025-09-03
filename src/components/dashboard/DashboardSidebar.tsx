@@ -104,7 +104,7 @@ const SidebarSkeleton = ({ isCollapsed }: { isCollapsed: boolean }) => (
 );
 
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ isMobile = false }: { isMobile?: boolean }) {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
@@ -113,18 +113,13 @@ export default function DashboardSidebar() {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
+  if (!isMounted && !isMobile) {
     return <SidebarSkeleton isCollapsed={isCollapsed} />;
   }
-
-  return (
-    <aside
-      className={cn(
-        "hidden md:flex flex-col justify-between p-4 bg-background/80 backdrop-blur-lg border-r transition-all duration-300 ease-in-out relative",
-        isCollapsed ? "w-20" : "w-64"
-      )}
-    >
-      <div>
+  
+  const SidebarContent = () => (
+      <>
+        <div>
         <div className="flex items-center justify-center gap-2 px-4 pb-4 border-b mb-4">
           <Link href="/" className="font-bold text-2xl text-primary relative">
             <span className="relative">
@@ -148,7 +143,7 @@ export default function DashboardSidebar() {
         </div>
         <nav className="flex flex-col gap-2">
           {menuItems.map((item) => (
-            <SidebarMenuItem key={item.href} item={item} isCollapsed={isCollapsed} />
+            <SidebarMenuItem key={item.href} item={item} isCollapsed={isMobile ? false : isCollapsed} />
           ))}
         </nav>
       </div>
@@ -161,7 +156,7 @@ export default function DashboardSidebar() {
                         <AvatarImage src="https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Aakash" data-ai-hint="man portrait"/>
                         <AvatarFallback>A</AvatarFallback>
                     </Avatar>
-                    {!isCollapsed && (
+                    {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
                         <p className="font-semibold text-sm">Aakash</p>
                         <p className="text-xs text-muted-foreground font-code">2,650 XP</p>
@@ -191,12 +186,31 @@ export default function DashboardSidebar() {
             </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-8">
-            <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
-        </Button>
+        {!isMobile && (
+             <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className="absolute -right-5 top-8">
+                <ChevronLeft className={cn("h-4 w-4 transition-transform", isCollapsed && "rotate-180")} />
+            </Button>
+        )}
       </div>
+      </>
+  );
+
+  if (isMobile) {
+      return (
+          <div className="flex flex-col justify-between h-full p-4 bg-background">
+            <SidebarContent />
+          </div>
+      )
+  }
+
+  return (
+    <aside
+      className={cn(
+        "hidden md:flex flex-col justify-between p-4 bg-background/80 backdrop-blur-lg border-r transition-all duration-300 ease-in-out relative",
+        isCollapsed ? "w-20" : "w-64"
+      )}
+    >
+        <SidebarContent />
     </aside>
   );
 }
-
-    
