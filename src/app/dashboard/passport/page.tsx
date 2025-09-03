@@ -111,6 +111,7 @@ export default function PassportPage() {
   ]);
   const [experiences, setExperiences] = useState(initialExperiences);
   const [projects, setProjects] = useState(initialProjects);
+  const [testimonials, setTestimonials] = useState(initialTestimonials);
 
   const videoSrc = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"; // Placeholder
 
@@ -149,6 +150,10 @@ export default function PassportPage() {
         ) : (
             <Input value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} />
         );
+    }
+    // For multiline text from textarea, we need to render newlines
+    if (isTextarea) {
+        return <p className={className}>{value.split('\n').map((line:string, i:number) => <span key={i}>{line}<br/></span>)}</p>;
     }
     return <p className={className}>{value}</p>;
   };
@@ -327,7 +332,7 @@ export default function PassportPage() {
                     <Badge variant="outline" className="mb-4">Testimonials</Badge>
                     <h3 className="text-2xl text-muted-foreground mb-8 text-center">Nice things people have said about me:</h3>
                     <div className="grid md:grid-cols-3 gap-8">
-                        {testimonials.map(t => (
+                        {testimonials.map((t, index) => (
                             <Card key={t.name} className="p-6">
                                 <CardContent className="p-0 flex flex-col items-center text-center">
                                     <EditableImage src={t.avatar} alt={t.name} hint={t.hint}>
@@ -336,9 +341,22 @@ export default function PassportPage() {
                                             <AvatarFallback>{t.name[0]}</AvatarFallback>
                                         </Avatar>
                                     </EditableImage>
-                                    <p className="text-muted-foreground italic mb-4">"{t.quote}"</p>
-                                    <h4 className="font-bold text-primary">{t.name}</h4>
-                                    <p className="text-sm text-muted-foreground">{t.title}</p>
+                                    <EditableField 
+                                        value={`"${t.quote}"`}
+                                        onChange={(newValue: string) => setTestimonials(prev => prev.map((item, i) => i === index ? { ...item, quote: newValue.replace(/"/g, '') } : item))}
+                                        isTextarea={true}
+                                        className="text-muted-foreground italic mb-4"
+                                    />
+                                    <EditableField 
+                                        value={t.name}
+                                        onChange={(newValue: string) => setTestimonials(prev => prev.map((item, i) => i === index ? { ...item, name: newValue } : item))}
+                                        className="font-bold text-primary"
+                                    />
+                                     <EditableField 
+                                        value={t.title}
+                                        onChange={(newValue: string) => setTestimonials(prev => prev.map((item, i) => i === index ? { ...item, title: newValue } : item))}
+                                        className="text-sm text-muted-foreground"
+                                    />
                                 </CardContent>
                             </Card>
                         ))}
@@ -375,3 +393,5 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
