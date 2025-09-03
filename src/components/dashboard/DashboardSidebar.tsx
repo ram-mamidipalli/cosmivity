@@ -17,6 +17,11 @@ import {
   LogOut,
   Briefcase,
   Calendar,
+  Gamepad2,
+  BookCopy,
+  Badge,
+  GraduationCap,
+  Code,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -36,7 +41,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
-  { href: "/dashboard/challenges", label: "Rooms", icon: MessageSquare },
+  { href: "/dashboard/challenges", label: "Debate Rooms", icon: MessageSquare },
   { href: "/dashboard/teams", label: "Teams", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
@@ -45,6 +50,11 @@ const menuItems = [
   { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
+  { href: "/dashboard/challenges", label: "Challenges", icon: Gamepad2 },
+  { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
+  { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
+  { href: "/dashboard/internships", label: "Internships", icon: GraduationCap },
+  { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
 ];
 
 const SidebarMenuItem = ({ item, isCollapsed }: { item: any; isCollapsed: boolean }) => {
