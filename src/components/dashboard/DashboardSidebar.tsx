@@ -36,6 +36,7 @@ import {
 import { cn } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 
 const menuItems = [
@@ -48,20 +49,20 @@ const menuItems = [
   { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },
   { href: "/dashboard/passport", label: "Portfolio", icon: Award },
   { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
+  { href: "/dashboard/internships", label: "Internships", icon: GraduationCap },
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
   { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
-  { href: "/dashboard/internships", label: "Internships", icon: GraduationCap },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
 ];
 
-const SidebarMenuItem = ({ item, isCollapsed }: { item: any; isCollapsed: boolean }) => {
+const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
   const pathname = usePathname();
   const isActive = pathname === item.href;
 
   return (
-    <Link href={item.href} passHref>
+    <Link href={item.href} passHref onClick={onLinkClick}>
       <Button
         variant={isActive ? "secondary" : "ghost"}
         className={cn(
@@ -104,7 +105,7 @@ const SidebarSkeleton = ({ isCollapsed }: { isCollapsed: boolean }) => (
 );
 
 
-export default function DashboardSidebar({ isMobile = false }: { isMobile?: boolean }) {
+export default function DashboardSidebar({ isMobile = false, onLinkClick }: { isMobile?: boolean, onLinkClick?: () => void }) {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
@@ -119,8 +120,8 @@ export default function DashboardSidebar({ isMobile = false }: { isMobile?: bool
   
   const SidebarContent = () => (
       <>
-        <div>
-        <div className="flex items-center justify-center gap-2 px-4 pb-4 border-b mb-4">
+        <div className="flex flex-col flex-grow min-h-0">
+        <div className="flex items-center justify-center gap-2 px-4 pb-4 border-b mb-4 flex-shrink-0">
           <Link href="/" className="font-bold text-2xl text-primary relative">
             <span className="relative">
               {!isCollapsed && "Cosmivity"}
@@ -141,13 +142,20 @@ export default function DashboardSidebar({ isMobile = false }: { isMobile?: bool
             </span>
           </Link>
         </div>
-        <nav className="flex flex-col gap-2">
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.href} item={item} isCollapsed={isMobile ? false : isCollapsed} />
-          ))}
-        </nav>
+        <ScrollArea className="flex-grow">
+          <nav className="flex flex-col gap-2 pr-4">
+            {menuItems.map((item) => (
+              <SidebarMenuItem 
+                key={item.href} 
+                item={item} 
+                isCollapsed={isMobile ? false : isCollapsed} 
+                onLinkClick={onLinkClick}
+              />
+            ))}
+          </nav>
+        </ScrollArea>
       </div>
-      <div className="flex flex-col gap-4 border-t pt-4">
+      <div className="flex flex-col gap-4 border-t pt-4 flex-shrink-0">
         
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

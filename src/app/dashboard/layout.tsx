@@ -1,4 +1,7 @@
 
+"use client";
+
+import { useState } from "react";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -9,12 +12,14 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="flex min-h-screen bg-secondary/50">
       <DashboardSidebar />
       <div className="flex flex-col flex-1">
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-background px-6 md:hidden">
-            <Sheet>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
                     <Button variant="outline" size="icon" className="shrink-0">
                         <Menu className="h-5 w-5" />
@@ -22,7 +27,7 @@ export default function DashboardLayout({
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="p-0">
-                    <DashboardSidebar isMobile />
+                    <DashboardSidebar isMobile onLinkClick={() => setMobileMenuOpen(false)} />
                 </SheetContent>
             </Sheet>
         </header>
