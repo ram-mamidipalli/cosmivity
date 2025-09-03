@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, SkipForward, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -120,6 +120,9 @@ export default function VideoIntroDialog({ isOpen, onClose, onVideoEnd, videoSrc
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="max-w-4xl p-0 border-0 bg-black text-white" hideCloseButton>
+                 <DialogHeader className="sr-only">
+                    <DialogTitle>Video Introduction</DialogTitle>
+                 </DialogHeader>
                 <div className="relative aspect-video group" onMouseMove={handleMouseMove}>
                     <video
                         ref={videoRef}
@@ -167,7 +170,7 @@ export default function VideoIntroDialog({ isOpen, onClose, onVideoEnd, videoSrc
                         "absolute top-4 right-4 flex items-center gap-2 transition-opacity duration-300",
                         showControls ? "opacity-100" : "opacity-0"
                         )}>
-                        <Button variant="outline" size="sm" onClick={handleSkip} className="bg-white/10 text-white hover:bg-white/20 hover:text-white">
+                        <Button variant="outline" size="sm" onClick={handleSkip} className="bg-white/10 text-white border-white/20 hover:bg-white/20 hover:text-white">
                             Skip Intro <SkipForward className="ml-2 h-4 w-4"/>
                         </Button>
                      </div>
@@ -180,9 +183,6 @@ export default function VideoIntroDialog({ isOpen, onClose, onVideoEnd, videoSrc
 // Add a prop to DialogContent to hide the default close button
 declare module "@radix-ui/react-dialog" {
     interface DialogContentProps {
-        hideCloseButton?: boolean;
-    }
-    interface DialogContentElement extends HTMLDivElement {
         hideCloseButton?: boolean;
     }
 }
