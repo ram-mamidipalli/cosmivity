@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -9,18 +10,23 @@ import { Upload, Download, RefreshCw, Save, CheckCircle } from "lucide-react";
 import ResumeStepper from "@/components/dashboard/coach/ResumeStepper";
 import ResumeForm from "@/components/dashboard/coach/ResumeForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+
+// Dynamically import jspdf and html2canvas to ensure they are only loaded on the client-side
+const jsPDF = dynamic(() => import("jspdf"), { ssr: false });
+const html2canvas = dynamic(() => import("html2canvas"), { ssr: false });
 
 export default function CoachPage() {
   const [isTemplateSelectorOpen, setTemplateSelectorOpen] = useState(false);
   const resumePreviewRef = useRef<HTMLDivElement>(null);
 
-  const handleExportPdf = () => {
+  const handleExportPdf = async () => {
     if (resumePreviewRef.current) {
+        const JSPDF = (await import('jspdf')).default;
+        const html2canvas = (await import('html2canvas')).default;
+
         html2canvas(resumePreviewRef.current, { scale: 2 }).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF({
+            const pdf = new JSPDF({
                 orientation: 'portrait',
                 unit: 'pt',
                 format: [canvas.width, canvas.height]
