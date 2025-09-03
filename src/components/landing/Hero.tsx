@@ -10,7 +10,7 @@ export default function Hero() {
   const [ref, isInView] = useInView({ once: true, threshold: 0.2 });
 
   return (
-    <section id="home" className="relative overflow-hidden py-24 md:py-32">
+    <section id="home" className="relative overflow-hidden py-12 md:py-16">
       <div className="container mx-auto px-4 text-center">
         <div ref={ref} className="relative max-w-5xl mx-auto p-8 rounded-2xl">
            <div className="absolute inset-0 animated-gradient -z-10 rounded-2xl opacity-70"></div>
