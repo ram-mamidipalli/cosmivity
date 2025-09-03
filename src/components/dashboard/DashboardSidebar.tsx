@@ -22,6 +22,7 @@ import {
   Badge,
   GraduationCap,
   Code,
+  NotebookText,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -55,6 +56,7 @@ const menuItems = [
   { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
   { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
+  { href: "/dashboard/notebook", label: "Notebook", icon: NotebookText },
 ];
 
 const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
