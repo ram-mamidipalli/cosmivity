@@ -57,17 +57,17 @@ function AuthFormContent() {
         <CardDescription>{isSignUp ? 'Enter your details to get started' : 'Enter your credentials to access your account'}</CardDescription>
       </CardHeader>
       <CardContent>
-         <div className="mb-4 grid grid-cols-2 gap-2 rounded-lg bg-muted p-1">
+         <div className="mb-4 grid grid-cols-2 gap-1 rounded-lg bg-muted p-1">
             <Button
               onClick={() => setIsSignUp(false)}
-              variant={!isSignUp ? 'secondary' : 'ghost'}
+              variant={!isSignUp ? 'default' : 'ghost'}
               className={cn(!isSignUp && 'shadow-sm')}
             >
               Sign In
             </Button>
             <Button
               onClick={() => setIsSignUp(true)}
-              variant={isSignUp ? 'secondary' : 'ghost'}
+              variant={isSignUp ? 'default' : 'ghost'}
               className={cn(isSignUp && 'shadow-sm')}
             >
               Sign Up
