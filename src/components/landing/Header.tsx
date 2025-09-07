@@ -14,12 +14,12 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <div className="w-full absolute top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <header className="p-2 md:p-3">
+    <div className="w-full fixed top-0 z-50 flex justify-center pt-4">
+      <div className="container mx-auto px-4">
+        <header className="bg-background/20 backdrop-blur-lg rounded-full border border-white/10 shadow-lg p-2 md:p-3">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
-              <span className="font-bold text-2xl text-white relative">
+            <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80 pl-4">
+              <span className="font-bold text-xl text-white relative">
                 Cosmivity
               </span>
             </Link>
