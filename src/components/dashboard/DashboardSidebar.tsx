@@ -23,6 +23,7 @@ import {
   GraduationCap,
   Code,
   NotebookText,
+  BarChart3,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
   { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
   { href: "/dashboard/teams", label: "Teams", icon: Users },

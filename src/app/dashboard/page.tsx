@@ -112,8 +112,9 @@ export default function DashboardPage() {
             <input placeholder="Search courses, debates..." className="pl-10 pr-4 py-2 rounded-full border bg-background w-64" />
           </div>
           <Button variant="outline" asChild>
-            <Link href="/dashboard/teams">
-                Teams
+            <Link href="/dashboard/analytics">
+                <BarChart3 className="mr-2" />
+                Analytics
             </Link>
           </Button>
           <Button variant="ghost" size="icon">
