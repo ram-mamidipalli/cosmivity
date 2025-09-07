@@ -14,48 +14,35 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <div className="w-full sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-2">
-        <header className="rounded-2xl p-2 md:p-3 border bg-background/80 backdrop-blur-lg">
+    <div className="w-full absolute top-0 z-50">
+      <div className="container mx-auto px-4 py-4">
+        <header className="p-2 md:p-3">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
-              <span className="font-bold text-2xl text-primary relative">
+              <span className="font-bold text-2xl text-white relative">
                 Cosmivity
-                <svg
-                  viewBox="0 0 285 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute -bottom-1 left-0 w-full"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                </svg>
               </span>
             </Link>
-            <nav className="hidden md:flex items-center space-x-4">
+            <nav className="hidden md:flex items-center space-x-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-medium text-sm text-foreground/80 hover:text-primary transition-colors"
+                  className="font-medium text-sm text-white/80 hover:text-white transition-colors"
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
             <div className="hidden md:flex items-center space-x-2">
-              <Button variant="ghost" asChild><Link href="/auth">Login</Link></Button>
-              <Button asChild><Link href="/auth">Start Free</Link></Button>
+              <Button variant="ghost" asChild className="text-white hover:bg-white/10 hover:text-white"><Link href="/auth">Login</Link></Button>
+              <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full neon-glow"><Link href="/auth">Enroll Now</Link></Button>
             </div>
             <div className="md:hidden">
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <Menu className="h-6 w-6" />
+                    <Menu className="h-6 w-6 text-white" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right">
@@ -63,19 +50,6 @@ export default function Header() {
                     <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
                        <span className="font-bold text-2xl text-primary relative">
                         Cosmivity
-                        <svg
-                          viewBox="0 0 285 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="absolute -bottom-1 left-0 w-full"
-                          preserveAspectRatio="none"
-                        >
-                          <path
-                            d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
-                            stroke="hsl(var(--primary))"
-                            strokeWidth="3"
-                            strokeLinecap="round"
-                          />
-                        </svg>
                        </span>
                     </Link>
                     <div className="flex flex-col space-y-2">
@@ -91,7 +65,7 @@ export default function Header() {
                     </div>
                     <div className="flex flex-col space-y-2">
                         <Button variant="ghost" asChild><Link href="/auth">Login</Link></Button>
-                        <Button asChild><Link href="/auth">Start Free</Link></Button>
+                        <Button asChild><Link href="/auth">Enroll Now</Link></Button>
                     </div>
                   </div>
                 </SheetContent>

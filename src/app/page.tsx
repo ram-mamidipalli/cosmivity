@@ -1,3 +1,4 @@
+import Achievements from "@/components/landing/Achievements";
 import Comparison from "@/components/landing/Comparison";
 import Features from "@/components/landing/Features";
 import Footer from "@/components/landing/Footer";
@@ -20,6 +21,7 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
+        <Achievements />
         <Problem />
         <Features />
         <Testimonials />

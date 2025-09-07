@@ -5,46 +5,44 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
-import Bubbles from "./Bubbles";
+import Image from "next/image";
+import { PlayCircle } from "lucide-react";
 
 export default function Hero() {
   const [ref, isInView] = useInView({ once: true, threshold: 0.2 });
 
   return (
-    <section id="home" className="relative overflow-hidden py-12">
-       <Bubbles />
-      <div className="container mx-auto px-4 text-center">
-        <div ref={ref} className="relative max-w-5xl mx-auto rounded-2xl">
-           <div className="p-8 rounded-xl">
-              <h1 className={cn("text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tighter leading-snug font-headline transition-all duration-500 ease-in-out hover:scale-105", isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4')}>
-                Struggling with Aptitude, Interviews, and English? <span className="relative inline-block">
-                  <span className="text-primary">Cosmivity</span>
-                  <svg
-                    viewBox="0 0 285 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="absolute -bottom-2 left-0 w-full"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span> Gets You Job-Ready — Fast.
+    <section id="home" className="relative bg-background text-foreground overflow-hidden">
+      <div className="container mx-auto px-4 pt-32 pb-20">
+        <div ref={ref} className="grid lg:grid-cols-2 gap-12 items-center">
+           <div className={cn("space-y-8 transition-all duration-700 ease-in-out", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-tight font-headline text-white">
+                Learn In-Demand Skills. Build a Future You're Proud Of
               </h1>
-              <p className={cn("mt-6 text-lg md:text-xl text-foreground/80 transition-all duration-500 delay-200 ease-in-out", isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4')}>
-                AI-driven preparation for aptitude tests, communication, and interviews — with personalized daily practice and instant feedback.
+              <p className="text-lg md:text-xl text-white/80">
+                Master industry-relevant courses taught by experts. Learn anytime, anywhere and get certified to boost your career.
               </p>
-              <div className={cn("mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300 ease-in-out", isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4')}>
-                 <Button size="lg" className="neon-glow text-lg px-8 py-6 transition-transform duration-300 hover:scale-105" asChild>
-                    <Link href="/auth">Start Free</Link>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full transition-transform duration-300 hover:scale-105 neon-glow" asChild>
+                    <Link href="/auth">Get Started</Link>
+                 </Button>
+                 <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white text-lg" asChild>
+                    <Link href="#"><PlayCircle className="mr-2"/>Watch Intro Video</Link>
                  </Button>
               </div>
-               <p className={cn("mt-4 text-sm text-foreground/60 transition-all duration-500 delay-400 ease-in-out", isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4')}>
-                No credit card required. First 100 users get 7 days Pro access.
-              </p>
+           </div>
+           <div className={cn("relative transition-all duration-700 delay-200 ease-in-out", isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8")}>
+                <div className="absolute -bottom-12 -left-12 -right-12 h-2/3 bg-white/10 rounded-t-full backdrop-blur-sm z-0"></div>
+                <div className="relative z-10">
+                    <Image 
+                        src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=800"
+                        width={800}
+                        height={900}
+                        alt="A smiling student holding a book"
+                        className="w-full h-auto max-w-md mx-auto"
+                        data-ai-hint="smiling student"
+                    />
+                </div>
            </div>
         </div>
       </div>
