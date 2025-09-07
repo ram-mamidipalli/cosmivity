@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 import Bubbles from "./Bubbles";
+import { PlayCircle } from "lucide-react";
 
 export default function Hero() {
   const [ref, isInView] = useInView({ once: true, threshold: 0.2 });
@@ -22,18 +23,22 @@ export default function Hero() {
       <Bubbles />
       <div className="container mx-auto px-4 py-20 relative">
         <div ref={ref} className={cn("transition-all duration-700 ease-in-out", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
-            <div className="max-w-4xl space-y-6">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
                 <p className="font-body text-sm uppercase tracking-widest text-primary">👉 Welcome to Cosmivity</p>
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight font-headline text-white">
                     Practice <span className="text-primary">✦</span> Improve &amp; <br />
                     Get Hired <span className="text-primary text-4xl md:text-5xl lg:text-6xl leading-none">→</span> Confidently
                 </h1>
-                <p className="text-lg md:text-xl text-white/80 max-w-xl">
+                <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
                     An AI-powered platform to sharpen your aptitude, boost communication, and ace interviews — all in one place.
                 </p>
-                <div className="flex gap-4">
+                <div className="flex gap-4 justify-center">
                     <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full transition-transform duration-300 hover:scale-105 neon-glow" asChild>
-                        <Link href="/auth">🚀 Start Learning Free</Link>
+                        <Link href="/auth">Start Learning</Link>
+                    </Button>
+                     <Button size="lg" variant="outline" className="text-white hover:bg-white/10 hover:text-white border-white/20 text-lg px-8 py-6 rounded-full transition-transform duration-300 hover:scale-105">
+                        <PlayCircle className="mr-2" />
+                        Watch Demo
                     </Button>
                 </div>
             </div>
