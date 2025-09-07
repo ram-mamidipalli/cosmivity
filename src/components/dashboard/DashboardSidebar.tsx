@@ -128,19 +128,6 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <span className="relative">
               {!isCollapsed && "Cosmivity"}
               {isCollapsed && "C"}
-              <svg
-                  viewBox="0 0 285 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute -bottom-1 left-0 w-full"
-                  preserveAspectRatio="none"
-              >
-                  <path
-                  d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  />
-              </svg>
             </span>
           </Link>
         </div>

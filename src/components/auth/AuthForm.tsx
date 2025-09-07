@@ -50,19 +50,6 @@ function AuthFormContent() {
         <div className="flex justify-center mb-4">
             <Link href="/" className="font-bold text-2xl text-primary relative">
                 Cosmivity
-                <svg
-                    viewBox="0 0 285 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="absolute -bottom-1 left-0 w-full"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                    d="M2.35999 15.352C53.8647 10.1561 161.464 2.53673 282.64 6.13624"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    />
-                </svg>
             </Link>
         </div>
         <CardTitle className="text-2xl font-headline">{isSignUp ? 'Create an Account' : 'Welcome Back'}</CardTitle>
