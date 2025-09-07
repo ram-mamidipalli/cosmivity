@@ -105,36 +105,45 @@
   .bubble {
       position: absolute;
       bottom: -100px;
-      width: 40px;
-      height: 40px;
-      background-color: hsla(var(--primary) / 0.2);
-      border-radius: 50%;
+      background-color: hsla(var(--primary) / 0.1);
+      border-radius: 1rem;
+      border: 1px solid hsla(var(--primary) / 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       opacity: 0.5;
       animation: rise 25s infinite ease-in;
   }
+  
+  .bubble > svg {
+    width: 60%;
+    height: 60%;
+    color: hsl(var(--primary-foreground));
+    opacity: 0.5;
+  }
 
   .bubble:nth-child(1) { left: 10%; animation-duration: 20s; width: 60px; height: 60px; }
-  .bubble:nth-child(2) { left: 20%; animation-duration: 15s; width: 30px; height: 30px; animation-delay: 1s;}
+  .bubble:nth-child(2) { left: 20%; animation-duration: 15s; width: 40px; height: 40px; animation-delay: 1s;}
   .bubble:nth-child(3) { left: 35%; animation-duration: 30s; width: 80px; height: 80px; animation-delay: 3s;}
-  .bubble:nth-child(4) { left: 50%; animation-duration: 18s; width: 45px; height: 45px; animation-delay: 5s;}
-  .bubble:nth-child(5) { left: 55%; animation-duration: 28s; width: 25px; height: 25px; animation-delay: 2s;}
+  .bubble:nth-child(4) { left: 50%; animation-duration: 18s; width: 50px; height: 50px; animation-delay: 5s;}
+  .bubble:nth-child(5) { left: 55%; animation-duration: 28s; width: 35px; height: 35px; animation-delay: 2s;}
   .bubble:nth-child(6) { left: 65%; animation-duration: 22s; width: 70px; height: 70px; animation-delay: 7s;}
-  .bubble:nth-child(7) { left: 75%; animation-duration: 12s; width: 35px; height: 35px; animation-delay: 4s;}
+  .bubble:nth-child(7) { left: 75%; animation-duration: 12s; width: 45px; height: 45px; animation-delay: 4s;}
   .bubble:nth-child(8) { left: 80%; animation-duration: 35s; width: 90px; height: 90px; animation-delay: 6s;}
-  .bubble:nth-child(9) { left: 90%; animation-duration: 17s; width: 50px; height: 50px; animation-delay: 8s;}
+  .bubble:nth-child(9) { left: 90%; animation-duration: 17s; width: 55px; height: 55px; animation-delay: 8s;}
   .bubble:nth-child(10) { left: 95%; animation-duration: 26s; width: 40px; height: 40px; animation-delay: 9s;}
 
   @keyframes rise {
       0% {
           bottom: -100px;
-          transform: translateX(0);
+          transform: translateX(0) rotate(0deg);
       }
       50% {
-        transform: translateX(100px);
+        transform: translateX(100px) rotate(180deg);
       }
       100% {
-          bottom: 100%;
-          transform: translateX(-100px);
+          bottom: 1080px;
+          transform: translateX(-100px) rotate(360deg);
       }
   }
 
