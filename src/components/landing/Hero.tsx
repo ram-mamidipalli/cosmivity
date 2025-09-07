@@ -22,9 +22,6 @@ export default function Hero() {
       </div>
       <Bubbles />
       <div className="container mx-auto px-4 py-20 relative">
-        <p className="absolute top-0 left-4 font-body text-sm uppercase tracking-widest text-primary">
-            Welcome to Cosmivity
-        </p>
         <div ref={ref} className={cn("transition-all duration-700 ease-in-out", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
             <div className="max-w-4xl text-center space-y-4 mx-auto">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight font-headline text-white">
@@ -49,5 +46,6 @@ export default function Hero() {
     </section>
   );
 }
+
 
 
