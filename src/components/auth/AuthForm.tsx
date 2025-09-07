@@ -127,7 +127,7 @@ function AuthFormContent() {
                     <Label htmlFor="phone">Phone Number</Label>
                     <div className="flex gap-2">
                         <Input id="phone" type="tel" placeholder="+91 12345 67890" required />
-                        <Button variant="outline" onClick={() => setIsOtpSent(true)}>Send OTP</Button>
+                        <Button onClick={() => setIsOtpSent(true)}>Send OTP</Button>
                     </div>
                 </div>
                 {isOtpSent && (
