@@ -118,7 +118,7 @@
   .bubble > svg {
     width: 60%;
     height: 60%;
-    color: hsl(var(--primary-foreground));
+    color: hsl(var(--primary));
     opacity: 0.5;
   }
 
