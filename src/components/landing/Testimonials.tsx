@@ -45,7 +45,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-20 bg-secondary/50">
+    <section id="testimonials" className="py-20 bg-background text-foreground dark">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
@@ -64,10 +64,10 @@ export default function Testimonials() {
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <Card
-                    className="p-6 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl neon-glow h-full flex flex-col justify-between"
+                    className="p-6 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl neon-glow h-full flex flex-col justify-between bg-card"
                   >
                     <CardContent className="p-0 flex-grow">
-                      <p className="text-lg text-foreground/80 mb-6">"{testimonial.quote}"</p>
+                      <p className="text-lg text-card-foreground/80 mb-6">"{testimonial.quote}"</p>
                     </CardContent>
                     <div className="flex items-center mt-auto">
                       <Avatar className="h-12 w-12 mr-4">
@@ -84,8 +84,8 @@ export default function Testimonials() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="text-white border-white/20 hover:bg-white/10" />
+          <CarouselNext className="text-white border-white/20 hover:bg-white/10"/>
         </Carousel>
       </div>
     </section>
