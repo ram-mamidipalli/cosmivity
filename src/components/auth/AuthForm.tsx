@@ -37,6 +37,8 @@ const GoogleIcon = () => (
 function AuthFormContent() {
   const [isSignUp, setIsSignUp] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
   const router = useRouter();
 
   const handleAuthAction = () => {
@@ -120,10 +122,21 @@ function AuthFormContent() {
             <Input id="email" type="email" placeholder="m@example.com" required />
           </div>
           {isSignUp && (
-            <div className="grid gap-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" placeholder="+91 12345 67890" required />
-            </div>
+            <>
+                <div className="grid gap-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <div className="flex gap-2">
+                        <Input id="phone" type="tel" placeholder="+91 12345 67890" required />
+                        <Button variant="outline" onClick={() => setIsOtpSent(true)}>Send OTP</Button>
+                    </div>
+                </div>
+                {isOtpSent && (
+                    <div className="grid gap-2">
+                        <Label htmlFor="otp">Enter OTP</Label>
+                        <Input id="otp" type="text" placeholder="6-digit OTP" required />
+                    </div>
+                )}
+            </>
           )}
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
@@ -146,6 +159,29 @@ function AuthFormContent() {
               </button>
             </div>
           </div>
+          {isSignUp && (
+            <div className="grid gap-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <div className="relative">
+                <Input
+                  id="confirm-password"
+                  type={showConfirmPassword ? "text" : "password"}
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
           <Button type="submit" className="w-full" onClick={handleAuthAction}>
             {isSignUp ? 'Create Account' : 'Sign In'}
           </Button>
