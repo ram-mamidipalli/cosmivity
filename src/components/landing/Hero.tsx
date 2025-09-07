@@ -5,15 +5,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { PlayCircle } from "lucide-react";
 import Bubbles from "./Bubbles";
 
 export default function Hero() {
   const [ref, isInView] = useInView({ once: true, threshold: 0.2 });
 
   return (
-    <section id="home" className="relative bg-background text-foreground overflow-hidden dark min-h-screen flex items-center justify-center">
+    <section id="home" className="relative bg-background text-foreground overflow-hidden dark min-h-screen flex items-center">
       <div 
         className="absolute inset-0 bg-cover bg-center" 
         style={{backgroundImage: "url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1600&q=80')", backgroundAttachment: 'fixed'}}
@@ -23,23 +21,22 @@ export default function Hero() {
       </div>
       <Bubbles />
       <div className="container mx-auto px-4 py-20 relative">
-        <div ref={ref} className="grid lg:grid-cols-1 gap-12 items-center">
-           <div className={cn("space-y-8 transition-all duration-700 ease-in-out text-center", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-tight font-headline text-white">
-                Learn In-Demand Skills. Build a Future You're Proud Of
-              </h1>
-              <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
-                Master industry-relevant courses taught by experts. Learn anytime, anywhere and get certified to boost your career.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-center gap-4">
-                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full transition-transform duration-300 hover:scale-105 neon-glow" asChild>
-                    <Link href="/auth">Get Started</Link>
-                 </Button>
-                 <Button size="lg" variant="ghost" className="text-white hover:bg-white/10 hover:text-white text-lg" asChild>
-                    <Link href="#"><PlayCircle className="mr-2"/>Watch Intro Video</Link>
-                 </Button>
-              </div>
-           </div>
+        <div ref={ref} className={cn("transition-all duration-700 ease-in-out", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+            <div className="max-w-4xl space-y-8">
+                <p className="font-code text-sm uppercase tracking-widest text-primary">👉 Welcome to Cosmivity</p>
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight font-headline text-white">
+                    Practice <span className="text-primary">✦</span> Improve &amp; <br />
+                    Get Hired <span className="text-primary text-4xl md:text-5xl lg:text-6xl leading-none">→</span> Confidently
+                </h1>
+                <p className="text-lg md:text-xl text-white/80 max-w-xl">
+                    An AI-powered platform to sharpen your aptitude, boost communication, and ace interviews — all in one place.
+                </p>
+                <div className="flex gap-4">
+                    <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full transition-transform duration-300 hover:scale-105 neon-glow" asChild>
+                        <Link href="/auth">🚀 Start Learning Free</Link>
+                    </Button>
+                </div>
+            </div>
         </div>
       </div>
     </section>
