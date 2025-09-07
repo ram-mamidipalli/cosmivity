@@ -20,7 +20,7 @@ const comparisonData = [
 
 export default function Comparison() {
   return (
-    <section id="comparison" className="py-20 bg-secondary/50">
+    <section id="comparison" className="py-20 bg-background dark">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
@@ -28,20 +28,20 @@ export default function Comparison() {
           </h2>
         </div>
         <div className="max-w-5xl mx-auto">
-          <Card className="overflow-hidden">
+          <Card className="overflow-hidden bg-card/50 border-white/10">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="w-1/2 text-lg font-semibold text-foreground">Feature</TableHead>
-                  <TableHead className="text-center text-lg font-semibold text-foreground">Cosmivity</TableHead>
-                  <TableHead className="text-center text-lg font-semibold text-foreground">YouTube</TableHead>
-                  <TableHead className="text-center text-lg font-semibold text-foreground">Coaching</TableHead>
+                <TableRow className="border-white/10">
+                  <TableHead className="w-1/2 text-lg font-semibold text-white">Feature</TableHead>
+                  <TableHead className="text-center text-lg font-semibold text-white">Cosmivity</TableHead>
+                  <TableHead className="text-center text-lg font-semibold text-white">YouTube</TableHead>
+                  <TableHead className="text-center text-lg font-semibold text-white">Coaching</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {comparisonData.map((item) => (
-                  <TableRow key={item.feature}>
-                    <TableCell className="font-medium text-base">{item.feature}</TableCell>
+                  <TableRow key={item.feature} className="border-white/10">
+                    <TableCell className="font-medium text-base text-white/80">{item.feature}</TableCell>
                     <TableCell className="text-center">
                       {item.cosmivity ? <Check className="mx-auto h-6 w-6 text-green-500" /> : <X className="mx-auto h-6 w-6 text-destructive" />}
                     </TableCell>
