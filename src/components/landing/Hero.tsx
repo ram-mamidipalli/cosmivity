@@ -14,8 +14,15 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative bg-background text-foreground overflow-hidden dark">
+      <div 
+        className="absolute inset-0 bg-cover bg-center" 
+        style={{backgroundImage: "url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1600&q=80')", backgroundAttachment: 'fixed'}}
+        data-ai-hint="galaxy stars"
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      </div>
       <Bubbles />
-      <div className="container mx-auto px-4 pt-32 pb-20">
+      <div className="container mx-auto px-4 pt-32 pb-20 relative">
         <div ref={ref} className="grid lg:grid-cols-2 gap-12 items-center">
            <div className={cn("space-y-8 transition-all duration-700 ease-in-out", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-tight font-headline text-white">
