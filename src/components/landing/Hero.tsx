@@ -43,12 +43,12 @@ export default function Hero() {
            <div className={cn("relative transition-all duration-700 delay-200 ease-in-out", isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8")}>
                 <div className="relative z-10">
                     <Image 
-                        src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=800"
+                        src="https://storage.googleapis.com/aai-web-samples/user-assets/6a455a7c-2b8f-4d9e-a0e2-7e0bdc8042c1.png"
                         width={800}
                         height={900}
-                        alt="A vector illustration of a student learning"
+                        alt="A vector illustration of a student learning and coding on a laptop"
                         className="w-full h-auto max-w-md mx-auto"
-                        data-ai-hint="learning student illustration"
+                        data-ai-hint="learning student coding"
                     />
                 </div>
            </div>
