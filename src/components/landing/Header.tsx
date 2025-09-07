@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -19,7 +18,7 @@ export default function Header() {
         <header className="bg-background/20 backdrop-blur-lg rounded-full border border-white/10 shadow-lg p-2 md:p-3">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80 pl-4">
-              <span className="font-bold text-xl text-white relative">
+              <span className="font-bold text-xl text-primary relative">
                 Cosmivity
                  <svg
                     viewBox="0 0 285 20"
