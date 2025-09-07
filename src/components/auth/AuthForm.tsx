@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 const GoogleIcon = () => (
     <svg className="h-5 w-5" viewBox="0 0 24 24">
@@ -56,6 +57,22 @@ function AuthFormContent() {
         <CardDescription>{isSignUp ? 'Enter your details to get started' : 'Enter your credentials to access your account'}</CardDescription>
       </CardHeader>
       <CardContent>
+         <div className="mb-4 grid grid-cols-2 gap-2 rounded-lg bg-muted p-1">
+            <Button
+              onClick={() => setIsSignUp(false)}
+              variant={!isSignUp ? 'secondary' : 'ghost'}
+              className={cn(!isSignUp && 'shadow-sm')}
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={() => setIsSignUp(true)}
+              variant={isSignUp ? 'secondary' : 'ghost'}
+              className={cn(isSignUp && 'shadow-sm')}
+            >
+              Sign Up
+            </Button>
+          </div>
         <div className="grid gap-4">
           <Button variant="outline" className="w-full" onClick={handleAuthAction}>
             <GoogleIcon />
@@ -130,14 +147,8 @@ function AuthFormContent() {
             </div>
           </div>
           <Button type="submit" className="w-full" onClick={handleAuthAction}>
-            {isSignUp ? 'Sign Up' : 'Sign In'}
+            {isSignUp ? 'Create Account' : 'Sign In'}
           </Button>
-        </div>
-        <div className="mt-4 text-center text-sm">
-          {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
-          <button onClick={() => setIsSignUp(!isSignUp)} className="underline">
-            {isSignUp ? 'Sign In' : 'Sign Up'}
-          </button>
         </div>
       </CardContent>
     </>
