@@ -18,7 +18,7 @@ export default function Problem() {
   const [ref, isInView] = useInView({ once: true, threshold: 0.1 });
 
   return (
-    <section id="problem" className="py-20 bg-background text-foreground dark">
+    <section id="problem" className="py-20 bg-secondary/50 text-foreground">
       <div
         ref={ref}
         className={cn(
