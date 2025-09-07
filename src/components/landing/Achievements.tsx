@@ -25,7 +25,7 @@ const achievements = [
 
 export default function Achievements() {
   return (
-    <section className="py-16 bg-card">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold font-headline">Our Achievements</h2>

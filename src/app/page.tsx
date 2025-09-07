@@ -21,16 +21,18 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <Achievements />
-        <Problem />
-        <Features />
-        <Testimonials />
-        <Gamification />
-        <TrustedBy />
-        <Partners />
-        <Comparison />
-        <Pricing />
-        <CtaTwo />
+        <div className="bg-background">
+          <Achievements />
+          <Problem />
+          <Features />
+          <Testimonials />
+          <Gamification />
+          <TrustedBy />
+          <Partners />
+          <Comparison />
+          <Pricing />
+          <CtaTwo />
+        </div>
       </main>
       <Footer />
     </div>

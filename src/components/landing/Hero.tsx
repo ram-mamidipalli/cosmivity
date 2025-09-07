@@ -7,12 +7,14 @@ import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { PlayCircle } from "lucide-react";
+import Bubbles from "./Bubbles";
 
 export default function Hero() {
   const [ref, isInView] = useInView({ once: true, threshold: 0.2 });
 
   return (
-    <section id="home" className="relative bg-background text-foreground overflow-hidden">
+    <section id="home" className="relative bg-background text-foreground overflow-hidden dark">
+      <Bubbles />
       <div className="container mx-auto px-4 pt-32 pb-20">
         <div ref={ref} className="grid lg:grid-cols-2 gap-12 items-center">
            <div className={cn("space-y-8 transition-all duration-700 ease-in-out", isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
@@ -32,7 +34,6 @@ export default function Hero() {
               </div>
            </div>
            <div className={cn("relative transition-all duration-700 delay-200 ease-in-out", isInView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8")}>
-                <div className="absolute -bottom-12 -left-12 -right-12 h-2/3 bg-white/10 rounded-t-full backdrop-blur-sm z-0"></div>
                 <div className="relative z-10">
                     <Image 
                         src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=800"
