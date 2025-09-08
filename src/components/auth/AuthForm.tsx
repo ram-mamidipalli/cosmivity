@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { Textarea } from "../ui/textarea";
 
 const GoogleIcon = () => (
     <svg className="h-5 w-5" viewBox="0 0 24 24">
@@ -138,16 +139,26 @@ function AuthFormContent() {
             </div>
           )}
            {isInstitution && (
-             <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                    <Label htmlFor="college-name">College Name</Label>
-                    <Input id="college-name" placeholder="e.g. IIT Bombay" required />
+             <>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                        <Label htmlFor="college-name">College Name</Label>
+                        <Input id="college-name" placeholder="e.g. IIT Bombay" required />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="admin-name">Administrator Name</Label>
+                        <Input id="admin-name" placeholder="e.g. Dr. A. P. J. Abdul Kalam" required />
+                    </div>
                 </div>
                 <div className="grid gap-2">
-                    <Label htmlFor="admin-name">Administrator Name</Label>
-                    <Input id="admin-name" placeholder="e.g. Dr. A. P. J. Abdul Kalam" required />
+                    <Label htmlFor="institution-address">Institution Address</Label>
+                    <Textarea id="institution-address" placeholder="Enter the full address of the institution" required />
                 </div>
-            </div>
+                 <div className="grid gap-2">
+                    <Label htmlFor="institution-id">Institution ID</Label>
+                    <Input id="institution-id" placeholder="e.g., UGC ID, AISHE Code" required />
+                </div>
+            </>
           )}
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
