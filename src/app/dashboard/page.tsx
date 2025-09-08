@@ -170,7 +170,9 @@ export default function DashboardPage() {
                         <Timer className="h-4 w-4"/>
                         <span className="font-code">Est. time: 5 mins</span>
                     </div>
-                    <Button>Start Test</Button>
+                    <Button asChild>
+                        <Link href="/dashboard/daily-test">Start Test</Link>
+                    </Button>
                 </CardContent>
             </Card>
 
