@@ -5,6 +5,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Calculator, Lightbulb, MessageCircle, Trophy, Code, Users, Brain, FileText, Puzzle, BookOpen } from "lucide-react";
 import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 
 const modules = [
   {
@@ -61,7 +63,7 @@ const modules = [
     description: "Take on daily timed quizzes to test your speed and accuracy under pressure.",
     icon: <Trophy className="h-8 w-8 text-primary" />,
     buttonText: "View Challenges",
-    href: "/dashboard/challenges",
+    href: "/dashboard/daily-test",
   },
    {
     title: "Puzzles",
@@ -70,46 +72,95 @@ const modules = [
     buttonText: "Solve Puzzles",
     href: "/dashboard/aptitude/puzzles",
   },
-  {
-    title: "Lessons & Tutorials",
-    description: "Study key concepts and review essential learning materials.",
-    icon: <BookOpen className="h-8 w-8 text-primary" />,
-    buttonText: "View Lessons",
-    href: "/dashboard/lessons",
-  },
 ];
+
+const lessons = [
+  {
+    title: "Python Programming",
+    description: "Learn Python from scratch, covering basic to advanced topics.",
+    icon: <Code className="h-8 w-8 text-primary" />,
+    buttonText: "Start Learning",
+    href: "/dashboard/lessons/python",
+  },
+   {
+    title: "Java Fundamentals",
+    description: "Master the fundamentals of Java and object-oriented programming.",
+    icon: <Code className="h-8 w-8 text-primary" />,
+    buttonText: "Start Learning",
+    href: "/dashboard/lessons/java",
+  },
+   {
+    title: "C++ for Beginners",
+    description: "An introduction to C++ for competitive programming and software development.",
+    icon: <Code className="h-8 w-8 text-primary" />,
+    buttonText: "Start Learning",
+    href: "/dashboard/lessons/c-plus-plus",
+  },
+]
 
 export default function AptitudePage() {
   return (
     <div className="flex flex-col gap-8">
       <header className="p-6 border bg-card rounded-lg">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Practice</h1>
-          <p className="text-muted-foreground">Select a module to sharpen your skills.</p>
+          <h1 className="text-3xl font-bold font-headline">Learn & Grow</h1>
+          <p className="text-muted-foreground">Select a module to sharpen your skills or a lesson to study new concepts.</p>
         </div>
       </header>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {modules.map((module, index) => (
-          <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
-            <CardHeader className="flex flex-row items-center gap-4">
-              <div className="p-3 bg-primary/10 rounded-full">
-                {module.icon}
-              </div>
-              <div>
-                <CardTitle className="text-xl">{module.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription>{module.description}</CardDescription>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full" asChild>
-                <Link href={module.href}>{module.buttonText}</Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+       <Tabs defaultValue="practice">
+            <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="practice">Practice Modules</TabsTrigger>
+                <TabsTrigger value="lessons">Lessons</TabsTrigger>
+            </TabsList>
+            <TabsContent value="practice" className="mt-6">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {modules.map((module, index) => (
+                      <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
+                        <CardHeader className="flex flex-row items-center gap-4">
+                          <div className="p-3 bg-primary/10 rounded-full">
+                            {module.icon}
+                          </div>
+                          <div>
+                            <CardTitle className="text-xl">{module.title}</CardTitle>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="flex-grow">
+                          <CardDescription>{module.description}</CardDescription>
+                        </CardContent>
+                        <CardFooter>
+                          <Button className="w-full" asChild>
+                            <Link href={module.href}>{module.buttonText}</Link>
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                  </div>
+            </TabsContent>
+            <TabsContent value="lessons" className="mt-6">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {lessons.map((lesson, index) => (
+                      <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
+                        <CardHeader className="flex flex-row items-center gap-4">
+                          <div className="p-3 bg-primary/10 rounded-full">
+                            {lesson.icon}
+                          </div>
+                          <div>
+                            <CardTitle className="text-xl">{lesson.title}</CardTitle>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="flex-grow">
+                          <CardDescription>{lesson.description}</CardDescription>
+                        </CardContent>
+                        <CardFooter>
+                          <Button className="w-full" asChild>
+                            <Link href={lesson.href}>{lesson.buttonText}</Link>
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                  </div>
+            </TabsContent>
+        </Tabs>
     </div>
   );
 }
