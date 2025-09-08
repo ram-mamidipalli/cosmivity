@@ -44,11 +44,8 @@ function AuthFormContent() {
 
   const handleAuthAction = () => {
     // In a real app, you'd handle Firebase auth here.
-    // For now, we'll just redirect to the dashboard.
     if (authType === 'institution') {
-        // Redirect to a future institution registration page
-        // router.push("/auth/institution-register");
-        alert("Redirecting to institution registration...");
+        router.push("/dashboard/admin");
     } else {
         router.push("/dashboard");
     }
