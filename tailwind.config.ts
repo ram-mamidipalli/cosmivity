@@ -10,9 +10,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['"Syne"', 'sans-serif'],
-        headline: ['"Syne"', 'sans-serif'],
-        code: ['"Roboto Mono"', 'monospace'],
+        body: ['"Helvetica"', 'sans-serif'],
+        headline: ['"Helvetica"', 'sans-serif'],
+        code: ['"Helvetica"', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',
