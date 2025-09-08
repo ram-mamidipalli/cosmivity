@@ -10,6 +10,7 @@ import { Upload, Download, RefreshCw, Save, CheckCircle } from "lucide-react";
 import ResumeStepper from "@/components/dashboard/coach/ResumeStepper";
 import ResumeForm from "@/components/dashboard/coach/ResumeForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ResumeAnalysis from "@/components/dashboard/coach/ResumeAnalysis";
 
 // Dynamically import jspdf and html2canvas to ensure they are only loaded on the client-side
 const jsPDF = dynamic(() => import("jspdf"), { ssr: false });
@@ -73,7 +74,7 @@ export default function CoachPage() {
             <div className="lg:col-span-2">
                 <ResumeForm />
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-8">
                 <Card>
                     <CardHeader>
                         <CardTitle>Live Preview</CardTitle>
@@ -90,6 +91,7 @@ export default function CoachPage() {
                         </div>
                     </CardContent>
                 </Card>
+                <ResumeAnalysis />
             </div>
         </div>
     </div>
