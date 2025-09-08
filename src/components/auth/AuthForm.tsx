@@ -35,7 +35,7 @@ const GoogleIcon = () => (
 );
 
 function AuthFormContent() {
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [authType, setAuthType] = useState('signup'); // 'signin', 'signup', 'institution'
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -44,7 +44,31 @@ function AuthFormContent() {
   const handleAuthAction = () => {
     // In a real app, you'd handle Firebase auth here.
     // For now, we'll just redirect to the dashboard.
-    router.push("/dashboard");
+    if (authType === 'institution') {
+        // Redirect to a future institution registration page
+        // router.push("/auth/institution-register");
+        alert("Redirecting to institution registration...");
+    } else {
+        router.push("/dashboard");
+    }
+  }
+
+  const isSignUp = authType === 'signup';
+  const isSignIn = authType === 'signin';
+  const isInstitution = authType === 'institution';
+
+  const getTitle = () => {
+      if (isSignUp) return 'Create a Student Account';
+      if (isSignIn) return 'Welcome Back';
+      if (isInstitution) return 'Institution Registration';
+      return 'Get Started';
+  }
+
+  const getDescription = () => {
+      if (isSignUp) return 'Enter your details to get started on your career journey.';
+      if (isSignIn) return 'Enter your credentials to access your account.';
+      if (isInstitution) return 'Register your college to partner with Cosmivity.';
+      return 'Sign in or sign up.';
   }
 
   return (
@@ -55,41 +79,52 @@ function AuthFormContent() {
                 Cosmivity
             </Link>
         </div>
-        <CardTitle className="text-2xl font-headline">{isSignUp ? 'Create an Account' : 'Welcome Back'}</CardTitle>
-        <CardDescription>{isSignUp ? 'Enter your details to get started' : 'Enter your credentials to access your account'}</CardDescription>
+        <CardTitle className="text-2xl font-headline">{getTitle()}</CardTitle>
+        <CardDescription>{getDescription()}</CardDescription>
       </CardHeader>
       <CardContent>
-         <div className="mb-4 grid grid-cols-2 gap-1 rounded-lg bg-muted p-1">
+         <div className="mb-4 grid grid-cols-3 gap-1 rounded-lg bg-muted p-1">
             <Button
-              onClick={() => setIsSignUp(false)}
-              variant={!isSignUp ? 'default' : 'ghost'}
-              className={cn(!isSignUp && 'shadow-sm')}
+              onClick={() => setAuthType('signin')}
+              variant={isSignIn ? 'default' : 'ghost'}
+              className={cn(isSignIn && 'shadow-sm')}
             >
               Sign In
             </Button>
             <Button
-              onClick={() => setIsSignUp(true)}
+              onClick={() => setAuthType('signup')}
               variant={isSignUp ? 'default' : 'ghost'}
               className={cn(isSignUp && 'shadow-sm')}
             >
               Sign Up
             </Button>
+            <Button
+              onClick={() => setAuthType('institution')}
+              variant={isInstitution ? 'default' : 'ghost'}
+              className={cn(isInstitution && 'shadow-sm')}
+            >
+              For Institutions
+            </Button>
           </div>
         <div className="grid gap-4">
-          <Button variant="outline" className="w-full" onClick={handleAuthAction}>
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-           <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
-          </div>
+          {!isInstitution && (
+            <>
+                <Button variant="outline" className="w-full" onClick={handleAuthAction}>
+                    <GoogleIcon />
+                    Continue with Google
+                </Button>
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-card px-2 text-muted-foreground">
+                        Or continue with
+                    </span>
+                    </div>
+                </div>
+            </>
+          )}
           {isSignUp && (
              <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
@@ -102,26 +137,23 @@ function AuthFormContent() {
                 </div>
             </div>
           )}
-          {isSignUp && (
-            <div className="grid gap-2">
-              <Label htmlFor="role">I am a...</Label>
-              <Select>
-                <SelectTrigger id="role" aria-label="Select role">
-                  <SelectValue placeholder="Select your role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="student">Student</SelectItem>
-                  <SelectItem value="professional">Professional</SelectItem>
-                  <SelectItem value="admin">College Admin</SelectItem>
-                </SelectContent>
-              </Select>
+           {isInstitution && (
+             <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                    <Label htmlFor="college-name">College Name</Label>
+                    <Input id="college-name" placeholder="e.g. IIT Bombay" required />
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="admin-name">Administrator Name</Label>
+                    <Input id="admin-name" placeholder="e.g. Dr. A. P. J. Abdul Kalam" required />
+                </div>
             </div>
           )}
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="m@example.com" required />
           </div>
-          {isSignUp && (
+          {(isSignUp || isInstitution) && (
             <>
                 <div className="grid gap-2">
                     <Label htmlFor="phone">Phone Number</Label>
@@ -159,7 +191,7 @@ function AuthFormContent() {
               </button>
             </div>
           </div>
-          {isSignUp && (
+          {(isSignUp || isInstitution) && (
             <div className="grid gap-2">
               <Label htmlFor="confirm-password">Confirm Password</Label>
               <div className="relative">
@@ -183,7 +215,7 @@ function AuthFormContent() {
             </div>
           )}
           <Button type="submit" className="w-full" onClick={handleAuthAction}>
-            {isSignUp ? 'Create Account' : 'Sign In'}
+            {isSignUp ? 'Create Account' : isSignIn ? 'Sign In' : 'Register Institution'}
           </Button>
         </div>
       </CardContent>
@@ -193,7 +225,7 @@ function AuthFormContent() {
 
 export default function AuthForm() {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-lg">
       <AuthFormContent />
     </Card>
   );
