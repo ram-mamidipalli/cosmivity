@@ -74,8 +74,8 @@ const modules = [
 
 export default function AptitudePage() {
   return (
-    <div className="flex flex-col gap-8">
-      <header className="flex items-center justify-between">
+    <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
+      <header className="p-6 border bg-card rounded-lg">
         <div>
           <h1 className="text-3xl font-bold font-headline">Practice</h1>
           <p className="text-muted-foreground">Select a module to sharpen your skills.</p>
@@ -96,7 +96,7 @@ export default function AptitudePage() {
               <CardDescription>{module.description}</CardDescription>
             </CardContent>
             <CardFooter>
-              <Button className="w-full neon-glow" asChild>
+              <Button className="w-full" asChild>
                 <Link href={module.href}>{module.buttonText}</Link>
               </Button>
             </CardFooter>
