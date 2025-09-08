@@ -80,7 +80,7 @@ export default function CoachPage() {
                         <CardTitle>Live Preview</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div ref={resumePreviewRef} className="bg-card p-4 rounded-lg aspect-[8.5/11] flex flex-col items-center justify-center border">
+                        <div ref={resumePreviewRef} className="bg-card p-4 rounded-lg min-h-[700px] flex flex-col items-center justify-center border">
                            <div className="w-full h-32 bg-primary rounded-t-lg flex flex-col items-center justify-center text-primary-foreground p-4">
                                <h3 className="text-2xl font-bold">Your Name</h3>
                                <p>Professional Title</p>
