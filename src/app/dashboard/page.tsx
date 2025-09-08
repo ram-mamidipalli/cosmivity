@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
 
 const learningPath = [
     {
@@ -75,13 +76,53 @@ const achievements = [
     { title: "Quick Learner", rarity: "Common", desc: "Solved 100 aptitude questions", xp: "+100 XP", icon: <BrainCircuit />, color: "bg-blue-100 text-blue-800" },
 ]
 
+const searchMappings: { [key: string]: string } = {
+    "analytics": "/dashboard/analytics",
+    "practice": "/dashboard/aptitude",
+    "aptitude": "/dashboard/aptitude",
+    "discussions": "/dashboard/challenges",
+    "debates": "/dashboard/challenges",
+    "teams": "/dashboard/teams",
+    "interviews": "/dashboard/interviews",
+    "communication": "/dashboard/communication",
+    "coach": "/dashboard/coach",
+    "resume": "/dashboard/coach",
+    "portfolio": "/dashboard/passport",
+    "jobs": "/dashboard/jobs",
+    "internships": "/dashboard/internships",
+    "events": "/dashboard/events",
+    "leaderboard": "/dashboard/leaderboard",
+    "courses": "/dashboard/courses",
+    "certifications": "/dashboard/certifications",
+    "compiler": "/dashboard/compiler",
+    "notebook": "/dashboard/notebook",
+};
+
 export default function DashboardPage() {
   const [currentDate, setCurrentDate] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   }, []);
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && searchQuery.trim() !== '') {
+        const query = searchQuery.trim().toLowerCase();
+        const route = Object.keys(searchMappings).find(key => query.includes(key));
+        if (route) {
+            router.push(searchMappings[route]);
+        } else {
+            toast({
+                variant: 'destructive',
+                title: "Not Found",
+                description: `Could not find a page for "${searchQuery}".`,
+            });
+        }
+    }
+  };
 
   return (
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
@@ -109,7 +150,13 @@ export default function DashboardPage() {
         <div className="flex items-center gap-2">
           <div className="relative hidden md:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <input placeholder="Search courses, debates..." className="pl-10 pr-4 py-2 rounded-full border bg-background w-64" />
+            <input 
+              placeholder="Search courses, debates..." 
+              className="pl-10 pr-4 py-2 rounded-full border bg-background w-64"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearch}
+            />
           </div>
           <Button variant="outline" asChild>
             <Link href="/dashboard/analytics">
