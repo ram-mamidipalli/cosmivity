@@ -70,11 +70,18 @@ const modules = [
     buttonText: "Solve Puzzles",
     href: "/dashboard/aptitude/puzzles",
   },
+  {
+    title: "Lessons & Tutorials",
+    description: "Study key concepts and review essential learning materials.",
+    icon: <BookOpen className="h-8 w-8 text-primary" />,
+    buttonText: "View Lessons",
+    href: "/dashboard/lessons",
+  },
 ];
 
 export default function AptitudePage() {
   return (
-    <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
+    <div className="flex flex-col gap-8">
       <header className="p-6 border bg-card rounded-lg">
         <div>
           <h1 className="text-3xl font-bold font-headline">Practice</h1>
