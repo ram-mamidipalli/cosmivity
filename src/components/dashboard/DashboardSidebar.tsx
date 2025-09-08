@@ -47,7 +47,7 @@ const studentMenuItems = [
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
   { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
-  { href: "/dashboard/teams", label: "Community", icon: Users },
+  { href: "/dashboard/teams", label: "Collaboration", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
   { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },

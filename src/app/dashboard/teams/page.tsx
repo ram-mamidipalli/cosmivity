@@ -4,8 +4,10 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Users, Search, PlusCircle } from "lucide-react";
+import { Users, Search, PlusCircle, Laptop, Code2, Users2 } from "lucide-react";
 import CreateCommunityDialog from "@/components/dashboard/teams/CreateCommunityDialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 const communities = [
   {
@@ -46,57 +48,119 @@ const communities = [
   },
 ];
 
+const teams = [
+    {
+        name: "AI-Powered Learning App",
+        description: "Building an adaptive learning platform using Next.js and Genkit.",
+        members: "3/5",
+        skills: ["React", "TypeScript", "AI/ML", "Firebase"]
+    },
+    {
+        name: "E-commerce Website",
+        description: "Developing a full-featured e-commerce site with a focus on UX.",
+        members: "2/4",
+        skills: ["Next.js", "MongoDB", "Node.js", "Tailwind CSS"]
+    },
+    {
+        name: "Open Source Contributor Group",
+        description: "Looking for members to contribute to popular open-source projects.",
+        members: "5/10",
+        skills: ["Git", "JavaScript", "Python"]
+    }
+]
+
 
 export default function TeamsPage() {
   return (
     <div className="flex flex-col gap-8">
         <header className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-                <h1 className="text-3xl font-bold font-headline">Explore Communities</h1>
-                <p className="text-muted-foreground">Find and join communities of peers, mentors, and industry experts.</p>
+                <h1 className="text-3xl font-bold font-headline">Collaboration</h1>
+                <p className="text-muted-foreground">Join communities and teams to learn and build together.</p>
             </div>
             <div className="flex w-full sm:w-auto items-center gap-2">
                 <div className="relative flex-grow">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input placeholder="Search communities..." className="pl-10 pr-4 py-2 w-full" />
+                    <Input placeholder="Search..." className="pl-10 pr-4 py-2 w-full" />
                 </div>
-                <CreateCommunityDialog>
-                    <Button className="neon-glow flex-shrink-0">
-                        <PlusCircle className="mr-2"/> Create Community
-                    </Button>
-                </CreateCommunityDialog>
+                 <Button className="neon-glow flex-shrink-0">
+                    <PlusCircle className="mr-2"/> Create
+                </Button>
             </div>
         </header>
 
-        <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {communities.map((community, index) => (
-                <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                        <div className="flex items-start justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-primary/10 rounded-lg">
-                                    <Users className="h-6 w-6 text-primary"/>
+        <Tabs defaultValue="communities">
+            <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="communities">Communities</TabsTrigger>
+                <TabsTrigger value="teams">Project Teams</TabsTrigger>
+            </TabsList>
+            <TabsContent value="communities" className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {communities.map((community, index) => (
+                        <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
+                            <CardHeader>
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-primary/10 rounded-lg">
+                                            <Users className="h-6 w-6 text-primary"/>
+                                        </div>
+                                        <div>
+                                            <CardTitle className="text-xl">{community.name}</CardTitle>
+                                            <p className="text-sm text-muted-foreground">{community.members}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <CardTitle className="text-xl">{community.name}</CardTitle>
-                                    <p className="text-sm text-muted-foreground">{community.members}</p>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                <CardDescription>{community.description}</CardDescription>
+                            </CardContent>
+                            <CardFooter>
+                                {community.joined ? (
+                                    <Button variant="secondary" className="w-full">Open Forum</Button>
+                                ) : (
+                                    <Button variant="outline" className="w-full">Join Community</Button>
+                                )}
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
+            </TabsContent>
+            <TabsContent value="teams" className="mt-6">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {teams.map((team, index) => (
+                        <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
+                            <CardHeader>
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-primary/10 rounded-lg">
+                                            <Laptop className="h-6 w-6 text-primary"/>
+                                        </div>
+                                        <div>
+                                            <CardTitle className="text-xl">{team.name}</CardTitle>
+                                             <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                                                <Users2 className="h-4 w-4"/>
+                                                <span>{team.members} members</span>
+                                             </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                        <CardDescription>{community.description}</CardDescription>
-                    </CardContent>
-                    <CardFooter>
-                        {community.joined ? (
-                             <Button variant="secondary" className="w-full">Open Forum</Button>
-                        ) : (
-                            <Button variant="outline" className="w-full">Join Community</Button>
-                        )}
-                    </CardFooter>
-                </Card>
-            ))}
-        </main>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                <CardDescription>{team.description}</CardDescription>
+                                <div className="flex flex-wrap gap-2 mt-4">
+                                    {team.skills.map((skill) => (
+                                        <Badge key={skill} variant="secondary">{skill}</Badge>
+                                    ))}
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Button className="w-full">Request to Join</Button>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
+            </TabsContent>
+        </Tabs>
     </div>
   );
 }
