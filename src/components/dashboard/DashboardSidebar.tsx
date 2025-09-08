@@ -71,7 +71,6 @@ const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isColl
         variant={isActive ? "secondary" : "ghost"}
         className={cn(
           "w-full justify-start gap-3 transition-all duration-300",
-          isActive && "neon-glow",
           isCollapsed ? "px-2" : "px-4"
         )}
       >
