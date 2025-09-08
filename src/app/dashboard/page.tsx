@@ -49,25 +49,25 @@ const learningPath = [
 ];
 
 const quickAccessItems = [
-    { label: "Aptitude", icon: <BrainCircuit/>, desc: "Quant, Verbal" },
-    { label: "AI English Chat", icon: <Mic/>, desc: "Improve Fluency" },
-    { label: "Mock Interview", icon: <MessageSquare/>, desc: "Practice with AI" },
-    { label: "Debate Rooms", icon: <Users/>, desc: "Live Discussions" },
-    { label: "Resume Builder", icon: <FileText/>, desc: "Create & Optimize" },
-    { label: "Study Circles", icon: <BookOpen/>, desc: "Join Peer Groups" }
-]
+    { label: "Aptitude", icon: <BrainCircuit/>, desc: "Quant, Verbal", href: "/dashboard/aptitude" },
+    { label: "AI English Chat", icon: <Mic/>, desc: "Improve Fluency", href: "/dashboard/communication" },
+    { label: "Mock Interview", icon: <MessageSquare/>, desc: "Practice with AI", href: "/dashboard/interviews" },
+    { label: "Debate Rooms", icon: <Users/>, desc: "Live Discussions", href: "/dashboard/challenges" },
+    { label: "Resume Builder", icon: <FileText/>, desc: "Create & Optimize", href: "/dashboard/coach" },
+    { label: "Study Circles", icon: <BookOpen/>, desc: "Join Peer Groups", href: "/dashboard/teams" }
+];
 
 const leaderboardData = [
-    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
-    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://images.unsplash.com/photo-1591980896142-4e36328411ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman smiling" },
-    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait", isCurrentUser: true },
-    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/flagged/photo-1571367034861-e6729ad9c2d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man headshot" },
-    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1648183185045-7a5592e66e9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxpbmRpYW58ZW58MHx8fHwxNzUzODAxNzA4fDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
-    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://placehold.co/40x40.png", hint: "man portrait" },
-    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://placehold.co/40x40.png", hint: "woman smiling" },
-    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://placehold.co/40x40.png", hint: "man headshot" },
-    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://placehold.co/40x40.png", hint: "woman headshot" },
-    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://placehold.co/40x40.png", hint: "man portrait" },
+    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
+    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://images.unsplash.com/photo-1714415182234-0672970be61a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman smiling" },
+    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait", isCurrentUser: true },
+    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man headshot" },
+    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1573496358961-3c82861ab8f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
+    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
+    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://images.unsplash.com/photo-1692736475357-7c18bfbb808b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman smiling" },
+    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man headshot" },
+    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-41.0&q=80&w=1080", hint: "woman headshot" },
+    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1624395213043-fa2e123b2656?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
 ];
 
 const achievements = [
@@ -124,6 +124,11 @@ export default function DashboardPage() {
     }
   };
 
+  const handleQuickAccessClick = (href: string) => {
+    router.push(href);
+  };
+
+
   return (
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
@@ -171,7 +176,7 @@ export default function DashboardPage() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Avatar>
-                  <AvatarImage src="https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Aakash" data-ai-hint="man portrait"/>
+                  <AvatarImage src="https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Aakash" data-ai-hint="man portrait"/>
                   <AvatarFallback>A</AvatarFallback>
                 </Avatar>
               </Button>
@@ -290,7 +295,7 @@ export default function DashboardPage() {
                 <ScrollArea className="w-full whitespace-nowrap rounded-lg">
                     <div className="flex w-max space-x-4 pb-4">
                         {quickAccessItems.map(item => (
-                            <Button key={item.label} variant="outline" className="flex flex-col h-28 w-32 gap-2 p-2 items-center justify-center text-center">
+                            <Button key={item.label} variant="outline" className="flex flex-col h-28 w-32 gap-2 p-2 items-center justify-center text-center" onClick={() => handleQuickAccessClick(item.href)}>
                                <div className="p-2 bg-primary/10 rounded-full">{item.icon}</div>
                                 <div className="text-center">
                                     <p className="font-semibold text-sm whitespace-normal">{item.label}</p>
@@ -315,7 +320,7 @@ export default function DashboardPage() {
                     <ScrollArea className="h-80">
                         <ul className="space-y-4 pr-4">
                             {leaderboardData.map((user, index) => (
-                                <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${user.isCurrentUser ? 'bg-primary/10 neon-glow' : ''}`}>
+                                <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${user.isCurrentUser ? 'bg-primary/10' : ''}`}>
                                     <span className="font-bold text-sm w-4 font-code">#{index + 1}</span>
                                     <Avatar className="h-10 w-10">
                                         <AvatarImage src={user.avatar} data-ai-hint={user.hint} />
@@ -388,3 +393,4 @@ export default function DashboardPage() {
   );
 }
 
+    
