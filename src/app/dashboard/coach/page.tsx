@@ -11,6 +11,7 @@ import ResumeStepper from "@/components/dashboard/coach/ResumeStepper";
 import ResumeForm from "@/components/dashboard/coach/ResumeForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ResumeAnalysis from "@/components/dashboard/coach/ResumeAnalysis";
+import TemplateSelection from "@/components/dashboard/coach/TemplateSelection";
 
 // Dynamically import jspdf and html2canvas to ensure they are only loaded on the client-side
 const jsPDF = dynamic(() => import("jspdf"), { ssr: false });
@@ -18,6 +19,7 @@ const html2canvas = dynamic(() => import("html2canvas"), { ssr: false });
 
 export default function CoachPage() {
   const [isTemplateSelectorOpen, setTemplateSelectorOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState("Modern Professional");
   const resumePreviewRef = useRef<HTMLDivElement>(null);
 
   const handleExportPdf = async () => {
@@ -94,6 +96,13 @@ export default function CoachPage() {
                 <ResumeAnalysis />
             </div>
         </div>
+
+        <TemplateSelection 
+            isOpen={isTemplateSelectorOpen}
+            onClose={() => setTemplateSelectorOpen(false)}
+            selectedTemplate={selectedTemplate}
+            onSelectTemplate={setSelectedTemplate}
+        />
     </div>
   );
 }
