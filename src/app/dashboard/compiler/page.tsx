@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code2, Play, Upload } from "lucide-react";
+import { Code2, Play, Upload, Save } from "lucide-react";
 
 const sampleCode = {
     c: `#include <stdio.h>\n\nint main() {\n    printf("Hello, World!");\n    return 0;\n}`,
@@ -82,6 +82,7 @@ export default function CompilerPage() {
                     </Select>
                     <div className="flex items-center gap-2">
                         <Button variant="outline"><Upload className="mr-2"/> Upload File</Button>
+                        <Button variant="outline"><Save className="mr-2"/> Save Code</Button>
                     </div>
                 </div>
                 
