@@ -3,11 +3,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { BarChart, BrainCircuit, Mic, Users, FileText } from "lucide-react"
 
 const studentData = [
     { name: 'Rahul Verma', email: 'rahul.v@example.com', overallScore: 82, aptitude: 85, communication: 75, interviews: 88, avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100', hint: "man portrait" },
@@ -23,7 +21,7 @@ export default function AdminAnalyticsPage() {
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
       <header className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Institution Analytics</h1>
+          <h1 className="text-3xl font-bold font-headline">Institution Dashboard</h1>
           <p className="text-muted-foreground">An overview of student progress and performance at your institution.</p>
         </div>
          <Select defaultValue="last-30-days">

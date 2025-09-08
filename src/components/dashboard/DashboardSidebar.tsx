@@ -42,10 +42,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 
-const menuItems = [
+const studentMenuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/dashboard/admin", label: "Admin", icon: Shield },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
   { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
   { href: "/dashboard/teams", label: "Teams", icon: Users },
@@ -61,6 +60,11 @@ const menuItems = [
   { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
   { href: "/dashboard/notebook", label: "Notebook", icon: NotebookText },
+];
+
+const adminMenuItems = [
+  { href: "/dashboard/admin", label: "Admin", icon: Shield },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ];
 
 const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
@@ -114,6 +118,10 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isAdmin = pathname.startsWith('/dashboard/admin');
+  const menuItems = isAdmin ? adminMenuItems : studentMenuItems.filter(item => item.href !== '/dashboard/admin');
 
   useEffect(() => {
     setIsMounted(true);
@@ -158,8 +166,8 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
-                        <p className="font-semibold text-sm">Aakash</p>
-                        <p className="text-xs text-muted-foreground font-code">2,650 XP</p>
+                        <p className="font-semibold text-sm">{isAdmin ? "Admin" : "Aakash"}</p>
+                        <p className="text-xs text-muted-foreground font-code">{isAdmin ? "Institution" : "2,650 XP"}</p>
                         </div>
                     )}
                 </Button>
@@ -167,9 +175,9 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuContent className="w-56 mb-2" align="end" forceMount>
                  <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">Aakash</p>
+                        <p className="text-sm font-medium leading-none">{isAdmin ? "Admin" : "Aakash"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                        aakash@example.com
+                        {isAdmin ? "admin@example.com" : "aakash@example.com"}
                         </p>
                     </div>
                 </DropdownMenuLabel>
