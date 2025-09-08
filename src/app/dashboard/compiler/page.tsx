@@ -92,7 +92,7 @@ export default function CompilerPage() {
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
                             placeholder="Write your code here..."
-                            className="h-full w-full rounded-t-lg rounded-b-none border-0 border-b resize-none font-code text-base"
+                            className="h-full w-full rounded-t-lg rounded-b-none border-0 resize-none font-code text-base bg-zinc-900 text-green-400 focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                     </CardContent>
                 </Card>
