@@ -35,8 +35,8 @@ export default function TemplateSelection({ isOpen, onClose, selectedTemplate, o
                         <Button key={cat} variant={cat === "All" ? "secondary" : "ghost"} size="sm">{cat}</Button>
                     ))}
                 </div>
-                <ScrollArea className="flex-grow pr-4 -mr-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <ScrollArea className="flex-grow">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-4">
                         {templates.map(template => (
                             <Card 
                                 key={template.name} 
