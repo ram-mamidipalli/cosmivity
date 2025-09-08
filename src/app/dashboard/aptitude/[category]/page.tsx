@@ -104,8 +104,8 @@ export default function AptitudeCategoryPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <header>
+    <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
+      <header className="p-6 border bg-card rounded-lg">
         <Link href="/dashboard/aptitude" className="text-sm text-primary hover:underline">
           &larr; Back to Practice Modules
         </Link>
@@ -135,7 +135,7 @@ export default function AptitudeCategoryPage() {
                                 </div>
                             </div>
                         </div>
-                        <Button className="w-full sm:w-auto neon-glow" onClick={() => handleStartTest(test.id, test.questions)}>Start Test</Button>
+                        <Button className="w-full sm:w-auto" onClick={() => handleStartTest(test.id, test.questions)}>Start Test</Button>
                     </li>
                 ))}
             </ul>
