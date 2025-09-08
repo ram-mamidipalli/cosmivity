@@ -114,10 +114,10 @@ export default function AnalyticsPage() {
                 <CardTitle>Aptitude Performance</CardTitle>
             </CardHeader>
             <CardContent>
-                 <ChartContainer config={{}} className="mx-auto aspect-square h-[250px]">
+                 <ChartContainer config={{}} className="mx-auto aspect-square h-[200px]">
                     <PieChart>
                         <Tooltip content={<ChartTooltipContent hideLabel />} />
-                        <Pie data={pieChartData.aptitude} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} />
+                        <Pie data={pieChartData.aptitude} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} />
                     </PieChart>
                  </ChartContainer>
             </CardContent>
@@ -129,10 +129,10 @@ export default function AnalyticsPage() {
                 <CardTitle>Mock Interviews</CardTitle>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={{}} className="mx-auto aspect-square h-[250px]">
+                <ChartContainer config={{}} className="mx-auto aspect-square h-[200px]">
                     <PieChart>
                         <Tooltip content={<ChartTooltipContent hideLabel />} />
-                        <Pie data={pieChartData.interviews} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} />
+                        <Pie data={pieChartData.interviews} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} />
                     </PieChart>
                  </ChartContainer>
             </CardContent>
@@ -144,10 +144,10 @@ export default function AnalyticsPage() {
                 <CardTitle>Communication Lab</CardTitle>
             </CardHeader>
             <CardContent>
-                 <ChartContainer config={{}} className="mx-auto aspect-square h-[250px]">
+                 <ChartContainer config={{}} className="mx-auto aspect-square h-[200px]">
                     <PieChart>
                         <Tooltip content={<ChartTooltipContent hideLabel />} />
-                        <Pie data={pieChartData.communication} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} />
+                        <Pie data={pieChartData.communication} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={50} outerRadius={70} />
                     </PieChart>
                  </ChartContainer>
             </CardContent>
