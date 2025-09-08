@@ -4,10 +4,10 @@
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Save, PlusCircle, X } from "lucide-react";
+import { Save, PlusCircle, X, Notebook } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type Note = {
   id: string;
@@ -17,10 +17,14 @@ type Note = {
 
 export default function NotebookPage() {
   const [notes, setNotes] = useState<Note[]>([
-    { id: "note-1", title: "My First Note", content: "" },
+    { id: "note-1", title: "My First Note", content: "This is the content of my first note." },
+    { id: "note-2", title: "Meeting Ideas", content: "- Discuss Q3 roadmap\n- Brainstorm new features" },
+    { id: "note-3", title: "Shopping List", content: "Milk, Bread, Eggs" },
   ]);
-  const [activeTab, setActiveTab] = useState("note-1");
+  const [activeNoteId, setActiveNoteId] = useState("note-1");
   const { toast } = useToast();
+  
+  const activeNote = notes.find(n => n.id === activeNoteId) || notes[0];
 
   const handleSave = () => {
     // In a real app, you would save this to a database.
@@ -34,15 +38,14 @@ export default function NotebookPage() {
     const newNoteId = `note-${Date.now()}`;
     const newNote: Note = {
       id: newNoteId,
-      title: `Note ${notes.length + 1}`,
+      title: `Untitled Note`,
       content: "",
     };
     setNotes([...notes, newNote]);
-    setActiveTab(newNoteId);
+    setActiveNoteId(newNoteId);
   };
   
   const removeNote = (noteIdToRemove: string) => {
-    // Prevent removing the last note
     if (notes.length <= 1) {
         toast({
             variant: "destructive",
@@ -54,23 +57,18 @@ export default function NotebookPage() {
     const newNotes = notes.filter((note) => note.id !== noteIdToRemove);
     setNotes(newNotes);
 
-    // If the active tab is being removed, switch to a different tab
-    if (activeTab === noteIdToRemove) {
+    if (activeNoteId === noteIdToRemove) {
       if (noteIndex > 0) {
-        setActiveTab(newNotes[noteIndex-1].id);
+        setActiveNoteId(newNotes[noteIndex - 1].id);
       } else {
-        setActiveTab(newNotes[0].id);
+        setActiveNoteId(newNotes[0].id);
       }
     }
   };
 
-  const updateNoteContent = (noteId: string, content: string) => {
-    setNotes(notes.map((note) => (note.id === noteId ? { ...note, content } : note)));
+  const updateNote = (noteId: string, updates: Partial<Note>) => {
+    setNotes(notes.map((note) => (note.id === noteId ? { ...note, ...updates } : note)));
   };
-
-  const updateNoteTitle = (noteId: string, title: string) => {
-     setNotes(notes.map((note) => (note.id === noteId ? { ...note, title } : note)));
-  }
 
   return (
     <div className="flex flex-col h-full p-4 sm:p-6 md:p-8 gap-8">
@@ -88,44 +86,56 @@ export default function NotebookPage() {
             </Button>
         </div>
       </header>
-      <div className="flex-grow flex flex-col">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-grow flex flex-col">
-            <div className="flex items-center">
-              <TabsList>
-                  {notes.map((note) => (
-                      <TabsTrigger key={note.id} value={note.id} className="relative group pr-8">
-                          <Input 
-                            value={note.title}
-                            onChange={(e) => updateNoteTitle(note.id, e.target.value)}
-                            className="bg-transparent border-none focus-visible:ring-0 p-0 h-auto"
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            className="absolute right-0 h-full w-8 opacity-50 group-hover:opacity-100"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                removeNote(note.id);
-                            }}
-                          >
-                            <X className="h-4 w-4"/>
-                          </Button>
-                      </TabsTrigger>
-                  ))}
-              </TabsList>
-            </div>
-            {notes.map((note) => (
-                <TabsContent key={note.id} value={note.id} className="flex-grow mt-2">
+      <div className="grid lg:grid-cols-4 gap-8 flex-grow">
+        <Card className="lg:col-span-1">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Notebook className="h-5 w-5"/> Saved Notes</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="space-y-2">
+                    {notes.map(note => (
+                        <Button 
+                            key={note.id}
+                            variant={note.id === activeNoteId ? 'secondary' : 'ghost'}
+                            className="w-full justify-start group"
+                            onClick={() => setActiveNoteId(note.id)}
+                        >
+                            <span className="flex-1 text-left truncate">{note.title}</span>
+                             <X 
+                                className="h-4 w-4 ml-2 text-muted-foreground opacity-0 group-hover:opacity-100"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeNote(note.id);
+                                }}
+                            />
+                        </Button>
+                    ))}
+                </div>
+            </CardContent>
+        </Card>
+        <div className="lg:col-span-3 flex flex-col gap-4">
+            {activeNote ? (
+                <>
+                    <input
+                        type="text"
+                        value={activeNote.title}
+                        onChange={(e) => updateNote(activeNote.id, { title: e.target.value })}
+                        className="text-2xl font-bold bg-transparent border-none focus:ring-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    />
                     <Textarea
+                        key={activeNote.id}
                         placeholder="Start writing your notes here..."
                         className="flex-grow text-base p-4 h-full"
-                        value={note.content}
-                        onChange={(e) => updateNoteContent(note.id, e.target.value)}
+                        value={activeNote.content}
+                        onChange={(e) => updateNote(activeNote.id, { content: e.target.value })}
                     />
-                </TabsContent>
-            ))}
-        </Tabs>
+                </>
+            ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                    <p>Select a note or create a new one to get started.</p>
+                </div>
+            )}
+        </div>
       </div>
     </div>
   );
