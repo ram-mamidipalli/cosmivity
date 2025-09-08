@@ -1,13 +1,14 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Code2, Play, Upload, Save } from "lucide-react";
+import { cn } from '@/lib/utils';
 
 const sampleCode = {
     c: `#include <stdio.h>\n\nint main() {\n    printf("Hello, World!");\n    return 0;\n}`,
@@ -22,6 +23,21 @@ export default function CompilerPage() {
     const [code, setCode] = useState(sampleCode[language]);
     const [output, setOutput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [lineNumbers, setLineNumbers] = useState('1');
+
+    const lineNumbersRef = useRef<HTMLTextAreaElement>(null);
+    const codeTextAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        const lineCount = code.split('\n').length;
+        setLineNumbers(Array.from({ length: lineCount }, (_, i) => i + 1).join('\n'));
+    }, [code]);
+
+    const handleScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+        if (lineNumbersRef.current) {
+            lineNumbersRef.current.scrollTop = e.currentTarget.scrollTop;
+        }
+    };
 
     const handleLanguageChange = (lang: keyof typeof sampleCode) => {
         setLanguage(lang);
@@ -87,12 +103,20 @@ export default function CompilerPage() {
                 </div>
                 
                 <Card className="flex-grow flex flex-col min-h-0">
-                    <CardContent className="p-0 flex-1 flex flex-col">
+                    <CardContent className="p-0 flex-1 flex flex-row">
                         <Textarea 
+                            ref={lineNumbersRef}
+                            readOnly
+                            value={lineNumbers}
+                            className="w-12 text-right text-muted-foreground bg-zinc-900 border-r border-zinc-700 resize-none font-code text-base focus-visible:ring-0 focus-visible:ring-offset-0 p-2 text-green-400/50 rounded-l-lg rounded-r-none"
+                        />
+                        <Textarea 
+                            ref={codeTextAreaRef}
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
+                            onScroll={handleScroll}
                             placeholder="Write your code here..."
-                            className="h-full w-full rounded-t-lg rounded-b-none border-0 resize-none font-code text-base bg-zinc-900 text-green-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+                            className="h-full w-full rounded-t-lg rounded-b-none border-0 resize-none font-code text-base bg-zinc-900 text-green-400 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-l-none"
                         />
                     </CardContent>
                 </Card>
