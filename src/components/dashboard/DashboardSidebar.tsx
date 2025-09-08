@@ -64,7 +64,6 @@ const studentMenuItems = [
 
 const adminMenuItems = [
   { href: "/dashboard/admin", label: "Admin", icon: Shield },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ];
 
 const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
