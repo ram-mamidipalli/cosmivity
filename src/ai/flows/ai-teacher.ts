@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -22,12 +23,11 @@ const AiTeacherOutputSchema = z.object({
 });
 export type AiTeacherOutput = z.infer<typeof AiTeacherOutputSchema>;
 
-export async function aiTeacher(input: AiTeacherInput): Promise<AiTeacherOutput> {
-  const prompt = ai.definePrompt({
-    name: 'aiTeacherPrompt',
-    input: { schema: AiTeacherInputSchema },
-    output: { schema: AiTeacherOutputSchema },
-    prompt: `You are an expert AI Teacher. Your goal is to help students by answering their questions and clearing their doubts on any topic. Provide clear, concise, and helpful explanations.
+const prompt = ai.definePrompt({
+  name: 'aiTeacherPrompt',
+  input: { schema: AiTeacherInputSchema },
+  output: { schema: AiTeacherOutputSchema },
+  prompt: `You are an expert AI Teacher. Your goal is to help students by answering their questions and clearing their doubts on any topic. Provide clear, concise, and helpful explanations.
 
 You are continuing a conversation. Here is the history:
 {{#each conversationHistory}}
@@ -41,19 +41,20 @@ You are continuing a conversation. Here is the history:
 Student's latest query: {{{query}}}
 
 Provide your response as an expert teacher.`,
-  });
+});
 
-  const aiTeacherFlow = ai.defineFlow(
-    {
-      name: 'aiTeacherFlow',
-      inputSchema: AiTeacherInputSchema,
-      outputSchema: AiTeacherOutputSchema,
-    },
-    async (input) => {
-      const { output } = await prompt(input);
-      return output!;
-    }
-  );
+const aiTeacherFlow = ai.defineFlow(
+  {
+    name: 'aiTeacherFlow',
+    inputSchema: AiTeacherInputSchema,
+    outputSchema: AiTeacherOutputSchema,
+  },
+  async (input) => {
+    const { output } = await prompt(input);
+    return output!;
+  }
+);
   
+export async function aiTeacher(input: AiTeacherInput): Promise<AiTeacherOutput> {
   return aiTeacherFlow(input);
 }
