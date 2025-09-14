@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import AiTeacher from "@/components/dashboard/AiTeacher";
 
 const learningPath = [
     {
@@ -174,7 +175,6 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-center gap-2">
           <div className="relative hidden md:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <input 
               placeholder="Search courses, debates..." 
               className="pl-10 pr-4 py-2 rounded-full border bg-background w-64"
@@ -340,6 +340,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="xl:col-span-1 flex flex-col gap-8">
+            <AiTeacher />
             <Card>
                 <CardHeader>
                     <CardTitle>Leaderboard</CardTitle>

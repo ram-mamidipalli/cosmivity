@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/ai-english-coach.ts';
 import '@/ai/flows/generate-test-questions.ts';
+import '@/ai/flows/ai-teacher.ts';
