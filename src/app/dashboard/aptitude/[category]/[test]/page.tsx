@@ -17,8 +17,15 @@ export default function TestPage() {
   const router = useRouter();
   const category = Array.isArray(params.category) ? params.category[0] : params.category;
   const test = Array.isArray(params.test) ? params.test[0] : params.test;
-  const searchParams = new URLSearchParams(window.location.search);
-  const numberOfQuestions = parseInt(searchParams.get('questions') || '10', 10);
+  
+  // A check to ensure window is defined before using searchParams
+  const [numberOfQuestions, setNumberOfQuestions] = useState(10);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      setNumberOfQuestions(parseInt(searchParams.get('questions') || '10', 10));
+    }
+  }, []);
 
 
   const testName = test.replace(/-/g, " ");
@@ -42,7 +49,7 @@ export default function TestPage() {
       }
     };
 
-    if(testName) {
+    if(testName && numberOfQuestions) {
         fetchQuestions();
     }
   }, [testName, numberOfQuestions]);
@@ -72,9 +79,10 @@ export default function TestPage() {
   }
 
   const handleSubmit = () => {
-    // Navigate to report page, passing answers in query params for now
-    const query = new URLSearchParams(answers as any).toString();
-    router.push(`/dashboard/aptitude/${category}/${test}/report?${query}`);
+    // Use sessionStorage to pass data to the report page
+    sessionStorage.setItem('testQuestions', JSON.stringify(questions));
+    sessionStorage.setItem('userAnswers', JSON.stringify(answers));
+    router.push(`/dashboard/aptitude/${category}/${test}/report`);
   }
 
   const isLastQuestion = currentQuestionIndex >= questions.length - 1;
@@ -125,7 +133,7 @@ export default function TestPage() {
                 Previous
                 </Button>
                 {isLastQuestion ? (
-                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading}>
+                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading || questions.length === 0}>
                         Submit Test
                     </Button>
                 ) : (
