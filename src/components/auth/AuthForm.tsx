@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, User, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
 import { auth } from "@/lib/firebase";
@@ -19,6 +19,7 @@ import {
   signInWithPopup 
 } from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const GoogleIcon = () => (
     <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
@@ -201,6 +202,21 @@ function AuthFormContent() {
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="m@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
+          {isSignUp && (
+            <div className="grid gap-2">
+              <Label>Gender</Label>
+              <RadioGroup defaultValue="male" className="flex gap-4">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="male" id="male" />
+                  <Label htmlFor="male">Male</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="female" id="female" />
+                  <Label htmlFor="female">Female</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          )}
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <div className="relative">

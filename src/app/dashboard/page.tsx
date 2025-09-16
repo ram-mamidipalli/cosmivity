@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight, Settings, LogOut, Flame, Trophy, Calendar, CheckCircle, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronDown, ClipboardCheck, Timer, Moon, Sun } from "lucide-react";
+import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight, Settings, LogOut, Flame, Trophy, Calendar, CheckCircle, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronDown, ClipboardCheck, Timer, Moon, Sun, User as UserIcon } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
@@ -64,16 +64,16 @@ const quickAccessItems = [
 ];
 
 const leaderboardData = [
-    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
-    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://images.unsplash.com/photo-1714415182234-0672970be61a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman smiling" },
-    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait", isCurrentUser: true },
-    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man headshot" },
-    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1573496358961-3c82861ab8f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
-    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
-    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://images.unsplash.com/photo-1692736475357-7c18bfbb808b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlibrb-4.1.0&q=80&w=1080", hint: "woman smiling" },
-    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib-rb-4.1.0&q=80&w=1080", hint: "man headshot" },
-    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib-rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
-    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1624395213043-fa2e123b2656?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib-rb-4.1.0&q=80&w=1080", hint: "man portrait" },
+    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
+    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
+    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon", isCurrentUser: true },
+    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
+    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
+    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
+    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
+    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
+    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
+    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
 ];
 
 const achievements = [
@@ -119,7 +119,6 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    setIsClient(true);
     setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     
     const darkModePreference = localStorage.getItem('darkMode') === 'true';
@@ -127,6 +126,7 @@ export default function DashboardPage() {
         setIsDarkMode(darkModePreference);
         document.documentElement.classList.add('dark');
     }
+    setIsClient(true);
   }, []);
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -165,7 +165,7 @@ export default function DashboardPage() {
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold font-headline">Good Evening, {user?.displayName || 'Aakash'} 👋</h1>
-          {currentDate && isClient && (
+          {isClient && currentDate && (
             <p className="text-muted-foreground flex items-center gap-2 mt-1">
                 <Calendar className="h-4 w-4" /> {currentDate}
             </p>
@@ -211,7 +211,6 @@ export default function DashboardPage() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Avatar>
-                  <AvatarImage src={user?.photoURL || "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080"} alt={user?.displayName || "Aakash"} data-ai-hint="man portrait"/>
                   <AvatarFallback>{user?.displayName ? user.displayName.charAt(0) : 'A'}</AvatarFallback>
                 </Avatar>
               </Button>
@@ -368,8 +367,7 @@ export default function DashboardPage() {
                                 <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${userItem.isCurrentUser ? 'bg-primary/10' : ''}`}>
                                     <span className="font-bold text-sm w-4 font-code">#{index + 1}</span>
                                     <Avatar className="h-10 w-10">
-                                        <AvatarImage src={userItem.avatar} data-ai-hint={userItem.hint} />
-                                        <AvatarFallback>{userItem.name.charAt(0)}</AvatarFallback>
+                                        <AvatarFallback><UserIcon /></AvatarFallback>
                                     </Avatar>
                                     <div className="flex-grow">
                                         <p className="font-semibold">{userItem.name}</p>

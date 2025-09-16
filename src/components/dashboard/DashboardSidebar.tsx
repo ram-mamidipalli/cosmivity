@@ -26,6 +26,7 @@ import {
   NotebookText,
   BarChart3,
   Shield,
+  User as UserIcon,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -169,8 +170,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
                     <Avatar>
-                        <AvatarImage src={user?.photoURL || "https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080"} alt={user?.displayName || "User"} data-ai-hint="man portrait"/>
-                        <AvatarFallback>{user?.displayName ? user.displayName.charAt(0) : 'U'}</AvatarFallback>
+                         <AvatarFallback><UserIcon /></AvatarFallback>
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
