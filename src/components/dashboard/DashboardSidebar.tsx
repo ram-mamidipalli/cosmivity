@@ -170,6 +170,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
                     <Avatar>
+                         <AvatarImage src="https://placehold.co/40x40.png" alt="User" data-ai-hint="boy icon" />
                          <AvatarFallback><UserIcon /></AvatarFallback>
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (

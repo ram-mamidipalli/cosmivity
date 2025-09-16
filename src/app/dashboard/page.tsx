@@ -64,16 +64,16 @@ const quickAccessItems = [
 ];
 
 const leaderboardData = [
-    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
-    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
-    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon", isCurrentUser: true },
-    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
-    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
-    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
-    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
-    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
-    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://www.flaticon.com/free-icon/woman_4140047", hint: "woman icon" },
-    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://www.flaticon.com/free-icon/boy_1999625", hint: "boy icon" },
+    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://placehold.co/40x40.png", hint: "boy icon" },
+    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://placehold.co/40x40.png", hint: "woman icon" },
+    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://placehold.co/40x40.png", hint: "boy icon", isCurrentUser: true },
+    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://placehold.co/40x40.png", hint: "boy icon" },
+    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://placehold.co/40x40.png", hint: "woman icon" },
+    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://placehold.co/40x40.png", hint: "boy icon" },
+    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://placehold.co/40x40.png", hint: "woman icon" },
+    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://placehold.co/40x40.png", hint: "boy icon" },
+    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://placehold.co/40x40.png", hint: "woman icon" },
+    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://placehold.co/40x40.png", hint: "boy icon" },
 ];
 
 const achievements = [
@@ -119,6 +119,7 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
+    setIsClient(true);
     setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     
     const darkModePreference = localStorage.getItem('darkMode') === 'true';
@@ -126,7 +127,6 @@ export default function DashboardPage() {
         setIsDarkMode(darkModePreference);
         document.documentElement.classList.add('dark');
     }
-    setIsClient(true);
   }, []);
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -211,6 +211,7 @@ export default function DashboardPage() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Avatar>
+                  <AvatarImage src="https://placehold.co/40x40.png" alt="User" data-ai-hint="boy icon"/>
                   <AvatarFallback>{user?.displayName ? user.displayName.charAt(0) : 'A'}</AvatarFallback>
                 </Avatar>
               </Button>
@@ -367,6 +368,7 @@ export default function DashboardPage() {
                                 <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${userItem.isCurrentUser ? 'bg-primary/10' : ''}`}>
                                     <span className="font-bold text-sm w-4 font-code">#{index + 1}</span>
                                     <Avatar className="h-10 w-10">
+                                        <AvatarImage src={userItem.avatar} alt={userItem.name} data-ai-hint={userItem.hint} />
                                         <AvatarFallback><UserIcon /></AvatarFallback>
                                     </Avatar>
                                     <div className="flex-grow">
