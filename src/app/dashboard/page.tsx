@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -17,6 +18,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import AiTeacher from "@/components/dashboard/AiTeacher";
+import { useAuth } from "@/hooks/use-auth";
+import { auth } from "@/lib/firebase";
 
 const learningPath = [
     {
@@ -69,8 +72,8 @@ const leaderboardData = [
     { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
     { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://images.unsplash.com/photo-1692736475357-7c18bfbb808b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlibrb-4.1.0&q=80&w=1080", hint: "woman smiling" },
     { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib-rb-4.1.0&q=80&w=1080", hint: "man headshot" },
-    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
-    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1624395213043-fa2e123b2656?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "man portrait" },
+    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib-rb-4.1.0&q=80&w=1080", hint: "woman headshot" },
+    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1624395213043-fa2e123b2656?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib-rb-4.1.0&q=80&w=1080", hint: "man portrait" },
 ];
 
 const achievements = [
@@ -108,17 +111,21 @@ export default function DashboardPage() {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { user } = useAuth();
+  
+  const handleLogout = async () => {
+    await auth.signOut();
+    router.push('/auth');
+  };
 
   useEffect(() => {
     setIsClient(true);
     setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     
     const darkModePreference = localStorage.getItem('darkMode') === 'true';
-    setIsDarkMode(darkModePreference);
-    if (darkModePreference) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    if(darkModePreference) {
+        setIsDarkMode(darkModePreference);
+        document.documentElement.classList.add('dark');
     }
   }, []);
 
@@ -157,8 +164,8 @@ export default function DashboardPage() {
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Good Evening, Aakash 👋</h1>
-          {currentDate && (
+          <h1 className="text-3xl font-bold font-headline">Good Evening, {user?.displayName || 'Aakash'} 👋</h1>
+          {currentDate && isClient && (
             <p className="text-muted-foreground flex items-center gap-2 mt-1">
                 <Calendar className="h-4 w-4" /> {currentDate}
             </p>
@@ -179,16 +186,18 @@ export default function DashboardPage() {
             </div>
         </div>
         <div className="flex items-center gap-2">
-          {isClient && <div className="relative hidden md:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <input 
-              placeholder="Search courses, debates..." 
-              className="pl-10 pr-4 py-2 rounded-full border bg-background w-64"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleSearch}
-            />
-          </div>}
+          {isClient && (
+            <div className="relative hidden md:block">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <input 
+                placeholder="Search courses, debates..." 
+                className="pl-10 pr-4 py-2 rounded-full border bg-background w-64"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
+              />
+            </div>
+          )}
           <Button variant="outline" asChild>
             <Link href="/dashboard/analytics">
                 <BarChart3 className="mr-2" />
@@ -202,17 +211,17 @@ export default function DashboardPage() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Avatar>
-                  <AvatarImage src="https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Aakash" data-ai-hint="man portrait"/>
-                  <AvatarFallback>A</AvatarFallback>
+                  <AvatarImage src={user?.photoURL || "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080"} alt={user?.displayName || "Aakash"} data-ai-hint="man portrait"/>
+                  <AvatarFallback>{user?.displayName ? user.displayName.charAt(0) : 'A'}</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">Aakash</p>
+                        <p className="text-sm font-medium leading-none">{user?.displayName || 'Aakash'}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                        aakash@example.com
+                        {user?.email || 'aakash@example.com'}
                         </p>
                     </div>
                 </DropdownMenuLabel>
@@ -231,7 +240,7 @@ export default function DashboardPage() {
                     </div>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => router.push('/auth')}>
+                <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                 </DropdownMenuItem>
@@ -355,18 +364,18 @@ export default function DashboardPage() {
                 <CardContent>
                     <ScrollArea className="h-80">
                         <ul className="space-y-4 pr-4">
-                            {leaderboardData.map((user, index) => (
-                                <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${user.isCurrentUser ? 'bg-primary/10' : ''}`}>
+                            {leaderboardData.map((userItem, index) => (
+                                <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${userItem.isCurrentUser ? 'bg-primary/10' : ''}`}>
                                     <span className="font-bold text-sm w-4 font-code">#{index + 1}</span>
                                     <Avatar className="h-10 w-10">
-                                        <AvatarImage src={user.avatar} data-ai-hint={user.hint} />
-                                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                        <AvatarImage src={userItem.avatar} data-ai-hint={userItem.hint} />
+                                        <AvatarFallback>{userItem.name.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     <div className="flex-grow">
-                                        <p className="font-semibold">{user.name}</p>
-                                        <p className="text-xs text-muted-foreground">{user.school}</p>
+                                        <p className="font-semibold">{userItem.name}</p>
+                                        <p className="text-xs text-muted-foreground">{userItem.school}</p>
                                     </div>
-                                    <span className="font-bold text-primary font-code">{user.xp}</span>
+                                    <span className="font-bold text-primary font-code">{userItem.xp}</span>
                                 </li>
                             ))}
                         </ul>

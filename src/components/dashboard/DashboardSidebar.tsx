@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Link from "next/link";
@@ -40,6 +41,8 @@ import { cn } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAuth } from "@/hooks/use-auth";
+import { auth } from "@/lib/firebase";
 
 
 const studentMenuItems = [
@@ -118,9 +121,15 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const isAdmin = pathname.startsWith('/dashboard/admin');
   const menuItems = isAdmin ? adminMenuItems : studentMenuItems.filter(item => item.href !== '/dashboard/admin');
+  
+  const handleLogout = async () => {
+    await auth.signOut();
+    router.push('/auth');
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -160,12 +169,12 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
                     <Avatar>
-                        <AvatarImage src="https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Aakash" data-ai-hint="man portrait"/>
-                        <AvatarFallback>A</AvatarFallback>
+                        <AvatarImage src={user?.photoURL || "https://images.unsplash.com/photo-1615109398623-88346a601842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW58ZW58MHx8fHwxNzUzNzgwMjUzfDA&ixlib=rb-4.1.0&q=80&w=1080"} alt={user?.displayName || "User"} data-ai-hint="man portrait"/>
+                        <AvatarFallback>{user?.displayName ? user.displayName.charAt(0) : 'U'}</AvatarFallback>
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
-                        <p className="font-semibold text-sm">{isAdmin ? "Admin" : "Aakash"}</p>
+                        <p className="font-semibold text-sm">{isAdmin ? "Admin" : user?.displayName || "Aakash"}</p>
                         <p className="text-xs text-muted-foreground font-code">{isAdmin ? "Institution" : "2,650 XP"}</p>
                         </div>
                     )}
@@ -174,9 +183,9 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuContent className="w-56 mb-2" align="end" forceMount>
                  <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{isAdmin ? "Admin" : "Aakash"}</p>
+                        <p className="text-sm font-medium leading-none">{isAdmin ? "Admin" : user?.displayName || "Aakash"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                        {isAdmin ? "admin@example.com" : "aakash@example.com"}
+                        {isAdmin ? "admin@example.com" : user?.email || "aakash@example.com"}
                         </p>
                     </div>
                 </DropdownMenuLabel>
@@ -186,7 +195,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                     <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => router.push('/auth')}>
+                <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                 </DropdownMenuItem>

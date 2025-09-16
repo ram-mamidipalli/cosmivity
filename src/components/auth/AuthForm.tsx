@@ -9,12 +9,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
+import { auth } from "@/lib/firebase";
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  GoogleAuthProvider, 
+  signInWithPopup 
+} from "firebase/auth";
+import { useToast } from "@/hooks/use-toast";
 
 const GoogleIcon = () => (
-    <svg className="h-5 w-5" viewBox="0 0 24 24">
+    <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
         <path
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
         fill="#4285F4"
@@ -36,25 +43,58 @@ const GoogleIcon = () => (
 );
 
 function AuthFormContent() {
-  const [authType, setAuthType] = useState('signup'); // 'signin', 'signup', 'institution'
+  const [authType, setAuthType] = useState('signup');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
-  const handleAuthAction = () => {
-    // In a real app, you'd handle Firebase auth here.
-    if (authType === 'institution') {
-        router.push("/dashboard/admin");
-    } else {
-        router.push("/dashboard");
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      router.push("/dashboard");
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "Authentication failed", description: error.message });
+      setIsLoading(false);
     }
-  }
+  };
+
+  const handleEmailPasswordAuth = async () => {
+    setIsLoading(true);
+    if (authType === 'signup') {
+      if (password !== confirmPassword) {
+        toast({ variant: "destructive", title: "Passwords do not match" });
+        setIsLoading(false);
+        return;
+      }
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        router.push("/dashboard");
+      } catch (error: any) {
+        toast({ variant: "destructive", title: "Sign up failed", description: error.message });
+        setIsLoading(false);
+      }
+    } else { // signin
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push("/dashboard");
+      } catch (error: any) {
+        toast({ variant: "destructive", title: "Sign in failed", description: error.message });
+        setIsLoading(false);
+      }
+    }
+  };
 
   const isSignUp = authType === 'signup';
   const isSignIn = authType === 'signin';
   const isInstitution = authType === 'institution';
-
+  
   const getTitle = () => {
       if (isSignUp) return 'Create a Student Account';
       if (isSignIn) return 'Welcome Back';
@@ -107,7 +147,7 @@ function AuthFormContent() {
         <div className="grid gap-4">
           {!isInstitution && (
             <>
-                <Button variant="outline" className="w-full" onClick={handleAuthAction}>
+                <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
                     <GoogleIcon />
                     Continue with Google
                 </Button>
@@ -123,7 +163,7 @@ function AuthFormContent() {
                 </div>
             </>
           )}
-          {isSignUp && (
+          {isSignUp && !isInstitution && (
              <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="first-name">First Name</Label>
@@ -159,25 +199,8 @@ function AuthFormContent() {
           )}
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" required />
+            <Input id="email" type="email" placeholder="m@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-          {(isSignUp || isInstitution) && (
-            <>
-                <div className="grid gap-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <div className="flex gap-2">
-                        <Input id="phone" type="tel" placeholder="+91 12345 67890" required />
-                        <Button onClick={() => setIsOtpSent(true)}>Send OTP</Button>
-                    </div>
-                </div>
-                {isOtpSent && (
-                    <div className="grid gap-2">
-                        <Label htmlFor="otp">Enter OTP</Label>
-                        <Input id="otp" type="text" placeholder="6-digit OTP" required />
-                    </div>
-                )}
-            </>
-          )}
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <div className="relative">
@@ -185,21 +208,19 @@ function AuthFormContent() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="button"
                 className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
           </div>
-          {(isSignUp || isInstitution) && (
+          {isSignUp && !isInstitution && (
             <div className="grid gap-2">
               <Label htmlFor="confirm-password">Confirm Password</Label>
               <div className="relative">
@@ -207,23 +228,21 @@ function AuthFormContent() {
                   id="confirm-password"
                   type={showConfirmPassword ? "text" : "password"}
                   required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
+                  {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
             </div>
           )}
-          <Button type="submit" className="w-full" onClick={handleAuthAction}>
-            {isSignUp ? 'Create Account' : isSignIn ? 'Sign In' : 'Register Institution'}
+          <Button type="submit" className="w-full" onClick={isInstitution ? () => router.push('/dashboard/admin') : handleEmailPasswordAuth} disabled={isLoading}>
+            {isLoading ? "Processing..." : isSignUp ? 'Create Account' : isSignIn ? 'Sign In' : 'Register Institution'}
           </Button>
         </div>
       </CardContent>

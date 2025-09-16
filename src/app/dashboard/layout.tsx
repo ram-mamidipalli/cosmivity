@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState } from "react";
@@ -6,13 +7,24 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { AuthProvider, useAuth } from "@/hooks/use-auth";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function DashboardContent({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { loading } = useAuth();
+
+  if (loading) {
+    return (
+        <div className="flex min-h-screen">
+            <Skeleton className="hidden md:block w-64 border-r" />
+            <div className="flex-1 p-8">
+                <Skeleton className="h-16 w-1/3 mb-8" />
+                <Skeleton className="h-64 w-full" />
+            </div>
+        </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-secondary/50">
@@ -34,5 +46,18 @@ export default function DashboardLayout({
         <main className="flex-1 p-4 sm:p-6 md:p-8">{children}</main>
       </div>
     </div>
+  );
+}
+
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AuthProvider>
+        <DashboardContent>{children}</DashboardContent>
+    </AuthProvider>
   );
 }
