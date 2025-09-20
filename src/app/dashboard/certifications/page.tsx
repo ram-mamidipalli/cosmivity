@@ -20,6 +20,7 @@ const certifications = [
         image: "https://placehold.co/600x400.png",
         hint: "google cloud logo",
         tags: ["GCP", "Cloud", "Architecture"],
+        link: "https://cloud.google.com/certification/cloud-architect"
     },
     {
         id: "aws-solutions-architect",
@@ -30,6 +31,7 @@ const certifications = [
         image: "https://placehold.co/600x400.png",
         hint: "aws logo",
         tags: ["AWS", "Cloud", "Solutions Architect"],
+        link: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
     },
     {
         id: "azure-fundamentals",
@@ -40,6 +42,7 @@ const certifications = [
         image: "https://placehold.co/600x400.png",
         hint: "azure logo",
         tags: ["Azure", "Microsoft", "Cloud"],
+        link: "https://learn.microsoft.com/en-us/certifications/azure-fundamentals/"
     },
     {
         id: "cissp",
@@ -50,6 +53,7 @@ const certifications = [
         image: "https://placehold.co/600x400.png",
         hint: "cybersecurity lock",
         tags: ["Security", "CISSP", "Cybersecurity"],
+        link: "https://www.isc2.org/Certifications/CISSP"
     },
     {
         id: "pmp",
@@ -60,6 +64,7 @@ const certifications = [
         image: "https://placehold.co/600x400.png",
         hint: "project plan chart",
         tags: ["PMP", "Management", "Agile"],
+        link: "https://www.pmi.org/certifications/project-management-pmp"
     },
     {
         id: "csm",
@@ -70,7 +75,41 @@ const certifications = [
         image: "https://placehold.co/600x400.png",
         hint: "scrum board",
         tags: ["Scrum", "Agile", "CSM"],
+        link: "https://www.scrumalliance.org/get-certified/scrum-master-certifications/csm"
     },
+    {
+        id: "ceh",
+        title: "Certified Ethical Hacker (CEH)",
+        provider: "EC-Council",
+        level: "Professional",
+        domain: "Cybersecurity",
+        image: "https://placehold.co/600x400.png",
+        hint: "hacker code screen",
+        tags: ["Security", "Hacking", "Ethical"],
+        link: "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"
+    },
+    {
+        id: "comptia-security-plus",
+        title: "CompTIA Security+",
+        provider: "CompTIA",
+        level: "Fundamental",
+        domain: "Cybersecurity",
+        image: "https://placehold.co/600x400.png",
+        hint: "security shield",
+        tags: ["Security", "CompTIA"],
+        link: "https://www.comptia.org/certifications/security"
+    },
+    {
+        id: "google-data-analytics",
+        title: "Google Data Analytics Professional Certificate",
+        provider: "Google",
+        level: "Fundamental",
+        domain: "Data Analytics",
+        image: "https://placehold.co/600x400.png",
+        hint: "data charts",
+        tags: ["Data", "Analytics", "Google"],
+        link: "https://www.coursera.org/professional-certificates/google-data-analytics"
+    }
 ];
 
 export default function CertificationsPage() {
@@ -96,6 +135,7 @@ export default function CertificationsPage() {
                         <SelectItem value="security">Cybersecurity</SelectItem>
                         <SelectItem value="pm">Project Management</SelectItem>
                         <SelectItem value="agile">Agile & Scrum</SelectItem>
+                        <SelectItem value="data">Data Analytics</SelectItem>
                     </SelectContent>
                 </Select>
                  <Select>

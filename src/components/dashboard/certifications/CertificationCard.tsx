@@ -12,7 +12,7 @@ export default function CertificationCard({ certification }: { certification: an
     return (
         <Card className="hover:shadow-lg transition-shadow flex flex-col group overflow-hidden">
             <CardHeader className="p-0 relative">
-                <Link href={`/dashboard/certifications/${certification.id}`}>
+                <Link href={certification.link || '#'} target="_blank" rel="noopener noreferrer">
                     <Image 
                         src={certification.image} 
                         alt={certification.title} 
@@ -43,7 +43,7 @@ export default function CertificationCard({ certification }: { certification: an
                     ))}
                 </div>
                  <Button asChild>
-                    <Link href={`/dashboard/certifications/${certification.id}`}>View Details</Link>
+                    <Link href={certification.link || '#'} target="_blank" rel="noopener noreferrer">View Details</Link>
                  </Button>
             </CardFooter>
         </Card>
