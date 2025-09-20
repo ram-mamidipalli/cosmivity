@@ -117,14 +117,15 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
+    // This code now runs only on the client
+    setIsClient(true);
     setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     
     const darkModePreference = localStorage.getItem('darkMode') === 'true';
-    if(darkModePreference) {
-        setIsDarkMode(darkModePreference);
+    setIsDarkMode(darkModePreference);
+    if (darkModePreference) {
         document.documentElement.classList.add('dark');
     }
-    setIsClient(true);
   }, []);
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
