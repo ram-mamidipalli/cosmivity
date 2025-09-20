@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 const companies = [
-  { name: 'Google', hint: 'google logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c30?w=120&h=60' },
+  { name: 'Meta', hint: 'meta logo', src: 'https://images.unsplash.com/photo-1706879349328-4a05bb3e16ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtZXRhfGVufDB8fHx8MTc1ODM1OTAxMHww&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Microsoft', hint: 'microsoft logo', src: 'https://images.unsplash.com/photo-1612810806563-4cb8265db55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsb2dvfGVufDB8fHx8MTc1ODM1MzIwNXww&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Slack', hint: 'slack logo', src: 'https://images.unsplash.com/photo-1705988142466-e468bc654eeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzbGFja3xlbnwwfHx8fDE3NTgyOTQ4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Tata', hint: 'tata logo', src: 'https://images.unsplash.com/photo-1621768216002-5ac171876625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhcHBsZXxlbnwwfHx8fDE3NTgyOTAwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080' },
@@ -33,4 +33,3 @@ export default function TrustedBy() {
     </section>
   );
 }
-
