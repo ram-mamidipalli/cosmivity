@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 
 const companies = [
@@ -8,7 +9,7 @@ const companies = [
   { name: 'TCS', hint: 'tcs logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Accenture', hint: 'accenture logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
   { name: 'Amazon', hint: 'amazon logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
-  { name: 'Deloitte', hint: 'deloitte logo', src: 'https://images.unsplash.com/photo-1678483790053-71367bc7a02c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb29nbGUlMjBsb2dvfGVufDB8fHx8MTc1MzgwMzkzOXww&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Deloitte', hint: 'slack logo', src: 'https://images.unsplash.com/photo-1705988142466-e468bc654eeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzbGFja3xlbnwwfHx8fDE3NTgyOTQ4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
 export default function TrustedBy() {
