@@ -11,7 +11,6 @@ import { aiEnglishCoach } from "@/ai/flows/ai-english-coach";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
-import { Message as GenkitMessage } from "genkit/experimental/ai";
 
 const suggestions = [
     "Hello, how are you today?",
