@@ -195,7 +195,6 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                         item={item} 
                         isCollapsed={isMobile ? false : isCollapsed} 
                         onLinkClick={onLinkClick}
-                        disabled
                       />
                     ))}
                 </>
