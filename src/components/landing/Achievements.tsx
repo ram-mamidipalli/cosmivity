@@ -3,7 +3,7 @@ import { GraduationCap, BookOpen, Briefcase, Star } from "lucide-react";
 const achievements = [
   {
     icon: <GraduationCap className="h-8 w-8 text-primary" />,
-    value: "50,000+",
+    value: "500+",
     label: "Students Trained",
   },
   {
