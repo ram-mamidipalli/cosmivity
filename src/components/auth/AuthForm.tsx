@@ -148,20 +148,32 @@ function AuthFormContent() {
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="m@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-          {isSignUp && (
-            <div className="grid gap-2">
-              <Label>Gender</Label>
-              <RadioGroup defaultValue="male" className="flex gap-4">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="male" id="male" />
-                  <Label htmlFor="male">Male</Label>
+          {isSignUp && !isInstitution && (
+            <>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                        <Label htmlFor="mobile-number">Mobile Number</Label>
+                        <Input id="mobile-number" type="tel" placeholder="e.g. +91 9876543210" required />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="age">Age</Label>
+                        <Input id="age" type="number" placeholder="e.g. 21" required />
+                    </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="female" id="female" />
-                  <Label htmlFor="female">Female</Label>
+                <div className="grid gap-2">
+                <Label>Gender</Label>
+                <RadioGroup defaultValue="male" className="flex gap-4">
+                    <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="male" id="male" />
+                    <Label htmlFor="male">Male</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="female" id="female" />
+                    <Label htmlFor="female">Female</Label>
+                    </div>
+                </RadioGroup>
                 </div>
-              </RadioGroup>
-            </div>
+            </>
           )}
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
@@ -182,7 +194,7 @@ function AuthFormContent() {
               </button>
             </div>
           </div>
-          {isSignUp && !isInstitution && (
+          {isSignUp && (
             <div className="grid gap-2">
               <Label htmlFor="confirm-password">Confirm Password</Label>
               <div className="relative">
