@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,7 +68,7 @@ const allCertifications = [
         tags: ["Security", "CompTIA"],
         link: "https://www.comptia.org/certifications/security"
     },
-    // Project Management & Data
+    // Project Management
     {
         id: "pmp",
         title: "Project Management Professional (PMP)",
@@ -78,6 +78,7 @@ const allCertifications = [
         tags: ["PMP", "Management", "Agile"],
         link: "https://www.pmi.org/certifications/project-management-pmp"
     },
+    // Agile & Scrum
     {
         id: "csm",
         title: "Certified ScrumMaster (CSM)",
@@ -208,7 +209,7 @@ const allCertifications = [
         tags: ["HTML", "CSS", "JavaScript"],
         link: "https://gaqm.org/certifications/information_technology/cwd"
     },
-    // Java & Python
+    // Programming
     {
         id: "ocp-java",
         title: "Oracle Certified Professional: Java SE Programmer",
@@ -249,17 +250,48 @@ const allCertifications = [
 ];
 
 const ITEMS_PER_PAGE = 12;
+const domains = ["All Domains", ...Array.from(new Set(allCertifications.map(c => c.domain)))];
+
 
 export default function CertificationsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState("All Domains");
+  const [filteredCertifications, setFilteredCertifications] = useState(allCertifications);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(allCertifications.length / ITEMS_PER_PAGE);
+  useEffect(() => {
+    const applyFilters = () => {
+      let results = allCertifications;
+
+      if (searchQuery) {
+        const lowercasedQuery = searchQuery.toLowerCase();
+        results = results.filter(cert =>
+          cert.title.toLowerCase().includes(lowercasedQuery) ||
+          cert.provider.toLowerCase().includes(lowercasedQuery) ||
+          cert.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery))
+        );
+      }
+
+      if (selectedDomain !== "All Domains") {
+        results = results.filter(cert => cert.domain === selectedDomain);
+      }
+
+      setFilteredCertifications(results);
+      setCurrentPage(1); // Reset to first page on new filter
+    };
+    applyFilters();
+  }, [searchQuery, selectedDomain]);
+
+
+  const totalPages = Math.ceil(filteredCertifications.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentCertifications = allCertifications.slice(startIndex, endIndex);
+  const currentCertifications = filteredCertifications.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   return (
@@ -273,39 +305,28 @@ export default function CertificationsPage() {
             <div className="p-4 flex flex-col sm:flex-row gap-4 border-b">
                 <div className="relative flex-grow">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input placeholder="Search for certifications..." className="pl-10 pr-4 py-2 w-full" />
+                    <Input 
+                        placeholder="Search for certifications..." 
+                        className="pl-10 pr-4 py-2 w-full"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
-                 <Select>
-                    <SelectTrigger className="w-full sm:w-[180px]">
+                 <Select value={selectedDomain} onValueChange={setSelectedDomain}>
+                    <SelectTrigger className="w-full sm:w-[240px]">
                         <SelectValue placeholder="Domain" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="cloud">IT & Cloud Computing</SelectItem>
-                        <SelectItem value="security">Cybersecurity</SelectItem>
-                        <SelectItem value="pm">Project Management</SelectItem>
-                        <SelectItem value="agile">Agile & Scrum</SelectItem>
-                        <SelectItem value="data">AI & Data Analytics</SelectItem>
+                        {domains.map(domain => (
+                            <SelectItem key={domain} value={domain}>{domain}</SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
-                 <Select>
-                    <SelectTrigger className="w-full sm:w-[180px]">
-                        <SelectValue placeholder="Level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="fundamental">Fundamental</SelectItem>
-                        <SelectItem value="associate">Associate</SelectItem>
-                        <SelectItem value="professional">Professional</SelectItem>
-                        <SelectItem value="advanced">Advanced</SelectItem>
-                    </SelectContent>
-                </Select>
-                <Button className="w-full sm:w-auto flex-shrink-0">
-                    <ListFilter className="mr-2"/> Filter
-                </Button>
             </div>
              <div className="p-4">
                 <Tabs defaultValue="all">
                     <TabsList>
-                        <TabsTrigger value="all">All Certifications</TabsTrigger>
+                        <TabsTrigger value="all">All Certifications ({filteredCertifications.length})</TabsTrigger>
                         <TabsTrigger value="in-progress">In Progress</TabsTrigger>
                         <TabsTrigger value="completed">Completed</TabsTrigger>
                     </TabsList>
@@ -315,23 +336,34 @@ export default function CertificationsPage() {
                                 <CertificationCard key={cert.id} certification={cert} />
                             ))}
                         </div>
-                         <Pagination className="mt-8">
-                            <PaginationContent>
-                                <PaginationItem>
-                                <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); handlePageChange(Math.max(1, currentPage - 1)); }} />
-                                </PaginationItem>
-                                {[...Array(totalPages)].map((_, i) => (
-                                    <PaginationItem key={i}>
-                                        <PaginationLink href="#" isActive={currentPage === i + 1} onClick={(e) => { e.preventDefault(); handlePageChange(i + 1); }}>
-                                        {i + 1}
-                                        </PaginationLink>
+                        {currentCertifications.length === 0 && (
+                            <div className="text-center py-16">
+                                <Search className="mx-auto h-12 w-12 text-muted-foreground" />
+                                <h3 className="mt-4 text-lg font-medium">No certifications found</h3>
+                                <p className="mt-1 text-sm text-muted-foreground">
+                                    Try adjusting your search or filters.
+                                </p>
+                            </div>
+                        )}
+                         {totalPages > 1 && (
+                            <Pagination className="mt-8">
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); handlePageChange(currentPage - 1); }} />
                                     </PaginationItem>
-                                ))}
-                                <PaginationItem>
-                                <PaginationNext href="#" onClick={(e) => { e.preventDefault(); handlePageChange(Math.min(totalPages, currentPage + 1)); }}/>
-                                </PaginationItem>
-                            </PaginationContent>
-                        </Pagination>
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <PaginationItem key={i}>
+                                            <PaginationLink href="#" isActive={currentPage === i + 1} onClick={(e) => { e.preventDefault(); handlePageChange(i + 1); }}>
+                                            {i + 1}
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                    ))}
+                                    <PaginationItem>
+                                    <PaginationNext href="#" onClick={(e) => { e.preventDefault(); handlePageChange(currentPage + 1); }}/>
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                         )}
                     </TabsContent>
                      <TabsContent value="in-progress" className="mt-6">
                         <div className="text-center py-16">
