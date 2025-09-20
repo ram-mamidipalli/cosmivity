@@ -27,6 +27,7 @@ import {
   BarChart3,
   Shield,
   User as UserIcon,
+  Lock,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -46,46 +47,60 @@ import { useAuth } from "@/hooks/use-auth";
 import { auth } from "@/lib/firebase";
 
 
-const studentMenuItems = [
+const presentFeatures = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
+  { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },
+  { href: "/dashboard/passport", label: "Portfolio", icon: Award },
+  { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
+  { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
+  { href: "/dashboard/notebook", label: "Notebook", icon: NotebookText },
+];
+
+const upcomingFeatures = [
   { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
   { href: "/dashboard/teams", label: "Collaboration", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
-  { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },
-  { href: "/dashboard/passport", label: "Portfolio", icon: Award },
   { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
   { href: "/dashboard/internships", label: "Internships", icon: GraduationCap },
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
-  { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
-  { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
-  { href: "/dashboard/notebook", label: "Notebook", icon: NotebookText },
 ];
 
 const adminMenuItems = [
   { href: "/dashboard/admin", label: "Admin", icon: Shield },
 ];
 
-const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
+const SidebarMenuItem = ({ item, isCollapsed, onLinkClick, disabled = false }: { item: any; isCollapsed: boolean, onLinkClick?: () => void, disabled?: boolean }) => {
   const pathname = usePathname();
   const isActive = pathname === item.href;
 
+  const content = (
+    <Button
+      variant={isActive ? "secondary" : "ghost"}
+      className={cn(
+        "w-full justify-start gap-3 transition-all duration-300",
+        isCollapsed ? "px-2" : "px-4",
+        disabled && "text-muted-foreground hover:text-muted-foreground cursor-not-allowed"
+      )}
+      disabled={disabled}
+    >
+      {item.icon && <item.icon className="h-5 w-5" />}
+      {!isCollapsed && <span>{item.label}</span>}
+      {disabled && !isCollapsed && <Lock className="h-4 w-4 ml-auto" />}
+    </Button>
+  );
+
+  if (disabled) {
+    return <div className="cursor-not-allowed">{content}</div>;
+  }
+
   return (
     <Link href={item.href} passHref onClick={onLinkClick}>
-      <Button
-        variant={isActive ? "secondary" : "ghost"}
-        className={cn(
-          "w-full justify-start gap-3 transition-all duration-300",
-          isCollapsed ? "px-2" : "px-4"
-        )}
-      >
-        <item.icon className="h-5 w-5" />
-        {!isCollapsed && <span>{item.label}</span>}
-      </Button>
+      {content}
     </Link>
   );
 };
@@ -125,7 +140,6 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
   const { user } = useAuth();
 
   const isAdmin = pathname.startsWith('/dashboard/admin');
-  const menuItems = isAdmin ? adminMenuItems : studentMenuItems.filter(item => item.href !== '/dashboard/admin');
   
   const handleLogout = async () => {
     await auth.signOut();
@@ -153,14 +167,39 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
         </div>
         <ScrollArea className="flex-grow">
           <nav className="flex flex-col gap-2 pr-4">
-            {menuItems.map((item) => (
-              <SidebarMenuItem 
-                key={item.href} 
-                item={item} 
-                isCollapsed={isMobile ? false : isCollapsed} 
-                onLinkClick={onLinkClick}
-              />
-            ))}
+            {isAdmin ? (
+                adminMenuItems.map((item) => (
+                  <SidebarMenuItem 
+                    key={item.href} 
+                    item={item} 
+                    isCollapsed={isMobile ? false : isCollapsed} 
+                    onLinkClick={onLinkClick}
+                  />
+                ))
+            ) : (
+                <>
+                    {presentFeatures.map((item) => (
+                      <SidebarMenuItem 
+                        key={item.href} 
+                        item={item} 
+                        isCollapsed={isMobile ? false : isCollapsed} 
+                        onLinkClick={onLinkClick}
+                      />
+                    ))}
+                    <div className={cn("px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider my-2", isCollapsed && "text-center")}>
+                        {isCollapsed ? "Soon" : "Upcoming Features"}
+                    </div>
+                    {upcomingFeatures.map((item) => (
+                      <SidebarMenuItem 
+                        key={item.href} 
+                        item={item} 
+                        isCollapsed={isMobile ? false : isCollapsed} 
+                        onLinkClick={onLinkClick}
+                        disabled
+                      />
+                    ))}
+                </>
+            )}
           </nav>
         </ScrollArea>
       </div>
