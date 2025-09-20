@@ -17,13 +17,13 @@ export default function TrustedBy() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center max-w-4xl mx-auto">
             {companies.map((company, index) => (
-              <div key={index} className="flex justify-center">
+              <div key={index} className="flex justify-center h-12 w-32 relative">
                 <Image 
                   src={company.src}
                   alt={`${company.name} logo`}
-                  width={120}
-                  height={60}
-                  className="object-contain"
+                  layout="fill"
+                  objectFit="contain"
+                  className="grayscale hover:grayscale-0 transition-all"
                   data-ai-hint={company.hint}
                 />
               </div>
