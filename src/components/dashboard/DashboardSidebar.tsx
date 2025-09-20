@@ -44,7 +44,7 @@ import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/use-auth";
-import { auth } from "@/lib/firebase";
+import { supabase } from "@/lib/supabase";
 
 
 const presentFeatures = [
@@ -142,7 +142,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
   const isAdmin = pathname.startsWith('/dashboard/admin');
   
   const handleLogout = async () => {
-    await auth.signOut();
+    await supabase.auth.signOut();
     router.push('/auth');
   };
 
@@ -213,7 +213,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
-                        <p className="font-semibold text-sm">{isAdmin ? "Admin" : user?.displayName || "Aakash"}</p>
+                        <p className="font-semibold text-sm">{isAdmin ? "Admin" : user?.user_metadata.name || "Aakash"}</p>
                         <p className="text-xs text-muted-foreground font-code">{isAdmin ? "Institution" : "2,650 XP"}</p>
                         </div>
                     )}
@@ -222,7 +222,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuContent className="w-56 mb-2" align="end" forceMount>
                  <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{isAdmin ? "Admin" : user?.displayName || "Aakash"}</p>
+                        <p className="text-sm font-medium leading-none">{isAdmin ? "Admin" : user?.user_metadata.name || "Aakash"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
                         {isAdmin ? "admin@example.com" : user?.email || "aakash@example.com"}
                         </p>

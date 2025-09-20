@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
-import { auth } from "@/lib/firebase";
+import { supabase } from "@/lib/supabase";
 
 const learningPath = [
     {
@@ -112,7 +112,7 @@ export default function DashboardPage() {
   const { user } = useAuth();
   
   const handleLogout = async () => {
-    await auth.signOut();
+    await supabase.auth.signOut();
     router.push('/auth');
   };
 
@@ -162,7 +162,7 @@ export default function DashboardPage() {
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Good Evening, {user?.displayName || 'Aakash'} 👋</h1>
+          <h1 className="text-3xl font-bold font-headline">Good Evening, {user?.user_metadata.name || 'Aakash'} 👋</h1>
           {isClient && currentDate && (
             <p className="text-muted-foreground flex items-center gap-2 mt-1">
                 <Calendar className="h-4 w-4" /> {currentDate}
@@ -216,7 +216,7 @@ export default function DashboardPage() {
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{user?.displayName || 'Aakash'}</p>
+                        <p className="text-sm font-medium leading-none">{user?.user_metadata.name || 'Aakash'}</p>
                         <p className="text-xs leading-none text-muted-foreground">
                         {user?.email || 'aakash@example.com'}
                         </p>

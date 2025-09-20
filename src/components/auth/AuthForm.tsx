@@ -11,13 +11,9 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, User, Briefcase } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
-import { auth } from "@/lib/firebase";
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword
-} from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { supabase } from "@/lib/supabase";
 
 function AuthFormContent() {
   const [authType, setAuthType] = useState('signup');
@@ -38,20 +34,20 @@ function AuthFormContent() {
         setIsLoading(false);
         return;
       }
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        router.push("/dashboard");
-      } catch (error: any) {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
         toast({ variant: "destructive", title: "Sign up failed", description: error.message });
         setIsLoading(false);
+      } else {
+        router.push("/dashboard");
       }
     } else { // signin
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        router.push("/dashboard");
-      } catch (error: any) {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
         toast({ variant: "destructive", title: "Sign in failed", description: error.message });
         setIsLoading(false);
+      } else {
+        router.push("/dashboard");
       }
     }
   };
