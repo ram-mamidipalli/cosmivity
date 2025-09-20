@@ -11,6 +11,7 @@ import { aiEnglishCoach } from "@/ai/flows/ai-english-coach";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
+import { Message as GenkitMessage } from "genkit/experimental/ai";
 
 const suggestions = [
     "Hello, how are you today?",
@@ -73,14 +74,20 @@ export default function ChatInterface({ topic }: { topic: string }) {
         const userMessage: Message = { sender: "user", text: input };
         const newMessages = [...messages, userMessage];
         setMessages(newMessages);
+        const currentInput = input;
         setInput("");
         setIsLoading(true);
 
+        const history: any[] = newMessages.slice(0, -1).map(msg => ({
+            sender: msg.sender,
+            text: msg.text
+        }));
+
         try {
             const response = await aiEnglishCoach({
-                text: input,
+                text: currentInput,
                 interviewContext: topic,
-                conversationHistory: newMessages.slice(0, -1) // Send previous history
+                conversationHistory: history,
             });
             const aiMessage: Message = { sender: "ai", text: response.feedback };
             setMessages([...newMessages, aiMessage]);

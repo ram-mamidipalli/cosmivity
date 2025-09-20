@@ -9,6 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Send, Bot } from "lucide-react";
 import { aiTeacher } from "@/ai/flows/ai-teacher";
+import { Message as GenkitMessage } from "genkit/experimental/ai";
 
 type Message = {
     sender: "user" | "ai";
@@ -33,10 +34,15 @@ export default function AiTeacher() {
         setInput("");
         setIsLoading(true);
 
+        const history: GenkitMessage[] = newMessages.slice(0, -1).map(msg => new GenkitMessage({
+            role: msg.sender === 'user' ? 'user' : 'model',
+            content: [{text: msg.text}]
+        }));
+
         try {
             const response = await aiTeacher({
                 query: currentInput,
-                conversationHistory: newMessages.slice(0, -1)
+                conversationHistory: history,
             });
             const aiMessage: Message = { sender: "ai", text: response.response };
             setMessages(prev => [...prev, aiMessage]);

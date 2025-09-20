@@ -11,10 +11,11 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {Message} from 'genkit/experimental/ai';
 
 const AiTeacherInputSchema = z.object({
   query: z.string().describe('The question or doubt from the student.'),
-  conversationHistory: z.array(z.any()).optional().describe("The history of the conversation so far."),
+  conversationHistory: z.array(Message.schema).optional().describe("The history of the conversation so far."),
 });
 export type AiTeacherInput = z.infer<typeof AiTeacherInputSchema>;
 
@@ -23,25 +24,30 @@ const AiTeacherOutputSchema = z.object({
 });
 export type AiTeacherOutput = z.infer<typeof AiTeacherOutputSchema>;
 
-const prompt = ai.definePrompt({
-  name: 'aiTeacherPrompt',
-  input: { schema: AiTeacherInputSchema },
-  output: { schema: AiTeacherOutputSchema },
-  prompt: `You are an expert AI Teacher. Your goal is to help students by answering their questions and clearing their doubts on any topic. Provide clear, concise, and helpful explanations.
-
+const prompt = ai.definePrompt(
+  {
+    name: 'aiTeacherPrompt',
+    input: {schema: AiTeacherInputSchema},
+    output: {schema: AiTeacherOutputSchema},
+    model: 'googleai/gemini-1.5-flash-latest',
+    system:
+      "You are an expert AI Teacher. Your goal is to help students by answering their questions and clearing their doubts on any topic. Provide clear, concise, and helpful explanations.",
+    prompt: `{{#if conversationHistory}}
 You are continuing a conversation. Here is the history:
 {{#each conversationHistory}}
-  {{#if (eq this.sender 'user')}}
-    User: {{{this.text}}}
+  {{#if (eq this.role 'user')}}
+    User: {{{this.content.[0].text}}}
   {{else}}
-    AI: {{{this.text}}}
+    AI: {{{this.content.[0].text}}}
   {{/if}}
 {{/each}}
+{{/if}}
 
 Student's latest query: {{{query}}}
 
 Provide your response as an expert teacher.`,
-});
+  },
+);
 
 const aiTeacherFlow = ai.defineFlow(
   {

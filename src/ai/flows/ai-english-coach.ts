@@ -11,6 +11,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {Message} from 'genkit/experimental/ai';
 
 export async function aiEnglishCoach(input: {text: string, interviewContext?: string, conversationHistory?: any[]}): Promise<{feedback: string}> {
   const AiEnglishCoachInputSchema = z.object({
@@ -18,7 +19,7 @@ export async function aiEnglishCoach(input: {text: string, interviewContext?: st
       .string()
       .describe('The text submitted by the student for English coaching.'),
     interviewContext: z.string().optional().describe("The context of the interview, if applicable."),
-    conversationHistory: z.array(z.any()).optional().describe("The history of the conversation so far."),
+    conversationHistory: z.array(Message.schema).optional().describe("The history of the conversation so far."),
   });
   
   const AiEnglishCoachOutputSchema = z.object({
@@ -29,18 +30,18 @@ export async function aiEnglishCoach(input: {text: string, interviewContext?: st
     name: 'aiEnglishCoachPrompt',
     input: {schema: AiEnglishCoachInputSchema},
     output: {schema: AiEnglishCoachOutputSchema},
-    prompt: `You are an AI English coach specializing in providing personalized feedback and suggestions to students to improve their English proficiency, especially regarding interview techniques and strategies.
-
+    model: 'googleai/gemini-1.5-flash-latest',
+    system: "You are an AI English coach specializing in providing personalized feedback and suggestions to students to improve their English proficiency, especially regarding interview techniques and strategies. Analyze the student's text and provide specific, actionable feedback on grammar, vocabulary, style, and clarity. If the student provided interview context, tailor the feedback towards effective communication in an interview setting. Use your knowledge of effective interview strategies to guide your feedback.",
+    prompt: `{{#if conversationHistory}}
 You are continuing a conversation. Here is the history:
 {{#each conversationHistory}}
-  {{#if (eq this.sender 'user')}}
-    User: {{{this.text}}}
+  {{#if (eq this.role 'user')}}
+    User: {{{this.content.[0].text}}}
   {{else}}
-    AI: {{{this.text}}}
+    AI: {{{this.content.[0].text}}}
   {{/if}}
 {{/each}}
-
-You will analyze the student's latest text and provide specific, actionable feedback on grammar, vocabulary, style, and clarity. If the student provided interview context, make sure to tailor the feedback towards effective communication in an interview setting. Use your knowledge of effective interview strategies to guide your feedback.
+{{/if}}
 
 Latest Text from User: {{{text}}}
 
@@ -53,11 +54,20 @@ Interview Context: {{{interviewContext}}}`,
       inputSchema: AiEnglishCoachInputSchema,
       outputSchema: AiEnglishCoachOutputSchema,
     },
-    async input => {
-      const {output} = await prompt(input);
+    async (flowInput) => {
+      const {output} = await prompt(flowInput);
       return output!;
     }
   );
   
-  return aiEnglishCoachFlow(input);
+  const history: GenkitMessage[] = (input.conversationHistory || []).map(msg => new GenkitMessage({
+    role: msg.sender === 'user' ? 'user' : 'model',
+    content: [{text: msg.text}]
+  }));
+
+  return aiEnglishCoachFlow({
+    text: input.text,
+    interviewContext: input.interviewContext,
+    conversationHistory: history,
+  });
 }
