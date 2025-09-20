@@ -5,7 +5,7 @@ const companies = [
   { name: 'Google', hint: 'google logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c30?w=120&h=60' },
   { name: 'Microsoft', hint: 'microsoft logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c31?w=120&h=60' },
   { name: 'Slack', hint: 'slack logo', src: 'https://images.unsplash.com/photo-1705988142466-e468bc654eeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzbGFja3xlbnwwfHx8fDE3NTgyOTQ4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080' },
-  { name: 'Infosys', hint: 'apple', src: 'https://images.unsplash.com/photo-1621768216002-5ac171876625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhcHBsZXxlbnwwfHx8fDE3NTgyOTAwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080' },
+  { name: 'Tata', hint: 'tata logo', src: 'https://images.unsplash.com/photo-1621768216002-5ac171876625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhcHBsZXxlbnwwfHx8fDE3NTgyOTAwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
 export default function TrustedBy() {
