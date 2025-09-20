@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 export default function NotebookPage() {
@@ -17,40 +16,35 @@ export default function NotebookPage() {
   const noteRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = () => {
-    if (noteRef.current) {
-      html2canvas(noteRef.current, { scale: 2 }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'px', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
-        
-        const ratio = canvasWidth / pdfWidth;
-        const imgHeight = canvasHeight / ratio;
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const margin = 40;
+    const maxLineWidth = pdfWidth - margin * 2;
 
-        let heightLeft = imgHeight;
-        let position = 0;
+    // Add Title
+    pdf.setFontSize(18);
+    pdf.text(title, margin, margin);
 
-        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-        heightLeft -= pdfHeight;
+    // Add Content
+    pdf.setFontSize(12);
+    const lines = pdf.splitTextToSize(content, maxLineWidth);
+    let y = margin + 30;
 
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-          heightLeft -= pdfHeight;
-        }
-        
-        pdf.save(`${title.replace(/\s+/g, '-')}.pdf`);
+    lines.forEach((line: string) => {
+      if (y > pdf.internal.pageSize.getHeight() - margin) {
+        pdf.addPage();
+        y = margin;
+      }
+      pdf.text(line, margin, y);
+      y += 15; // Line height
+    });
+    
+    pdf.save(`${title.replace(/\s+/g, '-')}.pdf`);
 
-        toast({
-          title: "Note Downloaded!",
-          description: "Your note has been saved as a PDF file.",
-        });
-      });
-    }
+    toast({
+      title: "Note Downloaded!",
+      description: "Your note has been saved as a PDF file.",
+    });
   };
 
   return (
