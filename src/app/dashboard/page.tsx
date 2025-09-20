@@ -17,7 +17,6 @@ import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import AiTeacher from "@/components/dashboard/AiTeacher";
 import { useAuth } from "@/hooks/use-auth";
 import { auth } from "@/lib/firebase";
 
@@ -70,10 +69,10 @@ const leaderboardData = [
     { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
     { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
     { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
-    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://images.unsplash.com/photo-1627161684458-a62da52b51c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
-    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
+    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib-rb-4.1.0&q=80&w=1080", hint: "woman icon" },
+    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://images.unsplash.com/photo-1627161684458-a62da52b51c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib-rb-4.1.0&q=80&w=1080", hint: "boy icon" },
+    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib-rb-4.1.0&q=80&w=1080", hint: "woman icon" },
+    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib-rb-4.1.0&q=80&w=1080", hint: "boy icon" },
 ];
 
 const achievements = [
@@ -355,7 +354,6 @@ export default function DashboardPage() {
         </div>
 
         <div className="xl:col-span-1 flex flex-col gap-8">
-            <AiTeacher />
             <Card>
                 <CardHeader>
                     <CardTitle>Leaderboard</CardTitle>
