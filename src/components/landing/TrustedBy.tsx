@@ -6,10 +6,6 @@ const companies = [
   { name: 'Microsoft', hint: 'microsoft logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c31?w=120&h=60' },
   { name: 'Wipro', hint: 'wipro logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c32?w=120&h=60' },
   { name: 'Infosys', hint: 'apple', src: 'https://images.unsplash.com/photo-1621768216002-5ac171876625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhcHBsZXxlbnwwfHx8fDE3NTgyOTAwNTR8MA&ixlib=rb-4.1.0&q=80&w=1080' },
-  { name: 'TCS', hint: 'tcs logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c34?w=120&h=60' },
-  { name: 'Accenture', hint: 'accenture logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c35?w=120&h=60' },
-  { name: 'Amazon', hint: 'amazon logo', src: 'https://images.unsplash.com/photo-1573495627361-ab2b3c419c36?w=120&h=60' },
-  { name: 'Deloitte', hint: 'slack logo', src: 'https://images.unsplash.com/photo-1705988142466-e468bc654eeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzbGFja3xlbnwwfHx8fDE3NTgyOTQ4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080' },
 ];
 
 export default function TrustedBy() {
@@ -19,7 +15,7 @@ export default function TrustedBy() {
         <h2 className="text-3xl font-headline font-bold text-primary text-center mb-12">
           Trusted by Students at Top Companies
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center max-w-4xl mx-auto">
             {companies.map((company, index) => (
               <div key={index} className="flex justify-center">
                 <Image 
