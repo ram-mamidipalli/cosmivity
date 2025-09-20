@@ -11,21 +11,26 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import {Message} from 'genkit/experimental/ai';
 
-export async function aiEnglishCoach(input: {text: string, interviewContext?: string, conversationHistory?: any[]}): Promise<{feedback: string}> {
-  const AiEnglishCoachInputSchema = z.object({
+const AiEnglishCoachInputSchema = z.object({
     text: z
       .string()
       .describe('The text submitted by the student for English coaching.'),
     interviewContext: z.string().optional().describe("The context of the interview, if applicable."),
-    conversationHistory: z.array(Message.schema).optional().describe("The history of the conversation so far."),
-  });
-  
-  const AiEnglishCoachOutputSchema = z.object({
-    feedback: z.string().describe('The personalized feedback and suggestions to improve the student\'s English proficiency.'),
-  });
+    conversationHistory: z.array(z.object({
+      role: z.string(),
+      content: z.array(z.object({
+          text: z.string()
+      }))
+    })).optional().describe("The history of the conversation so far."),
+});
 
+const AiEnglishCoachOutputSchema = z.object({
+    feedback: z.string().describe('The personalized feedback and suggestions to improve the student\'s English proficiency.'),
+});
+
+export async function aiEnglishCoach(input: {text: string, interviewContext?: string, conversationHistory?: any[]}): Promise<{feedback: string}> {
+  
   const prompt = ai.definePrompt({
     name: 'aiEnglishCoachPrompt',
     input: {schema: AiEnglishCoachInputSchema},
@@ -60,14 +65,16 @@ Interview Context: {{{interviewContext}}}`,
     }
   );
   
-  const history: GenkitMessage[] = (input.conversationHistory || []).map(msg => new GenkitMessage({
+  const history: {role: string, content: {text: string}[]}[] = (input.conversationHistory || []).map(msg => ({
     role: msg.sender === 'user' ? 'user' : 'model',
     content: [{text: msg.text}]
   }));
 
-  return aiEnglishCoachFlow({
+  const flowResult = await aiEnglishCoachFlow({
     text: input.text,
     interviewContext: input.interviewContext,
     conversationHistory: history,
   });
+
+  return flowResult;
 }

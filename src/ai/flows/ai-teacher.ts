@@ -11,11 +11,15 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import {Message} from 'genkit/experimental/ai';
 
 const AiTeacherInputSchema = z.object({
   query: z.string().describe('The question or doubt from the student.'),
-  conversationHistory: z.array(Message.schema).optional().describe("The history of the conversation so far."),
+  conversationHistory: z.array(z.object({
+    role: z.string(),
+    content: z.array(z.object({
+        text: z.string()
+    }))
+  })).optional().describe("The history of the conversation so far."),
 });
 export type AiTeacherInput = z.infer<typeof AiTeacherInputSchema>;
 
