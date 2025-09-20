@@ -1,73 +1,34 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Save, PlusCircle, X, Notebook } from "lucide-react";
+import { Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-
-type Note = {
-  id: string;
-  title: string;
-  content: string;
-};
+import { Card, CardContent } from "@/components/ui/card";
+import html2canvas from "html2canvas";
 
 export default function NotebookPage() {
-  const [notes, setNotes] = useState<Note[]>([
-    { id: "note-1", title: "My First Note", content: "This is the content of my first note." },
-    { id: "note-2", title: "Meeting Ideas", content: "- Discuss Q3 roadmap\n- Brainstorm new features" },
-    { id: "note-3", title: "Shopping List", content: "Milk, Bread, Eggs" },
-  ]);
-  const [activeNoteId, setActiveNoteId] = useState("note-1");
+  const [title, setTitle] = useState("Untitled Note");
+  const [content, setContent] = useState("Start writing your notes here...");
   const { toast } = useToast();
-  
-  const activeNote = notes.find(n => n.id === activeNoteId) || notes[0];
+  const noteRef = useRef<HTMLDivElement>(null);
 
-  const handleSave = () => {
-    // In a real app, you would save this to a database.
-    toast({
-      title: "Notes Saved!",
-      description: "Your notes have been saved locally.",
-    });
-  };
+  const handleDownload = () => {
+    if (noteRef.current) {
+      html2canvas(noteRef.current, { backgroundColor: null }).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = `${title.replace(/\s+/g, '-')}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
 
-  const addNote = () => {
-    const newNoteId = `note-${Date.now()}`;
-    const newNote: Note = {
-      id: newNoteId,
-      title: `Untitled Note`,
-      content: "",
-    };
-    setNotes([...notes, newNote]);
-    setActiveNoteId(newNoteId);
-  };
-  
-  const removeNote = (noteIdToRemove: string) => {
-    if (notes.length <= 1) {
         toast({
-            variant: "destructive",
-            title: "Cannot remove the last note.",
+          title: "Note Downloaded!",
+          description: "Your note has been saved as a PNG image.",
         });
-        return;
+      });
     }
-    const noteIndex = notes.findIndex(n => n.id === noteIdToRemove);
-    const newNotes = notes.filter((note) => note.id !== noteIdToRemove);
-    setNotes(newNotes);
-
-    if (activeNoteId === noteIdToRemove) {
-      if (noteIndex > 0) {
-        setActiveNoteId(newNotes[noteIndex - 1].id);
-      } else {
-        setActiveNoteId(newNotes[0].id);
-      }
-    }
-  };
-
-  const updateNote = (noteId: string, updates: Partial<Note>) => {
-    setNotes(notes.map((note) => (note.id === noteId ? { ...note, ...updates } : note)));
   };
 
   return (
@@ -78,64 +39,28 @@ export default function NotebookPage() {
             <p className="text-muted-foreground">Your personal space to jot down thoughts, ideas, and notes.</p>
         </div>
         <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={addNote}>
-                <PlusCircle className="mr-2"/> New Note
-            </Button>
-            <Button onClick={handleSave}>
-                <Save className="mr-2"/> Save All Notes
+            <Button onClick={handleDownload}>
+                <Download className="mr-2"/> Download as PNG
             </Button>
         </div>
       </header>
-      <div className="grid lg:grid-cols-4 gap-8 flex-grow">
-        <Card className="lg:col-span-1">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Notebook className="h-5 w-5"/> Saved Notes</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="space-y-2">
-                    {notes.map(note => (
-                        <Button 
-                            key={note.id}
-                            variant={note.id === activeNoteId ? 'secondary' : 'ghost'}
-                            className="w-full justify-start group"
-                            onClick={() => setActiveNoteId(note.id)}
-                        >
-                            <span className="flex-1 text-left truncate">{note.title}</span>
-                             <X 
-                                className="h-4 w-4 ml-2 text-muted-foreground opacity-0 group-hover:opacity-100"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeNote(note.id);
-                                }}
-                            />
-                        </Button>
-                    ))}
-                </div>
+      <div className="flex-grow">
+        <Card ref={noteRef} className="h-full">
+            <CardContent className="p-6 h-full flex flex-col gap-4">
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="text-2xl font-bold bg-transparent border-none focus:ring-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
+                />
+                <Textarea
+                    placeholder="Start writing your notes here..."
+                    className="flex-grow text-base p-4 h-full w-full resize-none border-0"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
             </CardContent>
         </Card>
-        <div className="lg:col-span-3 flex flex-col gap-4">
-            {activeNote ? (
-                <>
-                    <input
-                        type="text"
-                        value={activeNote.title}
-                        onChange={(e) => updateNote(activeNote.id, { title: e.target.value })}
-                        className="text-2xl font-bold bg-transparent border-none focus:ring-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                    />
-                    <Textarea
-                        key={activeNote.id}
-                        placeholder="Start writing your notes here..."
-                        className="flex-grow text-base p-4 h-full"
-                        value={activeNote.content}
-                        onChange={(e) => updateNote(activeNote.id, { content: e.target.value })}
-                    />
-                </>
-            ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                    <p>Select a note or create a new one to get started.</p>
-                </div>
-            )}
-        </div>
       </div>
     </div>
   );
