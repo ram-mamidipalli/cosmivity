@@ -29,6 +29,7 @@ import {
   User as UserIcon,
   Lock,
   Database,
+  LifeBuoy,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,11 @@ const menuItems = [
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
 ];
+
+const bottomMenuItems = [
+    { href: "/dashboard/settings", label: "Settings", icon: Settings },
+    { href: "/dashboard/help", label: "Help & Support", icon: LifeBuoy },
+]
 
 const adminMenuItems = [
   { href: "/dashboard/admin", label: "Admin", icon: Shield },
@@ -181,8 +187,17 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
           </nav>
         </ScrollArea>
       </div>
-      <div className="flex flex-col gap-4 border-t pt-4 flex-shrink-0">
+      <div className="flex flex-col gap-2 border-t pt-4 flex-shrink-0">
         
+        {bottomMenuItems.map((item) => (
+            <SidebarMenuItem 
+                key={item.href} 
+                item={item} 
+                isCollapsed={isMobile ? false : isCollapsed} 
+                onLinkClick={onLinkClick}
+            />
+        ))}
+
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
