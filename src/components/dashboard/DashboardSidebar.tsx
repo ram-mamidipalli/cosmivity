@@ -28,6 +28,7 @@ import {
   Shield,
   User as UserIcon,
   Lock,
+  Database,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/lib/supabase";
 
 
-const presentFeatures = [
+const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
@@ -56,25 +57,22 @@ const presentFeatures = [
   { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
   { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
   { href: "/dashboard/notebook", label: "Notebook", icon: NotebookText },
-];
-
-const upcomingFeatures = [
   { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
   { href: "/dashboard/teams", label: "Collaboration", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
-  { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
-  { href: "/dashboard/internships", label: "Internships", icon: GraduationCap },
+  { href: "/dashboard/opportunities", label: "Opportunities", icon: Briefcase },
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
+  { href: "/dashboard/sql-editor", label: "SQL Editor", icon: Database },
 ];
 
 const adminMenuItems = [
   { href: "/dashboard/admin", label: "Admin", icon: Shield },
 ];
 
-const SidebarMenuItem = ({ item, isCollapsed, onLinkClick, disabled = false }: { item: any; isCollapsed: boolean, onLinkClick?: () => void, disabled?: boolean }) => {
+const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
   const pathname = usePathname();
   const isActive = pathname === item.href;
 
@@ -83,20 +81,13 @@ const SidebarMenuItem = ({ item, isCollapsed, onLinkClick, disabled = false }: {
       variant={isActive ? "secondary" : "ghost"}
       className={cn(
         "w-full justify-start gap-3 transition-all duration-300",
-        isCollapsed ? "px-2" : "px-4",
-        disabled && "text-muted-foreground hover:text-muted-foreground cursor-not-allowed"
+        isCollapsed ? "px-2" : "px-4"
       )}
-      disabled={disabled}
     >
       {item.icon && <item.icon className="h-5 w-5" />}
       {!isCollapsed && <span>{item.label}</span>}
-      {disabled && !isCollapsed && <Lock className="h-4 w-4 ml-auto" />}
     </Button>
   );
-
-  if (disabled) {
-    return <div className="cursor-not-allowed">{content}</div>;
-  }
 
   return (
     <Link href={item.href} passHref onClick={onLinkClick}>
@@ -178,18 +169,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                 ))
             ) : (
                 <>
-                    {presentFeatures.map((item) => (
-                      <SidebarMenuItem 
-                        key={item.href} 
-                        item={item} 
-                        isCollapsed={isMobile ? false : isCollapsed} 
-                        onLinkClick={onLinkClick}
-                      />
-                    ))}
-                    <div className={cn("px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider my-2", isCollapsed && "text-center")}>
-                        {isCollapsed ? "Soon" : "Upcoming Features"}
-                    </div>
-                    {upcomingFeatures.map((item) => (
+                    {menuItems.map((item) => (
                       <SidebarMenuItem 
                         key={item.href} 
                         item={item} 
