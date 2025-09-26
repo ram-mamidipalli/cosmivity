@@ -65,7 +65,6 @@ const menuItems = [
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
-  { href: "/dashboard/sql-editor", label: "SQL Editor", icon: Database },
 ];
 
 const adminMenuItems = [
