@@ -20,7 +20,7 @@ import {
   Calendar,
   Gamepad2,
   BookCopy,
-  Badge,
+  Badge as BadgeIcon,
   GraduationCap,
   Code,
   NotebookText,
@@ -47,26 +47,30 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/lib/supabase";
+import { Badge } from "@/components/ui/badge";
 
 
-const menuItems = [
+const presentMenuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/aptitude", label: "Practice", icon: BrainCircuit },
   { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },
   { href: "/dashboard/passport", label: "Portfolio", icon: Award },
+  { href: "/dashboard/opportunities", label: "Opportunities", icon: Briefcase },
+];
+
+const upcomingMenuItems = [
+  { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
-  { href: "/dashboard/certifications", label: "Certifications", icon: Badge },
+  { href: "/dashboard/certifications", label: "Certifications", icon: BadgeIcon },
   { href: "/dashboard/notebook", label: "Notebook", icon: NotebookText },
   { href: "/dashboard/challenges", label: "Discussions", icon: Gamepad2 },
   { href: "/dashboard/teams", label: "Collaboration", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
-  { href: "/dashboard/opportunities", label: "Opportunities", icon: Briefcase },
   { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
-];
+]
 
 const bottomMenuItems = [
     { href: "/dashboard/settings", label: "Settings", icon: Settings },
@@ -77,7 +81,7 @@ const adminMenuItems = [
   { href: "/dashboard/admin", label: "Admin", icon: Shield },
 ];
 
-const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isCollapsed: boolean, onLinkClick?: () => void }) => {
+const SidebarMenuItem = ({ item, isCollapsed, onLinkClick, disabled = false }: { item: any; isCollapsed: boolean, onLinkClick?: () => void, disabled?: boolean }) => {
   const pathname = usePathname();
   const isActive = pathname === item.href;
 
@@ -85,14 +89,21 @@ const SidebarMenuItem = ({ item, isCollapsed, onLinkClick }: { item: any; isColl
     <Button
       variant={isActive ? "secondary" : "ghost"}
       className={cn(
-        "w-full justify-start gap-3 transition-all duration-300",
-        isCollapsed ? "px-2" : "px-4"
+        "w-full justify-start gap-3 transition-all duration-300 relative",
+        isCollapsed ? "px-2" : "px-4",
+        disabled && "text-muted-foreground/50 cursor-not-allowed hover:bg-transparent"
       )}
+      disabled={disabled}
     >
       {item.icon && <item.icon className="h-5 w-5" />}
       {!isCollapsed && <span>{item.label}</span>}
+      {disabled && !isCollapsed && <Badge variant="outline" className="absolute right-2 text-xs">Upcoming</Badge>}
     </Button>
   );
+
+  if (disabled) {
+    return <div className="cursor-not-allowed">{content}</div>
+  }
 
   return (
     <Link href={item.href} passHref onClick={onLinkClick}>
@@ -174,12 +185,22 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                 ))
             ) : (
                 <>
-                    {menuItems.map((item) => (
+                    {presentMenuItems.map((item) => (
                       <SidebarMenuItem 
                         key={item.href} 
                         item={item} 
                         isCollapsed={isMobile ? false : isCollapsed} 
                         onLinkClick={onLinkClick}
+                      />
+                    ))}
+                    {!isCollapsed && <p className="text-xs font-semibold text-muted-foreground px-4 mt-4 mb-2">Upcoming Features</p>}
+                     {upcomingMenuItems.map((item) => (
+                      <SidebarMenuItem 
+                        key={item.href} 
+                        item={item} 
+                        isCollapsed={isMobile ? false : isCollapsed} 
+                        onLinkClick={onLinkClick}
+                        disabled={true}
                       />
                     ))}
                 </>
