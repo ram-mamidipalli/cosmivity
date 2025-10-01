@@ -90,7 +90,7 @@ const SidebarMenuItem = ({ item, isCollapsed, onLinkClick, disabled = false }: {
       className={cn(
         "w-full justify-start gap-3 transition-all duration-300 relative",
         isCollapsed ? "px-2" : "px-4",
-        disabled && "text-muted-foreground/50 cursor-not-allowed hover:bg-transparent"
+        disabled && "text-muted-foreground cursor-not-allowed hover:bg-transparent"
       )}
       disabled={disabled}
     >
@@ -222,7 +222,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
                     <Avatar>
-                         <AvatarImage src="https://placehold.co/40x40.png" alt="User" data-ai-hint="boy icon" />
+                         <AvatarImage src={user?.user_metadata.avatar_url || "https://placehold.co/40x40.png"} alt="User" data-ai-hint="boy icon" />
                          <AvatarFallback><UserIcon /></AvatarFallback>
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (
@@ -283,5 +283,3 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
     </aside>
   );
 }
-
-    

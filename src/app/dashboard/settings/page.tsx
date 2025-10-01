@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,24 +11,88 @@ import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Upload, User as UserIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabase";
 
 export default function SettingsPage() {
   const { user } = useAuth();
   const { toast } = useToast();
 
-  const handleSaveChanges = () => {
-    toast({
-      title: "Settings Saved",
-      description: "Your changes have been saved successfully.",
-    });
-  }
+  const [fullName, setFullName] = useState(user?.user_metadata.name || "");
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
+  
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
-  const handlePasswordChange = () => {
-     toast({
-      title: "Password Updated",
-      description: "Your password has been changed successfully.",
+  const handleSaveChanges = async () => {
+    if (!fullName.trim()) {
+        toast({
+            variant: "destructive",
+            title: "Name is required",
+            description: "Please enter your full name.",
+        });
+        return;
+    }
+    
+    setIsSavingProfile(true);
+    const { error } = await supabase.auth.updateUser({
+      data: { name: fullName }
     });
-  }
+
+    if (error) {
+        toast({
+            variant: "destructive",
+            title: "Error updating profile",
+            description: error.message,
+        });
+    } else {
+        toast({
+            title: "Settings Saved",
+            description: "Your changes have been saved successfully.",
+        });
+    }
+    setIsSavingProfile(false);
+  };
+
+  const handlePasswordChange = async () => {
+    if (newPassword !== confirmPassword) {
+        toast({
+            variant: "destructive",
+            title: "Passwords do not match",
+            description: "Please ensure the new passwords match.",
+        });
+        return;
+    }
+    if (newPassword.length < 6) {
+        toast({
+            variant: "destructive",
+            title: "Password too short",
+            description: "Password should be at least 6 characters.",
+        });
+        return;
+    }
+
+    setIsChangingPassword(true);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+    if (error) {
+        toast({
+            variant: "destructive",
+            title: "Error changing password",
+            description: error.message,
+        });
+    } else {
+        toast({
+            title: "Password Updated",
+            description: "Your password has been changed successfully.",
+        });
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+    }
+    setIsChangingPassword(false);
+  };
 
   return (
     <div className="flex flex-col gap-8">
@@ -52,7 +117,7 @@ export default function SettingsPage() {
                         <CardContent className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <Avatar className="h-20 w-20">
-                                    <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmlsZXxlbnwwfHx8fDE3NTgwMTYyNzV8MA&ixlib=rb-4.1.0&q=80&w=1080" data-ai-hint="boy icon" />
+                                    <AvatarImage src={user?.user_metadata.avatar_url || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmlsZXxlbnwwfHx8fDE3NTgwMTYyNzV8MA&ixlib=rb-4.1.0&q=80&w=1080"} data-ai-hint="boy icon" />
                                     <AvatarFallback><UserIcon /></AvatarFallback>
                                 </Avatar>
                                 <Button variant="outline"><Upload className="mr-2"/>Change Photo</Button>
@@ -60,15 +125,17 @@ export default function SettingsPage() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name">Full Name</Label>
-                                    <Input id="name" defaultValue={user?.user_metadata.name || "Aakash"} />
+                                    <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" defaultValue={user?.email} disabled />
+                                    <Input id="email" value={user?.email || ""} disabled />
                                 </div>
                             </div>
                              <div className="flex justify-end">
-                                <Button onClick={handleSaveChanges}>Save Changes</Button>
+                                <Button onClick={handleSaveChanges} disabled={isSavingProfile}>
+                                    {isSavingProfile ? "Saving..." : "Save Changes"}
+                                </Button>
                             </div>
                         </CardContent>
                     </Card>
@@ -82,20 +149,22 @@ export default function SettingsPage() {
                         <CardContent className="space-y-4">
                              <div className="space-y-2">
                                 <Label htmlFor="current-password">Current Password</Label>
-                                <Input id="current-password" type="password" />
+                                <Input id="current-password" type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} placeholder="Supabase doesn't require current password"/>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="new-password">New Password</Label>
-                                    <Input id="new-password" type="password" />
+                                    <Input id="new-password" type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="confirm-password">Confirm New Password</Label>
-                                    <Input id="confirm-password" type="password" />
+                                    <Input id="confirm-password" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
                                 </div>
                             </div>
                             <div className="flex justify-end">
-                                <Button onClick={handlePasswordChange}>Update Password</Button>
+                                <Button onClick={handlePasswordChange} disabled={isChangingPassword}>
+                                    {isChangingPassword ? "Updating..." : "Update Password"}
+                                </Button>
                             </div>
                         </CardContent>
                     </Card>
