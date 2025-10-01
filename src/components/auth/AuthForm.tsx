@@ -25,6 +25,7 @@ function AuthFormContent() {
   // Form state
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [age, setAge] = useState('');
@@ -50,6 +51,7 @@ function AuthFormContent() {
         options: {
           data: {
             name: `${firstName} ${lastName}`,
+            username: username,
             mobile_number: mobileNumber,
             age: parseInt(age, 10),
             gender: gender,
@@ -161,6 +163,12 @@ function AuthFormContent() {
                     <Input id="institution-id" placeholder="e.g., UGC ID, AISHE Code" required />
                 </div>
             </>
+          )}
+          {isSignUp && !isInstitution && (
+             <div className="grid gap-2">
+                <Label htmlFor="username">Username</Label>
+                <Input id="username" placeholder="e.g. maxr" required value={username} onChange={(e) => setUsername(e.target.value)} />
+            </div>
           )}
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
