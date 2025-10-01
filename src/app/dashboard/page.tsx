@@ -18,37 +18,47 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/lib/supabase";
 
-const learningPath = [
-    {
-        title: "English Fluency Boost",
-        level: "Intermediate",
-        progress: 65,
-        icon: <Mic className="h-6 w-6 text-blue-500" />,
-        nextActivity: "AI Chat Session",
-        estTime: "20 min",
+const presentFeatures = [
+    { 
+        title: "Practice", 
+        href: "/dashboard/aptitude", 
+        icon: <BrainCircuit className="h-6 w-6 text-blue-500" />,
+        description: "Sharpen your aptitude skills.",
         color: "from-blue-100 to-blue-200 border-blue-300",
         textColor: "text-blue-800"
     },
-    {
-        title: "Aptitude Mastery",
-        level: "Advanced",
-        progress: 45,
-        icon: <BrainCircuit className="h-6 w-6 text-purple-500" />,
-        nextActivity: "Logical Reasoning Quiz",
-        estTime: "30 min",
+    { 
+        title: "Resume Builder", 
+        href: "/dashboard/coach", 
+        icon: <FileText className="h-6 w-6 text-purple-500" />,
+        description: "Build a professional resume.",
         color: "from-purple-100 to-purple-200 border-purple-300",
         textColor: "text-purple-800"
     },
-    {
-        title: "Interview Confidence",
-        level: "Expert",
-        progress: 30,
-        icon: <Users className="h-6 w-6 text-green-500" />,
-        nextActivity: "Technical Interview",
-        estTime: "45 min",
+    { 
+        title: "Portfolio", 
+        href: "/dashboard/passport", 
+        icon: <Award className="h-6 w-6 text-green-500" />,
+        description: "Showcase your skills and projects.",
         color: "from-green-100 to-green-200 border-green-300",
         textColor: "text-green-800"
-    }
+    },
+    { 
+        title: "Opportunities", 
+        href: "/dashboard/opportunities", 
+        icon: <Briefcase className="h-6 w-6 text-orange-500" />,
+        description: "Find jobs and internships.",
+        color: "from-orange-100 to-orange-200 border-orange-300",
+        textColor: "text-orange-800"
+    },
+    { 
+        title: "Events", 
+        href: "/dashboard/events", 
+        icon: <Calendar className="h-6 w-6 text-red-500" />,
+        description: "Join workshops and webinars.",
+        color: "from-red-100 to-red-200 border-red-300",
+        textColor: "text-red-800"
+    },
 ];
 
 const quickAccessItems = [
@@ -100,7 +110,7 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
+    <div className="flex flex-col gap-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold font-headline">Welcome, {user?.user_metadata.name || 'Aakash'}</h1>
@@ -172,22 +182,21 @@ export default function DashboardPage() {
             </Card>
 
             <div>
-                <CardTitle className="mb-4">Your Learning Path</CardTitle>
-                <div className="grid md:grid-cols-3 gap-6">
-                    {learningPath.map((path, i) => (
-                        <Card key={i} className={`bg-gradient-to-br ${path.color} p-4 flex flex-col gap-4 transition-transform hover:scale-105`}>
-                            <div className="flex justify-between items-center">
-                                <Badge variant="secondary" className="text-xs">{path.level}</Badge>
-                                {path.icon}
+                <CardTitle className="mb-4">Explore Features</CardTitle>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {presentFeatures.slice(1).map((feature, i) => (
+                        <Card key={i} className={`bg-gradient-to-br ${feature.color} p-4 flex flex-col gap-4 transition-transform hover:scale-105 cursor-pointer`} onClick={() => router.push(feature.href)}>
+                            <div className="flex justify-end items-center">
+                                {feature.icon}
                             </div>
                             <div className="flex-grow">
-                                <h3 className={`font-bold text-lg ${path.textColor}`}>{path.title}</h3>
-                                <Progress value={path.progress} className="h-2 mt-2" />
+                                <h3 className={`font-bold text-lg ${feature.textColor}`}>{feature.title}</h3>
+                                <p className="text-sm text-muted-foreground">{feature.description}</p>
                             </div>
                             <div>
-                                <p className="text-xs text-muted-foreground">Next: {path.nextActivity}</p>
-                                <p className="text-xs text-muted-foreground font-code">Est. Time: {path.estTime}</p>
-                                <Button variant="link" className="p-0 h-auto mt-2 text-primary font-bold">Continue Learning <ChevronRight className="h-4 w-4 ml-1"/></Button>
+                                <Button variant="link" className="p-0 h-auto text-primary font-bold">
+                                    Explore Now <ChevronRight className="h-4 w-4 ml-1"/>
+                                </Button>
                             </div>
                         </Card>
                     ))}
