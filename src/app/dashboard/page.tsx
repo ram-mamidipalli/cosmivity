@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, LogOut, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronRight, ClipboardCheck, Timer, Moon, Sun, User as UserIcon, Users, FileText, Trophy } from "lucide-react";
+import { Settings, LogOut, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronRight, ClipboardCheck, Timer, Moon, Sun, User as UserIcon, Users, FileText, Briefcase, Award, Calendar, LayoutDashboard } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
@@ -52,19 +52,14 @@ const learningPath = [
 ];
 
 const quickAccessItems = [
-    { label: "Aptitude", icon: <BrainCircuit/>, desc: "Quant, Verbal", href: "/dashboard/aptitude" },
-    { label: "AI English Chat", icon: <Mic/>, desc: "Improve Fluency", href: "/dashboard/communication" },
-    { label: "Mock Interview", icon: <MessageSquare/>, desc: "Practice with AI", href: "/dashboard/interviews" },
-    { label: "Debate Rooms", icon: <Users/>, desc: "Live Discussions", href: "/dashboard/challenges" },
-    { label: "Resume Builder", icon: <FileText/>, desc: "Create & Optimize", href: "/dashboard/coach" },
-    { label: "Study Circles", icon: <BookOpen/>, desc: "Join Peer Groups", href: "/dashboard/teams" }
+    { label: "Dashboard", icon: <LayoutDashboard/>, href: "/dashboard" },
+    { label: "Practice", icon: <BrainCircuit/>, href: "/dashboard/aptitude" },
+    { label: "Resume Builder", icon: <FileText/>, href: "/dashboard/coach" },
+    { label: "Portfolio", icon: <Award/>, href: "/dashboard/passport" },
+    { label: "Opportunities", icon: <Briefcase/>, href: "/dashboard/opportunities" },
+    { label: "Events", icon: <Calendar/>, href: "/dashboard/events" }
 ];
 
-const achievements = [
-    { title: "Debate Champion", rarity: "Rare", desc: "Won 3 consecutive debates", xp: "+250 XP", icon: <Trophy />, color: "bg-yellow-100 text-yellow-800" },
-    { title: "Fluency Master", rarity: "Epic", desc: "Completed 50 AI chat sessions", xp: "+500 XP", icon: <Mic />, color: "bg-purple-100 text-purple-800" },
-    { title: "Quick Learner", rarity: "Common", desc: "Solved 100 aptitude questions", xp: "+100 XP", icon: <BrainCircuit />, color: "bg-blue-100 text-blue-800" },
-]
 
 export default function DashboardPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
