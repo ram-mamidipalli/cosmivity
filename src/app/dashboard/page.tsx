@@ -170,19 +170,6 @@ export default function DashboardPage() {
             </p>
           )}
         </div>
-        <div className="flex items-center gap-4 sm:gap-6 text-sm">
-            <div className="flex items-center gap-2 font-semibold">
-                <Award className="h-5 w-5 text-yellow-500" />
-                <span className="font-code">2,650 XP</span>
-            </div>
-            <div className="flex items-center gap-2 font-semibold">
-                <Flame className="h-5 w-5 text-orange-500" />
-                <span className="font-code">7-day streak</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <Badge>Novice</Badge>
-            </div>
-        </div>
         <div className="flex items-center gap-2">
           {isClient && (
             <div className="relative hidden md:block">
