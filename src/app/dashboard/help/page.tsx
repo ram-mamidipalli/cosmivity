@@ -28,16 +28,23 @@ export default function HelpPage() {
     }
 
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-        setIsSubmitting(false);
-        setSubject("");
-        setMessage("");
-        toast({
-            title: "Query Sent!",
-            description: "Your message has been sent to the Cosmivity team. We'll get back to you shortly.",
-        });
-    }, 1500);
+
+    const whatsappNumber = "+918688394483";
+    const prefilledMessage = encodeURIComponent(`Subject: ${subject}\n\nMessage: ${message}`);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${prefilledMessage}`;
+
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
+
+    // Reset form and state
+    setSubject("");
+    setMessage("");
+    setIsSubmitting(false);
+
+    toast({
+        title: "Redirecting to WhatsApp",
+        description: "Your query is ready to be sent.",
+    });
   };
 
   return (
