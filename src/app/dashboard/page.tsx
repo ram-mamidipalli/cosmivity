@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, LogOut, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronRight, ClipboardCheck, Timer, Moon, Sun, User as UserIcon, Users, FileText } from "lucide-react";
+import { Settings, LogOut, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronRight, ClipboardCheck, Timer, Moon, Sun, User as UserIcon, Users, FileText, Trophy } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
@@ -66,30 +66,7 @@ const achievements = [
     { title: "Quick Learner", rarity: "Common", desc: "Solved 100 aptitude questions", xp: "+100 XP", icon: <BrainCircuit />, color: "bg-blue-100 text-blue-800" },
 ]
 
-const searchMappings: { [key: string]: string } = {
-    "analytics": "/dashboard/analytics",
-    "practice": "/dashboard/aptitude",
-    "aptitude": "/dashboard/aptitude",
-    "discussions": "/dashboard/challenges",
-    "debates": "/dashboard/challenges",
-    "teams": "/dashboard/teams",
-    "interviews": "/dashboard/interviews",
-    "communication": "/dashboard/communication",
-    "coach": "/dashboard/coach",
-    "resume": "/dashboard/coach",
-    "portfolio": "/dashboard/passport",
-    "jobs": "/dashboard/jobs",
-    "internships": "/dashboard/internships",
-    "events": "/dashboard/events",
-    "leaderboard": "/dashboard/leaderboard",
-    "courses": "/dashboard/courses",
-    "certifications": "/dashboard/certifications",
-    "compiler": "/dashboard/compiler",
-    "notebook": "/dashboard/notebook",
-};
-
 export default function DashboardPage() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
@@ -111,22 +88,6 @@ export default function DashboardPage() {
         document.documentElement.classList.add('dark');
     }
   }, []);
-
-  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && searchQuery.trim() !== '') {
-        const query = searchQuery.trim().toLowerCase();
-        const route = Object.keys(searchMappings).find(key => query.includes(key));
-        if (route) {
-            router.push(searchMappings[route]);
-        } else {
-            toast({
-                variant: 'destructive',
-                title: "Not Found",
-                description: `Could not find a page for "${searchQuery}".`,
-            });
-        }
-    }
-  };
 
   const handleQuickAccessClick = (href: string) => {
     router.push(href);
@@ -291,3 +252,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
