@@ -21,9 +21,17 @@ function AuthFormContent() {
   const [authType, setAuthType] = useState('signup');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Form state
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('male');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
@@ -36,7 +44,18 @@ function AuthFormContent() {
         setIsLoading(false);
         return;
       }
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          data: {
+            name: `${firstName} ${lastName}`,
+            mobile_number: mobileNumber,
+            age: parseInt(age, 10),
+            gender: gender,
+          }
+        }
+      });
       if (error) {
         toast({ variant: "destructive", title: "Sign up failed", description: error.message });
         setIsLoading(false);
@@ -113,11 +132,11 @@ function AuthFormContent() {
              <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="first-name">First Name</Label>
-                    <Input id="first-name" placeholder="Max" required />
+                    <Input id="first-name" placeholder="Max" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="last-name">Last Name</Label>
-                    <Input id="last-name" placeholder="Robinson" required />
+                    <Input id="last-name" placeholder="Robinson" required value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </div>
             </div>
           )}
@@ -152,16 +171,16 @@ function AuthFormContent() {
                 <div className="grid grid-cols-2 gap-4">
                     <div className="grid gap-2">
                         <Label htmlFor="mobile-number">Mobile Number</Label>
-                        <Input id="mobile-number" type="tel" placeholder="e.g. +91 9876543210" required />
+                        <Input id="mobile-number" type="tel" placeholder="e.g. +91 9876543210" required value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} />
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="age">Age</Label>
-                        <Input id="age" type="number" placeholder="e.g. 21" required />
+                        <Input id="age" type="number" placeholder="e.g. 21" required value={age} onChange={(e) => setAge(e.target.value)} />
                     </div>
                 </div>
                 <div className="grid gap-2">
                 <Label>Gender</Label>
-                <RadioGroup defaultValue="male" className="flex gap-4">
+                <RadioGroup defaultValue={gender} onValueChange={setGender} className="flex gap-4">
                     <div className="flex items-center space-x-2">
                     <RadioGroupItem value="male" id="male" />
                     <Label htmlFor="male">Male</Label>
