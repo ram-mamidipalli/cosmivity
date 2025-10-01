@@ -120,7 +120,6 @@ export default function SettingsPage() {
                                     <AvatarImage src={user?.user_metadata.avatar_url || ""} data-ai-hint="boy icon" />
                                     <AvatarFallback>{user?.user_metadata.name?.[0] || <UserIcon />}</AvatarFallback>
                                 </Avatar>
-                                <Button variant="outline"><Upload className="mr-2"/>Change Photo</Button>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
