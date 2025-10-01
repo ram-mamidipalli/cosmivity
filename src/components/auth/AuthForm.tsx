@@ -14,6 +14,7 @@ import { Textarea } from "../ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { supabase } from "@/lib/supabase";
+import { Badge } from "@/components/ui/badge";
 
 function AuthFormContent() {
   const [authType, setAuthType] = useState('signup');
@@ -97,13 +98,16 @@ function AuthFormContent() {
             >
               Sign Up
             </Button>
-            <Button
-              onClick={() => setAuthType('institution')}
-              variant={isInstitution ? 'default' : 'ghost'}
-              className={cn(isInstitution && 'shadow-sm')}
-            >
-              For Institutions
-            </Button>
+            <div className="relative">
+                <Button
+                    variant={isInstitution ? 'default' : 'ghost'}
+                    className={cn(isInstitution && 'shadow-sm', 'w-full')}
+                    disabled
+                >
+                    For Institutions
+                </Button>
+                <Badge variant="secondary" className="absolute -top-2 right-0 text-xs">Upcoming</Badge>
+            </div>
           </div>
         <div className="grid gap-4">
           {isSignUp && !isInstitution && (
