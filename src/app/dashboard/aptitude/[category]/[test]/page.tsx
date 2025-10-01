@@ -9,8 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import QuestionView from "@/components/dashboard/aptitude/QuestionView";
 import { cn } from "@/lib/utils";
-import { generateTestQuestions } from "@/ai/flows/generate-test-questions";
 import { Skeleton } from "@/components/ui/skeleton";
+import { quantitativeQuestions } from "@/lib/quantitative-questions";
 
 export default function TestPage() {
   const params = useParams();
@@ -39,20 +39,25 @@ export default function TestPage() {
     const fetchQuestions = async () => {
       try {
         setLoading(true);
-        const response = await generateTestQuestions({ topic: testName, numberOfQuestions });
-        setQuestions(response.questions);
+        if (category === 'quantitative' && test in quantitativeQuestions) {
+          // Type assertion to access the property with a string key
+          const testQuestions = (quantitativeQuestions as any)[test];
+          setQuestions(testQuestions.slice(0, numberOfQuestions));
+        } else {
+          // Fallback or handle other categories if needed in the future
+          setQuestions([]);
+        }
       } catch (error) {
-        console.error("Failed to generate test questions:", error);
-        // Optionally, set some error state to show in the UI
+        console.error("Failed to load test questions:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    if(testName && numberOfQuestions) {
+    if(test && numberOfQuestions) {
         fetchQuestions();
     }
-  }, [testName, numberOfQuestions]);
+  }, [category, test, numberOfQuestions]);
 
 
   const handleSetCurrentQuestion = (index: number) => {
