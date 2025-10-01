@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { supabase } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
+import dynamic from "next/dynamic";
 
 function AuthFormContent() {
   const [authType, setAuthType] = useState('signup');
@@ -224,10 +225,14 @@ function AuthFormContent() {
   );
 }
 
+const DynamicAuthFormContent = dynamic(() => Promise.resolve(AuthFormContent), {
+  ssr: false,
+});
+
 export default function AuthForm() {
   return (
     <Card className="w-full max-w-lg">
-      <AuthFormContent />
+      <DynamicAuthFormContent />
     </Card>
   );
 }
