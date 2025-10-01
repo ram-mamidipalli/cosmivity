@@ -163,7 +163,7 @@ export default function DashboardPage() {
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Good Evening, {user?.user_metadata.name || 'Aakash'} 👋</h1>
+          <h1 className="text-3xl font-bold font-headline">Welcome, {user?.user_metadata.name || 'Aakash'}</h1>
           {isClient && currentDate && (
             <p className="text-muted-foreground flex items-center gap-2 mt-1">
                 <Calendar className="h-4 w-4" /> {currentDate}
