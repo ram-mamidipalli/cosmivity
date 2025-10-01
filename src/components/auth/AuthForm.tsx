@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, User, Briefcase } from "lucide-react";
+import { Eye, EyeOff, User, Briefcase, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -99,16 +99,14 @@ function AuthFormContent() {
             >
               Sign Up
             </Button>
-            <div className="relative">
-                <Button
-                    variant={isInstitution ? 'default' : 'ghost'}
-                    className={cn(isInstitution && 'shadow-sm', 'w-full')}
-                    disabled
-                >
-                    For Institutions
-                </Button>
-                <Badge variant="secondary" className="absolute -top-2 right-0 text-xs">Upcoming</Badge>
-            </div>
+            <Button
+                variant={'outline'}
+                className={'w-full'}
+                disabled
+            >
+                <Lock className="mr-2 h-4 w-4" />
+                For Institutions
+            </Button>
           </div>
         <div className="grid gap-4">
           {isSignUp && !isInstitution && (
