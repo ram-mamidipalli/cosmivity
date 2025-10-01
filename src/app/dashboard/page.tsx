@@ -328,27 +328,6 @@ export default function DashboardPage() {
                     ))}
                 </CardContent>
             </Card>
-             <Card>
-                <CardHeader>
-                    <CardTitle>Upcoming Milestones</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div>
-                        <div className="flex justify-between items-center mb-1">
-                            <p className="text-sm font-semibold">Interview Ace</p>
-                            <p className="text-xs text-muted-foreground font-code">7/10</p>
-                        </div>
-                        <Progress value={70} />
-                    </div>
-                     <div>
-                        <div className="flex justify-between items-center mb-1">
-                            <p className="text-sm font-semibold">Community Leader</p>
-                            <p className="text-xs text-muted-foreground font-code">10/25</p>
-                        </div>
-                        <Progress value={40} />
-                    </div>
-                </CardContent>
-            </Card>
              <Card className="text-center p-6">
                 <CardContent className="p-0">
                     <Quote className="h-8 w-8 text-primary mx-auto mb-2" />
