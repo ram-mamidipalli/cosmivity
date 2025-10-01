@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import Link from "next/link";
@@ -56,6 +55,7 @@ const presentMenuItems = [
   { href: "/dashboard/coach", label: "Resume Builder", icon: FileText },
   { href: "/dashboard/passport", label: "Portfolio", icon: Award },
   { href: "/dashboard/opportunities", label: "Opportunities", icon: Briefcase },
+  { href: "/dashboard/events", label: "Events", icon: Calendar },
 ];
 
 const upcomingMenuItems = [
@@ -67,7 +67,6 @@ const upcomingMenuItems = [
   { href: "/dashboard/teams", label: "Collaboration", icon: Users },
   { href: "/dashboard/interviews", label: "Mock Interviews (AI)", icon: MessageSquare },
   { href: "/dashboard/communication", label: "Communication Lab", icon: Mic },
-  { href: "/dashboard/events", label: "Events", icon: Calendar },
   { href: "/dashboard/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/dashboard/compiler", label: "Online Compiler", icon: Code },
 ]
@@ -97,7 +96,7 @@ const SidebarMenuItem = ({ item, isCollapsed, onLinkClick, disabled = false }: {
     >
       {item.icon && <item.icon className="h-5 w-5" />}
       {!isCollapsed && <span>{item.label}</span>}
-      {disabled && !isCollapsed && <Badge variant="outline" className="absolute right-2 text-xs">Upcoming</Badge>}
+      {disabled && !isCollapsed && <Lock className="absolute right-3 h-4 w-4" />}
     </Button>
   );
 
