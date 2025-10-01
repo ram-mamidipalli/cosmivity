@@ -236,45 +236,6 @@ export default function DashboardPage() {
                 </CardContent>
             </Card>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Today's Goals</CardTitle>
-                    <CardDescription>Keep up the momentum! You're doing great.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <div className="p-2 bg-primary/10 rounded-lg"><BrainCircuit className="h-6 w-6 text-primary"/></div>
-                        <div className="flex-1">
-                            <p className="font-semibold">Complete Aptitude Quiz</p>
-                            <p className="text-xs text-muted-foreground">Solve 10 quantitative questions</p>
-                        </div>
-                        <Progress value={70} className="w-24 h-2"/>
-                        <span className="text-sm font-semibold font-code">7/10</span>
-                    </div>
-                     <div className="flex items-center gap-4">
-                        <div className="p-2 bg-primary/10 rounded-lg"><Mic className="h-6 w-6 text-primary"/></div>
-                        <div className="flex-1">
-                            <p className="font-semibold">AI Chat Practice</p>
-                            <p className="text-xs text-muted-foreground">15 minutes conversation</p>
-                        </div>
-                        <Progress value={40} className="w-24 h-2"/>
-                        <span className="text-sm font-semibold font-code">6/15</span>
-                    </div>
-                     <div className="flex items-center gap-4">
-                        <div className="p-2 bg-primary/10 rounded-lg"><BookOpen className="h-6 w-6 text-primary"/></div>
-                        <div className="flex-1">
-                            <p className="font-semibold">Vocabulary Building</p>
-                            <p className="text-xs text-muted-foreground">Learn 5 new words</p>
-                        </div>
-                        <Progress value={100} className="w-24 h-2"/>
-                        <CheckCircle className="h-5 w-5 text-green-500"/>
-                    </div>
-                    <div className="border-t pt-4 mt-4 flex items-center justify-end text-sm font-semibold text-yellow-600">
-                        <Flame className="h-4 w-4 mr-1"/> <span className="font-code">7-day streak</span> <span className="text-muted-foreground mx-2">|</span> <span className="font-code">+150 XP today</span>
-                    </div>
-                </CardContent>
-            </Card>
-
             <div>
                 <CardTitle className="mb-4">Your Learning Path</CardTitle>
                 <div className="grid md:grid-cols-3 gap-6">
