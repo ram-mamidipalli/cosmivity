@@ -218,28 +218,6 @@ export default function DashboardPage() {
         </div>
 
         <div className="xl:col-span-1 flex flex-col gap-8">
-            
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle>Achievements</CardTitle>
-                    <Button variant="link" size="sm">View All</Button>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    {achievements.map((ach, i) => (
-                         <div key={i} className={`flex items-start gap-4 p-3 rounded-lg ${ach.color}`}>
-                             <div className="p-2 bg-white/50 rounded-full">{ach.icon}</div>
-                             <div>
-                                <div className="flex items-center gap-2">
-                                 <p className="font-semibold">{ach.title}</p>
-                                 <Badge variant="outline" className="text-xs border-current">{ach.rarity}</Badge>
-                                </div>
-                                 <p className="text-xs">{ach.desc}</p>
-                                 <p className="text-xs font-bold mt-1 font-code">{ach.xp}</p>
-                             </div>
-                         </div>
-                    ))}
-                </CardContent>
-            </Card>
              <Card className="text-center p-6">
                 <CardContent className="p-0">
                     <Quote className="h-8 w-8 text-primary mx-auto mb-2" />
