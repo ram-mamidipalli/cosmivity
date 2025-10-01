@@ -6,11 +6,10 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Search, Award, Activity, BarChart3, Users, FileText, ChevronRight, Settings, LogOut, Flame, Trophy, Calendar, CheckCircle, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronDown, ClipboardCheck, Timer, Moon, Sun, User as UserIcon } from "lucide-react";
+import { Settings, LogOut, BrainCircuit, Mic, MessageSquare, BookOpen, Quote, ChevronRight, ClipboardCheck, Timer, Moon, Sun, User as UserIcon, Users, FileText } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import RecentActivity from "@/components/dashboard/RecentActivity";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
@@ -61,19 +60,6 @@ const quickAccessItems = [
     { label: "Study Circles", icon: <BookOpen/>, desc: "Join Peer Groups", href: "/dashboard/teams" }
 ];
 
-const leaderboardData = [
-    { name: "Rahul Verma", school: "NIT Kurukshetra", xp: "2,850", avatar: "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-    { name: "Priya Sharma", school: "IIT Allahabad", xp: "2,720", avatar: "https://images.unsplash.com/photo-1711645169736-53327e726205?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
-    { name: "Aakash (You)", school: "VIT Vellore", xp: "2,650", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmlsZXxlbnwwfHx8fDE3NTgwMTYyNzV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon", isCurrentUser: true },
-    { name: "Ankit Kumar", school: "BIT Mesra", xp: "2,580", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-    { name: "Sneha Patel", school: "NSIT Delhi", xp: "2,450", avatar: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
-    { name: "Vikram Singh", school: "IIT Bombay", xp: "2,380", avatar: "https://images.unsplash.com/photo-1583195763986-0231686dcd43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-    { name: "Neha Gupta", school: "IIT Delhi", xp: "2,310", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU3MjQ3MDUwfDA&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
-    { name: "Amit Reddy", school: "IIT Madras", xp: "2,250", avatar: "https://images.unsplash.com/photo-1627161684458-a62da52b51c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBoZWFkc2hvdHxlbnwwfHx8fDE3NTczNDQyMDV8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-    { name: "Sunita Rao", school: "IIT Kanpur", xp: "2,190", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b21hbiUyMGhlYWRzaG90fGVufDB8fHx8MTc1NzM0NDIwNXww&ixlib=rb-4.1.0&q=80&w=1080", hint: "woman icon" },
-    { name: "Rajesh Kumar", school: "IIT Kharagpur", xp: "2,120", avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTcyNDcwNTB8MA&ixlib=rb-4.1.0&q=80&w=1080", hint: "boy icon" },
-];
-
 const achievements = [
     { title: "Debate Champion", rarity: "Rare", desc: "Won 3 consecutive debates", xp: "+250 XP", icon: <Trophy />, color: "bg-yellow-100 text-yellow-800" },
     { title: "Fluency Master", rarity: "Epic", desc: "Completed 50 AI chat sessions", xp: "+500 XP", icon: <Mic />, color: "bg-purple-100 text-purple-800" },
@@ -103,7 +89,6 @@ const searchMappings: { [key: string]: string } = {
 };
 
 export default function DashboardPage() {
-  const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -119,7 +104,6 @@ export default function DashboardPage() {
   useEffect(() => {
     // This code now runs only on the client
     setIsClient(true);
-    setCurrentDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     
     const darkModePreference = localStorage.getItem('darkMode') === 'true';
     setIsDarkMode(darkModePreference);
@@ -164,11 +148,6 @@ export default function DashboardPage() {
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold font-headline">Welcome, {user?.user_metadata.name || 'Aakash'}</h1>
-          {isClient && currentDate && (
-            <p className="text-muted-foreground flex items-center gap-2 mt-1">
-                <Calendar className="h-4 w-4" /> {currentDate}
-            </p>
-          )}
         </div>
         <div className="flex items-center gap-2">
           <DropdownMenu>
@@ -275,38 +254,10 @@ export default function DashboardPage() {
                     <ScrollBar orientation="horizontal" />
                 </ScrollArea>
             </div>
-
-            <RecentActivity />
         </div>
 
         <div className="xl:col-span-1 flex flex-col gap-8">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Leaderboard</CardTitle>
-                    <CardDescription>Weekly XP Rankings</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <ScrollArea className="h-80">
-                        <ul className="space-y-4 pr-4">
-                            {leaderboardData.map((userItem, index) => (
-                                <li key={index} className={`flex items-center gap-4 p-2 rounded-lg ${userItem.isCurrentUser ? 'bg-primary/10' : ''}`}>
-                                    <span className="font-bold text-sm w-4 font-code">#{index + 1}</span>
-                                    <Avatar className="h-10 w-10">
-                                        <AvatarImage src={userItem.avatar} alt={userItem.name} data-ai-hint={userItem.hint} />
-                                        <AvatarFallback><UserIcon /></AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-grow">
-                                        <p className="font-semibold">{userItem.name}</p>
-                                        <p className="text-xs text-muted-foreground">{userItem.school}</p>
-                                    </div>
-                                    <span className="font-bold text-primary font-code">{userItem.xp}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </ScrollArea>
-                </CardContent>
-            </Card>
-
+            
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>Achievements</CardTitle>
@@ -340,5 +291,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
