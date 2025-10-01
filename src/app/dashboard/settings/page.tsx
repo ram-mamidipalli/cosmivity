@@ -117,8 +117,8 @@ export default function SettingsPage() {
                         <CardContent className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <Avatar className="h-20 w-20">
-                                    <AvatarImage src={user?.user_metadata.avatar_url || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmlsZXxlbnwwfHx8fDE3NTgwMTYyNzV8MA&ixlib=rb-4.1.0&q=80&w=1080"} data-ai-hint="boy icon" />
-                                    <AvatarFallback><UserIcon /></AvatarFallback>
+                                    <AvatarImage src={user?.user_metadata.avatar_url || ""} data-ai-hint="boy icon" />
+                                    <AvatarFallback>{user?.user_metadata.name?.[0] || <UserIcon />}</AvatarFallback>
                                 </Avatar>
                                 <Button variant="outline"><Upload className="mr-2"/>Change Photo</Button>
                             </div>

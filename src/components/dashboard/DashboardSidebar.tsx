@@ -192,7 +192,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                         onLinkClick={onLinkClick}
                       />
                     ))}
-                    {!isCollapsed && <p className="text-xs font-semibold text-muted-foreground px-4 mt-4 mb-2">Upcoming Features</p>}
+                    {!isCollapsed && <p className="text-xs font-semibold text-foreground px-4 mt-4 mb-2">Upcoming Features</p>}
                      {upcomingMenuItems.map((item) => (
                       <SidebarMenuItem 
                         key={item.href} 
@@ -222,8 +222,8 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("w-full justify-start gap-3 h-auto p-2", isCollapsed ? 'px-2' : 'px-3')}>
                     <Avatar>
-                         <AvatarImage src={user?.user_metadata.avatar_url || "https://placehold.co/40x40.png"} alt="User" data-ai-hint="boy icon" />
-                         <AvatarFallback><UserIcon /></AvatarFallback>
+                         <AvatarImage src={user?.user_metadata.avatar_url || ""} alt="User" data-ai-hint="boy icon" />
+                         <AvatarFallback>{user?.user_metadata.name?.[0] || <UserIcon />}</AvatarFallback>
                     </Avatar>
                     {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
