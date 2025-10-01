@@ -11,14 +11,16 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   quantitative: {
     title: "Quantitative Aptitude Tests",
     tests: [
-      { id: "arithmetic-aptitude", name: "Arithmetic Aptitude", questions: 10, time: 30 },
-      { id: "data-interpretation", name: "Data Interpretation", questions: 15, time: 25 },
-      ...Array.from({ length: 8 }, (_, i) => ({
-        id: `quantitative-test-${i + 1}`,
-        name: `Quantitative Test ${i + 1}`,
-        questions: 20,
-        time: 30,
-      })),
+        { id: "percentages", name: "Percentages", questions: 15, time: 20 },
+        { id: "ratio-and-proportion", name: "Ratio & Proportion", questions: 15, time: 20 },
+        { id: "profit-loss-and-partnership", name: "Profit, Loss & Partnership", questions: 15, time: 25 },
+        { id: "averages-mixture-and-alligations", name: "Averages, Mixture & Alligations", questions: 15, time: 25 },
+        { id: "time-and-work", name: "Time and Work", questions: 15, time: 20 },
+        { id: "time-speed-and-distance", name: "Time, Speed and Distance", questions: 15, time: 20 },
+        { id: "simple-and-compound-interest", name: "Simple and Compound Interest", questions: 15, time: 20 },
+        { id: "number-system", name: "Number System", questions: 15, time: 15 },
+        { id: "number-series", name: "Number Series", questions: 15, time: 15 },
+        { id: "simplification", name: "Simplification", questions: 15, time: 15 },
     ],
   },
   logical: {
