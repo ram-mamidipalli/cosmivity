@@ -52,6 +52,7 @@ const modules = [
     icon: <BookOpen className="h-8 w-8 text-primary" />,
     buttonText: "View Quizzes",
     href: "/dashboard/aptitude/gk",
+    isUpcoming: true,
   },
    {
     title: "Technical MCQs",
