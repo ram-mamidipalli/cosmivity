@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, RadialBarChart, RadialBar, Legend } from "recharts"
 import { BarChart, BrainCircuit, Mic, Users, FileText } from "lucide-react"
+import { useEffect, useState } from "react"
 
 const overallData = [
     { name: 'Aptitude', value: 75, fill: 'hsl(var(--primary))' },
@@ -16,7 +17,7 @@ const overallData = [
 
 const overallScore = Math.round(overallData.reduce((acc, item) => acc + item.value, 0) / overallData.length);
 
-const pieChartData = {
+const defaultPieChartData = {
     aptitude: [
         { name: 'Quantitative', value: 400, fill: '#8884d8' },
         { name: 'Logical', value: 300, fill: '#82ca9d' },
@@ -42,6 +43,30 @@ const pieChartData = {
 
 
 export default function AnalyticsPage() {
+    const [pieChartData, setPieChartData] = useState(defaultPieChartData);
+
+    useEffect(() => {
+        // In a real app, you would fetch this data from your backend.
+        // For demonstration, we'll use mock data.
+        const mockAptitudeScores = {
+            "Percentages": 80,
+            "Ratio & Proportion": 75,
+            "Profit, Loss & Partnership": 90
+        };
+
+        const aptitudeData = Object.entries(mockAptitudeScores).map(([name, value], index) => ({
+            name,
+            value,
+            fill: defaultPieChartData.aptitude[index % defaultPieChartData.aptitude.length].fill
+        }));
+
+        setPieChartData(prevData => ({
+            ...prevData,
+            aptitude: aptitudeData.length > 0 ? aptitudeData : prevData.aptitude
+        }));
+
+    }, [])
+
   return (
     <div className="flex flex-col gap-8 p-4 sm:p-6 md:p-8">
       <header className="flex items-center justify-between flex-wrap gap-4">

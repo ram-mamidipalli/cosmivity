@@ -9,6 +9,7 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { CircularProgress } from '@/components/ui/circular-progress';
+import Link from 'next/link';
 
 type Question = {
   id: number;
@@ -23,6 +24,7 @@ type Answers = { [key: number]: string };
 export default function TestReportPage() {
     const params = useParams();
     const router = useRouter();
+    const category = Array.isArray(params.category) ? params.category[0] : params.category;
     const testName = (Array.isArray(params.test) ? params.test[0] : params.test).replace(/-/g, " ");
 
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -75,12 +77,17 @@ export default function TestReportPage() {
                             <span className="text-5xl font-bold text-primary">{Math.round(scorePercentage)}%</span>
                         </div>
                     </div>
-                    <div className="text-center md:text-left">
+                    <div className="text-center md:text-left flex flex-col gap-2">
                         <p className="text-2xl font-bold">{score} / {questions.length}</p>
                         <p className="text-muted-foreground">Correct Answers</p>
-                         <Button onClick={() => router.back()} className="mt-4">
-                            Try Again
-                        </Button>
+                         <div className='flex gap-2 mt-2'>
+                            <Button onClick={() => router.back()}>
+                                Try Again
+                            </Button>
+                             <Button variant="outline" asChild>
+                                <Link href={`/dashboard/aptitude/${category}`}>Back to Quizzes</Link>
+                            </Button>
+                         </div>
                     </div>
                 </CardContent>
             </Card>
