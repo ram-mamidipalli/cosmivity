@@ -233,7 +233,7 @@ export default function CoachPage() {
                         <div className="h-[800px] overflow-auto border rounded-lg shadow-lg">
                             <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm">
                                 <header className="text-center mb-8">
-                                    <h1 className="text-4xl font-bold font-serif text-black">{details.name}</h1>
+                                    <h1 className="text-3xl font-bold font-serif text-black">{details.name}</h1>
                                     <div className="flex justify-center items-center gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 flex-wrap">
                                         <span className="flex items-center gap-1.5"><Phone className="h-3 w-3"/>{details.phone}</span>
                                         <span className="flex items-center gap-1.5"><Mail className="h-3 w-3"/>{details.email}</span>
