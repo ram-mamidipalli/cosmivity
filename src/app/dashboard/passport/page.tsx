@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -152,6 +152,27 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
         description: "Your changes have been saved locally.",
     });
   }
+  
+  const handleExperienceChange = useCallback((index: number, field: string, value: string, descIndex?: number) => {
+    setExperiences(prev => {
+        const newExps = [...prev];
+        if (field === 'description' && descIndex !== undefined) {
+            newExps[index].description[descIndex] = value;
+        } else {
+            (newExps[index] as any)[field] = value;
+        }
+        return newExps;
+    });
+  }, []);
+
+  const handleProjectChange = useCallback((index: number, field: string, value: any) => {
+      setProjects(prev => prev.map((p, i) => i === index ? { ...p, [field]: value } : p));
+  }, []);
+
+  const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
+      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
+  }, []);
+
 
   const EditableField = ({ value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
     if (isEditing) {
@@ -275,17 +296,13 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                         <Card key={exp.company} className="p-6">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <EditableField value={exp.role} onChange={(newValue: string) => setExperiences(exps => exps.map((e, i) => i === index ? {...e, role: newValue} : e))} className="text-xl font-bold"/>
-                                    <EditableField value={exp.company} onChange={(newValue: string) => setExperiences(exps => exps.map((e, i) => i === index ? {...e, company: newValue} : e))} className="text-primary font-semibold"/>
+                                    <EditableField value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
+                                    <EditableField value={exp.company} onChange={(newValue: string) => handleExperienceChange(index, 'company', newValue)} className="text-primary font-semibold"/>
                                 </div>
-                                <EditableField value={exp.duration} onChange={(newValue: string) => setExperiences(exps => exps.map((e, i) => i === index ? {...e, duration: newValue} : e))} className="text-muted-foreground text-sm"/>
+                                <EditableField value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
                             <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
-                                {exp.description.map((d, i) => <EditableField key={i} value={d} onChange={(newValue: string) => {
-                                    const newExps = [...experiences];
-                                    newExps[index].description[i] = newValue;
-                                    setExperiences(newExps);
-                                }}/>)}
+                                {exp.description.map((d, i) => <EditableField key={i} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)}/>)}
                             </ul>
                         </Card>
                     ))}
@@ -305,10 +322,14 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 </EditableImage>
                             </div>
                             <div className="p-8 flex flex-col justify-center">
-                                <EditableField value={project.title} onChange={(newValue: string) => setProjects(projs => projs.map((p, i) => i === index ? {...p, title: newValue} : p))} className="text-2xl font-bold mb-4"/>
-                                <EditableField value={project.description} onChange={(newValue: string) => setProjects(projs => projs.map((p, i) => i === index ? {...p, description: newValue} : p))} isTextarea={true} className="text-muted-foreground mb-4"/>
+                                <EditableField value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
+                                <EditableField value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
                                 <div className="flex flex-wrap gap-2 mb-4">
-                                    {project.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}
+                                    {isEditing ? 
+                                        <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} />
+                                        :
+                                        project.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)
+                                    }
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <Button variant="ghost" size="icon"><ArrowUpRight/></Button>
@@ -335,18 +356,18 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 </EditableImage>
                                 <EditableField 
                                     value={`"${t.quote}"`}
-                                    onChange={(newValue: string) => setTestimonials(prev => prev.map((item, i) => i === index ? { ...item, quote: newValue.replace(/"/g, '') } : item))}
+                                    onChange={(newValue: string) => handleTestimonialChange(index, 'quote', newValue.replace(/"/g, ''))}
                                     isTextarea={true}
                                     className="text-muted-foreground italic mb-4"
                                 />
                                 <EditableField 
                                     value={t.name}
-                                    onChange={(newValue: string) => setTestimonials(prev => prev.map((item, i) => i === index ? { ...item, name: newValue } : item))}
+                                    onChange={(newValue: string) => handleTestimonialChange(index, 'name', newValue)}
                                     className="font-bold text-primary"
                                 />
                                  <EditableField 
                                     value={t.title}
-                                    onChange={(newValue: string) => setTestimonials(prev => prev.map((item, i) => i === index ? { ...item, title: newValue } : item))}
+                                    onChange={(newValue: string) => handleTestimonialChange(index, 'title', newValue)}
                                     className="text-sm text-muted-foreground"
                                 />
                             </CardContent>
@@ -394,5 +415,3 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   );
 
 }
-
-    
