@@ -70,45 +70,26 @@ export default function CoachPage() {
   const [certifications, setCertifications] = useState(initialCertifications);
   const [activities, setActivities] = useState(initialActivities);
 
-  const handleExportPdf = async () => {
+  const handleExportImage = async () => {
     if (resumePreviewRef.current) {
-        const JSPDF = (await import('jspdf')).default;
         const html2canvas = (await import('html2canvas')).default;
-        const resumeElement = resumePreviewRef.current;
 
-        html2canvas(resumeElement, {
+        html2canvas(resumePreviewRef.current, {
             scale: 2,
             useCORS: true,
-            width: resumeElement.scrollWidth,
-            height: resumeElement.scrollHeight,
-            windowWidth: resumeElement.scrollWidth,
-            windowHeight: resumeElement.scrollHeight,
+            width: resumePreviewRef.current.scrollWidth,
+            height: resumePreviewRef.current.scrollHeight,
+            windowWidth: resumePreviewRef.current.scrollWidth,
+            windowHeight: resumePreviewRef.current.scrollHeight,
         }).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new JSPDF('p', 'pt', 'a4');
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-            const pageHeight = pdf.internal.pageSize.getHeight();
-            let heightLeft = pdfHeight;
-            let position = 0;
-
-            // Add the first page
-            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-            heightLeft -= pageHeight;
-
-            // Add new pages if content overflows
-            while (heightLeft > 0) {
-                position = heightLeft - pdfHeight;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
-                heightLeft -= pageHeight;
-            }
-            
-            pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
+            const link = document.createElement('a');
+            link.download = `${details.name.toLowerCase().replace(" ", "-")}-resume.png`;
+            link.href = imgData;
+            link.click();
         });
     }
-};
+  };
 
   
   const handleDetailChange = (field: keyof typeof details, value: string) => {
@@ -138,9 +119,6 @@ export default function CoachPage() {
             <div>
                 <h1 className="text-3xl font-bold font-headline">Resume Builder</h1>
                 <p className="text-muted-foreground">Create a professional resume that stands out to employers</p>
-            </div>
-            <div className="flex items-center gap-2">
-                <Button className="neon-glow" onClick={handleExportPdf}><Download className="mr-2"/> Export PDF</Button>
             </div>
         </header>
 
@@ -250,11 +228,16 @@ export default function CoachPage() {
             <div className="lg:col-span-1 space-y-8 sticky top-24">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Live Preview</CardTitle>
-                        <CardDescription>This is how your resume will look.</CardDescription>
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <CardTitle>Live Preview</CardTitle>
+                                <CardDescription>This is how your resume will look.</CardDescription>
+                            </div>
+                            <Button className="neon-glow" onClick={handleExportImage}><Download className="mr-2"/> Export as PNG</Button>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[800px] overflow-auto border rounded-lg shadow-lg">
+                        <div className="h-[900px] overflow-auto border rounded-lg shadow-lg">
                             <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm">
                                 <header className="text-center mb-8">
                                     <h1 className="text-3xl font-bold font-serif text-black">{details.name}</h1>
@@ -344,5 +327,3 @@ export default function CoachPage() {
     </div>
   );
 }
-
-    
