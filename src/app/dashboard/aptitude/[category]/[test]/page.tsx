@@ -11,6 +11,7 @@ import QuestionView from "@/components/dashboard/aptitude/QuestionView";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { quantitativeQuestions } from "@/lib/quantitative-questions";
+import { logicalQuestions } from "@/lib/logical-questions";
 
 export default function TestPage() {
   const params = useParams();
@@ -39,14 +40,13 @@ export default function TestPage() {
     const fetchQuestions = async () => {
       try {
         setLoading(true);
+        let testQuestions: any[] = [];
         if (category === 'quantitative' && test in quantitativeQuestions) {
-          // Type assertion to access the property with a string key
-          const testQuestions = (quantitativeQuestions as any)[test];
-          setQuestions(testQuestions.slice(0, numberOfQuestions));
-        } else {
-          // Fallback or handle other categories if needed in the future
-          setQuestions([]);
+          testQuestions = (quantitativeQuestions as any)[test];
+        } else if (category === 'logical' && test in logicalQuestions) {
+          testQuestions = (logicalQuestions as any)[test];
         }
+        setQuestions(testQuestions.slice(0, numberOfQuestions));
       } catch (error) {
         console.error("Failed to load test questions:", error);
       } finally {

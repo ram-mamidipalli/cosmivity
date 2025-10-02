@@ -26,15 +26,14 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   logical: {
     title: "Logical Reasoning Tests",
     tests: [
-      { id: "logical-reasoning-1", name: "Logical Reasoning Test 1", questions: 15, time: 25 },
-      { id: "verbal-reasoning", name: "Verbal Reasoning", questions: 20, time: 20 },
-      { id: "non-verbal-reasoning", name: "Non-Verbal Reasoning", questions: 20, time: 20 },
-      ...Array.from({ length: 7 }, (_, i) => ({
-        id: `logical-reasoning-${i + 2}`,
-        name: `Logical Reasoning Test ${i + 2}`,
-        questions: 15,
-        time: 25,
-      })),
+      { id: "alphanumeric-series", name: "AlphaNumeric Series", questions: 15, time: 20 },
+      { id: "blood-relations", name: "Blood Relations", questions: 15, time: 15 },
+      { id: "coding-decoding", name: "Coding-Decoding", questions: 15, time: 20 },
+      { id: "data-sufficiency", name: "Data Sufficiency", questions: 15, time: 25 },
+      { id: "direction-sense", name: "Direction Sense", questions: 15, time: 15 },
+      { id: "statement-and-conclusion", name: "Statement & Conclusion", questions: 15, time: 20 },
+      { id: "syllogism", name: "Syllogism", questions: 15, time: 20 },
+      { id: "calendar-and-clock", name: "Calendar & Clock", questions: 15, time: 15 },
     ],
   },
   verbal: {
