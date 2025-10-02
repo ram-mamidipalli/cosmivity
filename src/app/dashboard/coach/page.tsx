@@ -2,7 +2,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Upload, Download, Edit, Save, PlusCircle, Trash2, Mail, Phone, Linkedin, Github } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -72,16 +71,17 @@ export default function CoachPage() {
   const [certifications, setCertifications] = useState(initialCertifications);
   const [activities, setActivities] = useState(initialActivities);
 
-  const handleExportPdf = async () => {
+  const handleExportPdf = () => {
     const input = resumePreviewRef.current;
     if (input) {
       html2canvas(input, {
-          scale: 2, // Higher scale for better quality
-          useCORS: true,
-          width: input.scrollWidth,
-          height: input.scrollHeight,
-          windowWidth: input.scrollWidth,
-          windowHeight: input.scrollHeight
+        useCORS: true,
+        scale: 2,
+        // Set the width and height to capture the entire content
+        width: input.scrollWidth,
+        height: input.scrollHeight,
+        windowWidth: input.scrollWidth,
+        windowHeight: input.scrollHeight,
       }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -98,7 +98,6 @@ export default function CoachPage() {
       });
     }
   };
-
   
   const handleDetailChange = (field: keyof typeof details, value: string) => {
       setDetails(prev => ({...prev, [field]: value}));
@@ -245,7 +244,7 @@ export default function CoachPage() {
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[900px] overflow-auto border rounded-lg shadow-lg">
+                        <div className="h-[900px] overflow-y-auto border rounded-lg shadow-lg">
                             <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm">
                                 <header className="text-center mb-8">
                                     <h1 className="text-3xl font-bold font-serif text-black">{details.name}</h1>
@@ -336,4 +335,3 @@ export default function CoachPage() {
   );
 }
 
-    
