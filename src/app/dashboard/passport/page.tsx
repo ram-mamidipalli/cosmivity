@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
+import { Label } from "@/components/ui/label";
 
 const initialExperiences = [
     {
@@ -394,3 +395,4 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
 
 }
 
+    
