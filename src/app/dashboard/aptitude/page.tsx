@@ -13,21 +13,21 @@ const modules = [
     title: "Quantitative Aptitude",
     description: "Practice numerical problems, data interpretation, and mathematical concepts.",
     icon: <Calculator className="h-8 w-8 text-primary" />,
-    buttonText: "View Tests",
+    buttonText: "View Quizzes",
     href: "/dashboard/aptitude/quantitative",
   },
   {
     title: "Logical Reasoning",
     description: "Sharpen your analytical and critical thinking skills with puzzles and scenarios.",
     icon: <Lightbulb className="h-8 w-8 text-primary" />,
-    buttonText: "View Tests",
+    buttonText: "View Quizzes",
     href: "/dashboard/aptitude/logical",
   },
     {
     title: "Verbal Ability",
     description: "Improve your grammar, vocabulary, and reading comprehension.",
     icon: <MessageCircle className="h-8 w-8 text-primary" />,
-    buttonText: "View Tests",
+    buttonText: "View Quizzes",
     href: "/dashboard/aptitude/verbal",
   },
   {
@@ -62,7 +62,7 @@ const modules = [
     title: "Daily Challenges",
     description: "Take on daily timed quizzes to test your speed and accuracy under pressure.",
     icon: <Trophy className="h-8 w-8 text-primary" />,
-    buttonText: "View Challenges",
+    buttonText: "Start Practice",
     href: "/dashboard/daily-test",
   },
    {

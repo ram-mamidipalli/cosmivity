@@ -97,7 +97,7 @@ export default function TestPage() {
       <header>
         <Link href={`/dashboard/aptitude/${category}`} className="text-sm text-primary hover:underline flex items-center gap-2">
           <ChevronLeft className="h-4 w-4" />
-          Back to {category.charAt(0).toUpperCase() + category.slice(1)} Tests
+          Back to {category.charAt(0).toUpperCase() + category.slice(1)}
         </Link>
         <h1 className="text-3xl font-bold font-headline mt-2 capitalize">{testName}</h1>
       </header>
@@ -129,7 +129,7 @@ export default function TestPage() {
                         <CardTitle>No Questions Yet</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>Questions for this test will be added soon. Check back later!</p>
+                        <p>Questions for this topic will be added soon. Check back later!</p>
                     </CardContent>
                 </Card>
             )}
@@ -139,7 +139,7 @@ export default function TestPage() {
                 </Button>
                 {isLastQuestion ? (
                     <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading || questions.length === 0}>
-                        Submit Test
+                        Submit
                     </Button>
                 ) : (
                     <Button onClick={handleNext} disabled={currentQuestionIndex >= questions.length - 1 || loading}>

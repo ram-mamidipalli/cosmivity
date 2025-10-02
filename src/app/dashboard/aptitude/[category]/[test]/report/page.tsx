@@ -60,8 +60,8 @@ export default function TestReportPage() {
     return (
         <div className="flex flex-col gap-8">
             <header>
-                <h1 className="text-3xl font-bold font-headline capitalize">Test Report: {testName}</h1>
-                <p className="text-muted-foreground">Here is a summary of your test performance.</p>
+                <h1 className="text-3xl font-bold font-headline capitalize">Report: {testName}</h1>
+                <p className="text-muted-foreground">Here is a summary of your performance.</p>
             </header>
 
             <Card>

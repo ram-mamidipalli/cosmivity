@@ -100,7 +100,7 @@ export default function DailyTestPage() {
           <ChevronLeft className="h-4 w-4" />
           Back to Dashboard
         </Link>
-        <h1 className="text-3xl font-bold font-headline mt-2 capitalize">Daily Quick Test</h1>
+        <h1 className="text-3xl font-bold font-headline mt-2 capitalize">Daily Quick Practice</h1>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -156,7 +156,7 @@ export default function DailyTestPage() {
                         <CardTitle>No Questions Yet</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>Questions for this test will be added soon. Check back later!</p>
+                        <p>Questions for this practice will be added soon. Check back later!</p>
                     </CardContent>
                 </Card>
             )}
@@ -166,7 +166,7 @@ export default function DailyTestPage() {
                 </Button>
                 {isLastQuestion ? (
                     <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading}>
-                        Submit Test
+                        Submit
                     </Button>
                 ) : (
                     <Button onClick={handleNext} disabled={currentQuestionIndex >= totalQuestions - 1 || loading}>

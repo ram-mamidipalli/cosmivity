@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 
 const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   quantitative: {
-    title: "Quantitative Aptitude Tests",
+    title: "Quantitative Aptitude",
     tests: [
         { id: "percentages", name: "Percentages", questions: 15, time: 20 },
         { id: "ratio-and-proportion", name: "Ratio & Proportion", questions: 15, time: 20 },
@@ -24,7 +24,7 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
     ],
   },
   logical: {
-    title: "Logical Reasoning Tests",
+    title: "Logical Reasoning",
     tests: [
       { id: "alphanumeric-series", name: "AlphaNumeric Series", questions: 15, time: 20 },
       { id: "blood-relations", name: "Blood Relations", questions: 15, time: 15 },
@@ -37,11 +37,11 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
     ],
   },
   verbal: {
-    title: "Verbal Ability Tests",
+    title: "Verbal Ability",
     tests: [
       ...Array.from({ length: 10 }, (_, i) => ({
         id: `verbal-ability-${i + 1}`,
-        name: `Verbal Ability Test ${i + 1}`,
+        name: `Verbal Ability Practice ${i + 1}`,
         questions: 25,
         time: 20,
       })),
@@ -65,7 +65,7 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
       ]
   },
   programming: {
-      title: "Programming Language Tests",
+      title: "Programming Language Practice",
       tests: [
         { id: 'c-programming', name: "C Programming", questions: 20, time: 30 },
         { id: 'c-plus-plus', name: "C++ Programming", questions: 20, time: 30 },
@@ -98,9 +98,9 @@ export default function AptitudeCategoryPage() {
   const params = useParams();
   const router = useRouter();
   const category = Array.isArray(params.category) ? params.category[0] : params.category;
-  const details = categoryDetails[category] || { title: "Practice Tests", tests: [] };
+  const details = categoryDetails[category] || { title: "Practice Topics", tests: [] };
 
-  const handleStartTest = (testId: string, questions: number) => {
+  const handleStartPractice = (testId: string, questions: number) => {
     router.push(`/dashboard/aptitude/${category}/${testId}?questions=${questions}`);
   }
 
@@ -111,7 +111,7 @@ export default function AptitudeCategoryPage() {
           &larr; Back to Practice Modules
         </Link>
         <h1 className="text-3xl font-bold font-headline mt-2">{details.title}</h1>
-        <p className="text-muted-foreground">Select a test to begin your practice session.</p>
+        <p className="text-muted-foreground">Select a topic to begin your practice session.</p>
       </header>
       <Card>
         <CardContent className="p-0">
@@ -136,7 +136,7 @@ export default function AptitudeCategoryPage() {
                                 </div>
                             </div>
                         </div>
-                        <Button className="w-full sm:w-auto" onClick={() => handleStartTest(test.id, test.questions)}>Start Test</Button>
+                        <Button className="w-full sm:w-auto" onClick={() => handleStartPractice(test.id, test.questions)}>Start Practice</Button>
                     </li>
                 ))}
             </ul>
