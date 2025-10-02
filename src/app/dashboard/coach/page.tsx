@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import jsPDF from "jspdf";
 
 const initialDetails = {
     name: "Sagar",
@@ -70,23 +71,23 @@ export default function CoachPage() {
   const [certifications, setCertifications] = useState(initialCertifications);
   const [activities, setActivities] = useState(initialActivities);
 
-  const handleExportImage = async () => {
+  const handleExportPdf = async () => {
     if (resumePreviewRef.current) {
-        const html2canvas = (await import('html2canvas')).default;
-
-        html2canvas(resumePreviewRef.current, {
-            scale: 2,
-            useCORS: true,
-            width: resumePreviewRef.current.scrollWidth,
-            height: resumePreviewRef.current.scrollHeight,
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        
+        pdf.html(resumePreviewRef.current, {
+            callback: function (doc) {
+                doc.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
+            },
+            autoPaging: 'text',
+            width: 595, // A4 width in points
             windowWidth: resumePreviewRef.current.scrollWidth,
-            windowHeight: resumePreviewRef.current.scrollHeight,
-        }).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.download = `${details.name.toLowerCase().replace(" ", "-")}-resume.png`;
-            link.href = imgData;
-            link.click();
+            margin: [40, 40, 40, 40],
+        });
+
+        toast({
+            title: "Resume Exported!",
+            description: "Your resume has been downloaded as a PDF.",
         });
     }
   };
@@ -233,7 +234,7 @@ export default function CoachPage() {
                                 <CardTitle>Live Preview</CardTitle>
                                 <CardDescription>This is how your resume will look.</CardDescription>
                             </div>
-                            <Button className="neon-glow" onClick={handleExportImage}><Download className="mr-2"/> Export as PNG</Button>
+                            <Button className="neon-glow" onClick={handleExportPdf}><Download className="mr-2"/> Export as PDF</Button>
                         </div>
                     </CardHeader>
                     <CardContent>
@@ -243,7 +244,7 @@ export default function CoachPage() {
                                     <h1 className="text-3xl font-bold font-serif text-black">{details.name}</h1>
                                     <div className="flex justify-center items-center gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 flex-wrap">
                                         <span className="flex items-center gap-1.5"><Phone className="h-3 w-3"/>{details.phone}</span>
-                                        <span className="flex items-center gap-1.5"><Mail className="h-3 w-3"/>{details.email}</span>
+                                        <a href={`mailto:${details.email}`} className="flex items-center gap-1.5 hover:text-primary"><Mail className="h-3 w-3"/>{details.email}</a>
                                         <a href={`https://${details.linkedin}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary"><Linkedin className="h-3 w-3"/>{details.linkedin}</a>
                                         <a href={`https://${details.github}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary"><Github className="h-3 w-3"/>{details.github}</a>
                                     </div>
