@@ -76,25 +76,28 @@ export default function CoachPage() {
         const html2canvas = (await import('html2canvas')).default;
         const resumeElement = resumePreviewRef.current;
 
-        html2canvas(resumeElement, { 
-            scale: 2, 
+        html2canvas(resumeElement, {
+            scale: 2,
             useCORS: true,
-            width: resumeElement.offsetWidth,
-            height: resumeElement.offsetHeight,
+            width: resumeElement.scrollWidth,
+            height: resumeElement.scrollHeight,
+            windowWidth: resumeElement.scrollWidth,
+            windowHeight: resumeElement.scrollHeight,
         }).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new JSPDF('p', 'pt', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            
-            // If the resume is longer than one page, we'll need to split it
+
             const pageHeight = pdf.internal.pageSize.getHeight();
             let heightLeft = pdfHeight;
             let position = 0;
 
+            // Add the first page
             pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
             heightLeft -= pageHeight;
 
+            // Add new pages if content overflows
             while (heightLeft > 0) {
                 position = heightLeft - pdfHeight;
                 pdf.addPage();
@@ -105,7 +108,8 @@ export default function CoachPage() {
             pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
         });
     }
-  };
+};
+
   
   const handleDetailChange = (field: keyof typeof details, value: string) => {
       setDetails(prev => ({...prev, [field]: value}));
