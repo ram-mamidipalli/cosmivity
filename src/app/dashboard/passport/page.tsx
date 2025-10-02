@@ -197,24 +197,16 @@ export default function PassportPage() {
             </header>
 
             {/* Hero Section */}
-            <section className="py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-                <div className="space-y-6">
-                    {isEditing ? <Input value={heroTitle} onChange={e => setHeroTitle(e.target.value)} className="text-5xl md:text-7xl font-bold font-headline h-auto" /> : <h1 className="text-5xl md:text-7xl font-bold font-headline">{heroTitle}</h1>}
-                    {isEditing ? <Textarea value={heroSubtitle} onChange={e => setHeroSubtitle(e.target.value)} className="text-lg text-muted-foreground" rows={4}/> : <p className="text-lg text-muted-foreground">{heroSubtitle}</p>}
+            <section className="py-16 md:py-24 text-center">
+                <div className="space-y-6 max-w-3xl mx-auto">
+                    {isEditing ? <Input value={heroTitle} onChange={e => setHeroTitle(e.target.value)} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" /> : <h1 className="text-5xl md:text-7xl font-bold font-headline">{heroTitle}</h1>}
+                    {isEditing ? <Textarea value={heroSubtitle} onChange={e => setHeroSubtitle(e.target.value)} className="text-lg text-muted-foreground text-center" rows={4}/> : <p className="text-lg text-muted-foreground">{heroSubtitle}</p>}
                     
-                    <div className="flex items-center gap-4 text-muted-foreground">
+                    <div className="flex items-center justify-center gap-4 text-muted-foreground">
                         <Github className="h-6 w-6 cursor-pointer hover:text-primary"/>
                         <Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/>
                         <Figma className="h-6 w-6 cursor-pointer hover:text-primary"/>
                     </div>
-                </div>
-                <div>
-                    <EditableImage src="https://placehold.co/400x400.png" alt="Sagar" hint="man portrait">
-                        <Avatar className="w-full h-auto max-w-sm mx-auto shadow-lg">
-                            <AvatarImage src="https://placehold.co/400x400.png" alt="Sagar" data-ai-hint="man portrait"/>
-                            <AvatarFallback>S</AvatarFallback>
-                        </Avatar>
-                    </EditableImage>
                 </div>
             </section>
 
@@ -383,5 +375,7 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
 
     
