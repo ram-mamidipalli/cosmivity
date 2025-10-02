@@ -81,6 +81,35 @@ const initialTestimonials = [
     }
 ]
 
+
+const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
+    if (isEditing) {
+        return isTextarea ? (
+            <Textarea value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} rows={rows} />
+        ) : (
+            <Input value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} />
+        );
+    }
+    if (isTextarea) {
+        return <div className={className}>{value.split('\n').map((line:string, i:number) => <p key={i}>{line}</p>)}</div>;
+    }
+    return <p className={className}>{value}</p>;
+};
+  
+const EditableImage = ({ src, alt, hint, children, isEditing }: any) => {
+    return (
+        <div className="relative group">
+            {children}
+            {isEditing && (
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+                    <Button variant="outline"><Upload className="mr-2 h-4 w-4"/>Change</Button>
+                </div>
+            )}
+        </div>
+    )
+};
+
+
 export default function PassportPage() {
   const { toast } = useToast();
   const { user } = useAuth();
@@ -136,11 +165,9 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
         });
       } catch (error) {
         console.error("Error sharing:", error);
-        // Fallback to copy link if sharing fails
         handleCopyLink();
       }
     } else {
-      // Fallback for browsers that don't support the Share API
       handleCopyLink();
     }
   };
@@ -184,35 +211,6 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const handlePhoneChange = useCallback((value: string) => setPhone(value), []);
   const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
 
-
-  const EditableField = ({ value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
-    if (isEditing) {
-        return isTextarea ? (
-            <Textarea value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} rows={rows} />
-        ) : (
-            <Input value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} />
-        );
-    }
-    // For multiline text from textarea, we need to render newlines
-    if (isTextarea) {
-        return <div className={className}>{value.split('\n').map((line:string, i:number) => <p key={i}>{line}</p>)}</div>;
-    }
-    return <p className={className}>{value}</p>;
-  };
-  
-  const EditableImage = ({ src, alt, hint, children }: any) => {
-    return (
-        <div className="relative group">
-            {children}
-            {isEditing && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
-                    <Button variant="outline"><Upload className="mr-2 h-4 w-4"/>Change</Button>
-                </div>
-            )}
-        </div>
-    )
-  }
-
   return (
     <div className="bg-background text-foreground font-body">
         <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
@@ -236,8 +234,8 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             {/* Hero Section */}
             <section className="py-16 md:py-24 text-center">
                 <div className="space-y-6 max-w-3xl mx-auto">
-                    <EditableField value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
-                    <EditableField value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
+                    <EditableField isEditing={isEditing} value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
+                    <EditableField isEditing={isEditing} value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
                     
                     <div className="flex items-center justify-center gap-4 text-muted-foreground">
                         {isEditing ? (
@@ -265,6 +263,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                          <h3 className="text-3xl font-bold font-headline text-foreground">Curious about me? Here you have it:</h3>
                          
                          <EditableField
+                            isEditing={isEditing}
                             value={aboutContent}
                             onChange={handleAboutContentChange}
                             isTextarea={true}
@@ -307,13 +306,13 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                         <Card key={exp.company} className="p-6">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <EditableField value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
-                                    <EditableField value={exp.company} onChange={(newValue: string) => handleExperienceChange(index, 'company', newValue)} className="text-primary font-semibold"/>
+                                    <EditableField isEditing={isEditing} value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
+                                    <EditableField isEditing={isEditing} value={exp.company} onChange={(newValue: string) => handleExperienceChange(index, 'company', newValue)} className="text-primary font-semibold"/>
                                 </div>
-                                <EditableField value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
+                                <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
                             <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
-                                {exp.description.map((d, i) => <EditableField key={i} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)}/>)}
+                                {exp.description.map((d, i) => <EditableField key={i} isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)}/>)}
                             </ul>
                         </Card>
                     ))}
@@ -328,13 +327,13 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                     {projects.map((project, index) => (
                         <Card key={project.title} className="grid md:grid-cols-2 overflow-hidden">
                             <div className={`p-8 bg-card ${index % 2 === 1 ? 'md:order-last' : ''}`}>
-                                <EditableImage src={project.image} alt={project.title} hint={project.hint}>
+                                <EditableImage isEditing={isEditing} src={project.image} alt={project.title} hint={project.hint}>
                                     <Image src={project.image} alt={project.title} width={600} height={400} className="rounded-lg shadow-lg" data-ai-hint={project.hint}/>
                                 </EditableImage>
                             </div>
                             <div className="p-8 flex flex-col justify-center">
-                                <EditableField value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
-                                <EditableField value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
+                                <EditableField isEditing={isEditing} value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
+                                <EditableField isEditing={isEditing} value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {isEditing ? 
                                         <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} />
@@ -359,24 +358,27 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                     {testimonials.map((t, index) => (
                         <Card key={t.name} className="p-6">
                             <CardContent className="p-0 flex flex-col items-center text-center">
-                                <EditableImage src={t.avatar} alt={t.name} hint={t.hint}>
+                                <EditableImage isEditing={isEditing} src={t.avatar} alt={t.name} hint={t.hint}>
                                     <Avatar className="w-20 h-20 mb-4">
                                         <AvatarImage src={t.avatar} alt={t.name} data-ai-hint={t.hint}/>
                                         <AvatarFallback>{t.name[0]}</AvatarFallback>
                                     </Avatar>
                                 </EditableImage>
                                 <EditableField 
+                                    isEditing={isEditing}
                                     value={`"${t.quote}"`}
                                     onChange={(newValue: string) => handleTestimonialChange(index, 'quote', newValue.replace(/"/g, ''))}
                                     isTextarea={true}
                                     className="text-muted-foreground italic mb-4"
                                 />
                                 <EditableField 
+                                    isEditing={isEditing}
                                     value={t.name}
                                     onChange={(newValue: string) => handleTestimonialChange(index, 'name', newValue)}
                                     className="font-bold text-primary"
                                 />
                                  <EditableField 
+                                    isEditing={isEditing}
                                     value={t.title}
                                     onChange={(newValue: string) => handleTestimonialChange(index, 'title', newValue)}
                                     className="text-sm text-muted-foreground"
@@ -391,6 +393,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             <section className="py-16 text-center">
                 <Badge variant="outline" className="mb-4">Get in touch</Badge>
                 <EditableField 
+                    isEditing={isEditing}
                     value={contactHeading}
                     onChange={handleContactHeadingChange}
                     isTextarea={true}
