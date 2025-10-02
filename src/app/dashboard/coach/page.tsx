@@ -74,17 +74,21 @@ export default function CoachPage() {
   const handleExportPdf = () => {
     const input = resumePreviewRef.current;
     if (input) {
-      // Use scrollHeight and scrollWidth to capture the full content
       html2canvas(input, {
         useCORS: true,
-        scale: 2,
+        scale: 2, // Higher scale for better quality
+        logging: true,
         width: input.scrollWidth,
         height: input.scrollHeight,
+        windowWidth: input.scrollWidth,
+        windowHeight: input.scrollHeight
       }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfWidth = 210; // A4 width in mm
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        // Create a PDF with the calculated height
+        const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
         
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
@@ -93,6 +97,13 @@ export default function CoachPage() {
           title: "Resume Exported!",
           description: "Your resume has been downloaded as a PDF.",
         });
+      }).catch(err => {
+        console.error("Could not generate PDF", err);
+        toast({
+          title: "Export Failed",
+          description: "There was an error generating the PDF.",
+          variant: "destructive"
+        })
       });
     }
   };
@@ -332,3 +343,5 @@ export default function CoachPage() {
     </div>
   );
 }
+
+    
