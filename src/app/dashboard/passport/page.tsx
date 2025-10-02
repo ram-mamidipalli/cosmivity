@@ -114,6 +114,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const [figmaUrl, setFigmaUrl] = useState("https://figma.com/@sagar-dev");
   const [email, setEmail] = useState("sagar@example.com");
   const [phone, setPhone] = useState("+91 98765 43210");
+  const [contactHeading, setContactHeading] = useState("What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.");
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -379,7 +380,13 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             {/* Contact */}
             <section className="py-16 text-center">
                 <Badge variant="outline" className="mb-4">Get in touch</Badge>
-                <h3 className="text-3xl font-bold font-headline mb-4">What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.</h3>
+                <EditableField 
+                    value={contactHeading}
+                    onChange={setContactHeading}
+                    isTextarea={true}
+                    className="text-3xl font-bold font-headline mb-4"
+                    rows={3}
+                />
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-lg mt-8">
                     {isEditing ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
