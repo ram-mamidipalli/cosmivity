@@ -45,6 +45,7 @@ const modules = [
     icon: <Code className="h-8 w-8 text-primary" />,
     buttonText: "View Languages",
     href: "/dashboard/aptitude/programming",
+    isUpcoming: true,
   },
   {
     title: "General Knowledge",
@@ -60,13 +61,7 @@ const modules = [
     icon: <Brain className="h-8 w-8 text-primary" />,
     buttonText: "View MCQs",
     href: "/dashboard/aptitude/technical",
-  },
-  {
-    title: "Daily Challenges",
-    description: "Take on daily timed quizzes to test your speed and accuracy under pressure.",
-    icon: <Trophy className="h-8 w-8 text-primary" />,
-    buttonText: "Start Practice",
-    href: "/dashboard/daily-test",
+    isUpcoming: true,
   },
    {
     title: "Puzzles",
@@ -74,6 +69,7 @@ const modules = [
     icon: <Puzzle className="h-8 w-8 text-primary" />,
     buttonText: "Solve Puzzles",
     href: "/dashboard/aptitude/puzzles",
+    isUpcoming: true,
   },
 ];
 
