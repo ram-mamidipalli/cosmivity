@@ -101,13 +101,17 @@ export default function PassportPage() {
   const [heroTitle, setHeroTitle] = useState("Hi, I'm Sagar 👋");
   const [heroSubtitle, setHeroSubtitle] = useState("I'm a full-stack developer with 5+ years of experience. I enjoy building solid and scalable frontend products with great user experiences.");
   const [aboutTitle, setAboutTitle] = useState("Curious about me? Here you have it:");
-  const [aboutContent, setAboutContent] = useState([
-    "I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.",
-    "I began my journey as a web developer in 2015, and since then, I've continued to grow and evolve as a developer, taking on new challenges and learning the latest technologies along the way. Now, in my early thirties, 5 years after starting my web development journey, I'm building cutting-edge web applications using modern technologies such as Next.js, TypeScript, Nestjs, Tailwindcss, Supabase and much more.",
-    "I am very much a person who loves to solve problems of others and loves to help people with their questions. I am also a great team player and always willing to learn from others.",
-    "Finally, some quick bits about me.",
-    "One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉"
-  ]);
+  const [aboutContent, setAboutContent] = useState(
+    `I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.
+
+I began my journey as a web developer in 2015, and since then, I've continued to grow and evolve as a developer, taking on new challenges and learning the latest technologies along the way. Now, in my early thirties, 5 years after starting my web development journey, I'm building cutting-edge web applications using modern technologies such as Next.js, TypeScript, Nestjs, Tailwindcss, Supabase and much more.
+
+I am very much a person who loves to solve problems of others and loves to help people with their questions. I am also a great team player and always willing to learn from others.
+
+Finally, some quick bits about me.
+
+One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`
+  );
   const [experiences, setExperiences] = useState(initialExperiences);
   const [projects, setProjects] = useState(initialProjects);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
@@ -155,10 +159,10 @@ export default function PassportPage() {
     });
   }
 
-  const EditableField = ({ value, onChange, isTextarea = false, className = '' }: any) => {
+  const EditableField = ({ value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
     if (isEditing) {
         return isTextarea ? (
-            <Textarea value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} />
+            <Textarea value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} rows={rows} />
         ) : (
             <Input value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} />
         );
@@ -233,13 +237,14 @@ export default function PassportPage() {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="md:col-span-2 space-y-4 text-muted-foreground">
                          {isEditing ? <Input value={aboutTitle} onChange={e => setAboutTitle(e.target.value)} className="text-3xl font-bold font-headline text-foreground h-auto" /> : <h3 className="text-3xl font-bold font-headline text-foreground">{aboutTitle}</h3>}
-                         {aboutContent.map((paragraph, index) => (
-                            <EditableField key={index} value={paragraph} onChange={(newValue: string) => {
-                                const newContent = [...aboutContent];
-                                newContent[index] = newValue;
-                                setAboutContent(newContent);
-                            }} isTextarea={true} />
-                        ))}
+                         
+                         <EditableField
+                            value={aboutContent}
+                            onChange={setAboutContent}
+                            isTextarea={true}
+                            className="text-muted-foreground"
+                            rows={15}
+                          />
 
                         <div className="flex gap-8">
                             <ul className="list-disc list-inside">
@@ -364,10 +369,10 @@ export default function PassportPage() {
                 <h3 className="text-3xl font-bold font-headline mb-4">What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.</h3>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-lg mt-8">
                     {isEditing ? (
-                        <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
                             <Input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email Address" />
                             <Input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone Number" />
-                        </>
+                        </div>
                     ) : (
                         <>
                             <div className="flex items-center gap-2">
@@ -395,5 +400,7 @@ export default function PassportPage() {
         </div>
     </div>
   );
+
+    
 
     
