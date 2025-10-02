@@ -14,48 +14,45 @@ import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 
 const initialDetails = {
-    name: "M S Aditya Vardhan",
-    phone: "+91-9392584546",
-    email: "msadityavardhan18@gmail.com",
-    linkedin: "linkedin.com/in/msadityavardhan",
-    github: "github.com/msadityavardhan"
+    name: "Sagar",
+    phone: "+91-9876543210",
+    email: "sagar@example.com",
+    linkedin: "linkedin.com/in/sagar-dev",
+    github: "github.com/sagar-dev"
 };
 
-const initialSummary = "Enthusiastic graduate seeking to start a career as an entry-level engineer with a reputed firm driven by technology. Passionate about implementing and launching new projects. Strong collaborative skills gained through team projects and a proactive approach to learning. Excited to contribute innovative solutions and learn from experienced professionals in a dynamic environment.";
+const initialSummary = "I'm a full-stack developer with 5+ years of experience. I enjoy building solid and scalable frontend products with great user experiences.";
 
 const initialEducation = [
-    { school: "Vellore Institute of Technology", degree: "BTech in Computer Science and Engineering (GPA: 8.02/10)", duration: "2021 - Present", location: "Amaravathi, Andhra Pradesh" },
-    { school: "Aditya Junior College", degree: "Intermediate (GPA: 9.80/10)", duration: "2019 - 2021", location: "Andhra Pradesh" },
-    { school: "Narayana Institutions", degree: "Schooling (GPA: 10/10)", duration: "2018 - 2019", location: "Andhra Pradesh" }
+    { school: "University of Technology", degree: "B.E. in Computer Engineering (GPA: 8.5/10)", duration: "2017 - 2021", location: "Delhi, India" },
+    { school: "City College", degree: "Senior Secondary (95%)", duration: "2015 - 2017", location: "Delhi, India" },
+    { school: "Public School", degree: "Secondary School (10 CGPA)", duration: "2014 - 2015", location: "Delhi, India" }
 ];
 
 const initialProjects = [
-    { title: "Autism Disorder Detection", tech: "Python, Convolutional Neural Networks, ResNet, VGG16, Deep Learning", description: "Developed a deep learning-based system to detect autistic traits from image datasets, focusing on early and accurate diagnosis. Preprocessed images using techniques such as normalization, data augmentation, and feature scaling, ensuring high-quality inputs to the model.\nIncorporated advanced architectures like ResNet and VGG16 for improved accuracy and robustness.\nExtracted critical features like facial landmarks, eye gaze patterns, and micro-expressions to identify potential indicators of autism. Integrated transfer learning for faster training and better generalization on smaller datasets." },
-    { title: "Rice Plant Disease Detection", tech: "Python, Deep Learning, Convolutional Neural Networks", description: "Developed a Convolutional Neural Network (CNN) model with 2D convolution, Max Pooling, and Softmax output layers to classify rice leaf disease images. Preprocessed images using data augmentation and normalization to enhance model performance.\nTrained the model for 70 epochs, implementing callbacks to halt training upon reaching the desired accuracy.\nAchieved a 95% accuracy on a standard rice leaf disease dataset." },
-    { title: "Gaming Community", tech: "ReactJs, NodeJs, MongoDB", description: "Developed a full-stack web application providing a platform for gamers to connect, share content, and communicate. Built a secure backend using Node.js and MongoDB, implementing user authentication and session management with JWT for data protection.\nDesigned and implemented search and filtering functionalities to allow users to find game-specific groups and posts quickly. Integrated real-time messaging to allow users to interact and communicate within the platform." }
+    { title: "E-commerce Platform", tech: "React, Node.js, MongoDB, Express", description: "Developed a full-stack e-commerce website with features like product catalog, shopping cart, user authentication, and payment gateway integration. Implemented a responsive user interface using React and Bootstrap. Built a RESTful API with Node.js and Express for backend services." },
+    { title: "Task Management App", tech: "Next.js, Firebase, Tailwind CSS", description: "Created a task management application to help users organize their daily tasks. Features include creating, updating, and deleting tasks, setting due dates, and categorizing tasks into different projects. Used Firebase for real-time database and authentication." },
+    { title: "Portfolio Website", tech: "HTML, CSS, JavaScript", description: "Designed and built a personal portfolio website to showcase projects and skills. Focused on creating a clean and modern design with a user-friendly interface. Optimized for performance and responsiveness across different devices." }
 ];
 
-const initialOtherProjects = "Customer churn prediction, Smart Farming Assistant, Smart Farming using Solar Power, Facial Emotion Detection.";
+const initialOtherProjects = "Weather App, Blog Platform, Chat Application.";
 
 const initialSkills = [
-    { category: "Technical Skills", skills: "Machine Learning, Natural Language Processing, Deep Learning, OOPS, Artificial Intelligence" },
-    { category: "Programming Languages", skills: "Java, HTML, CSS, Python, ReactJs, NodeJs" },
-    { category: "Tools", skills: "NLTK, Numpy, scikit-learn, PyTorch, TensorFlow, OpenCV, PowerBI" },
-    { category: "Database", skills: "SQL, MongoDB" },
-    { category: "Soft Skills", skills: "Leadership, Teamwork, Communication, Time management, Problem Solving, Analytical Thinking" },
+    { category: "Programming Languages", skills: "JavaScript, Python, Java, C++" },
+    { category: "Frontend", skills: "React, Next.js, HTML, CSS, Tailwind CSS" },
+    { category: "Backend", skills: "Node.js, Express, Firebase" },
+    { category: "Database", skills: "MongoDB, SQL" },
+    { category: "Tools & Others", skills: "Git, Docker, Figma, Agile" },
 ];
 
 const initialCertifications = [
-    { name: "AWS Cloud Practioner", link: "AWS Certificate" },
-    { name: "MERN Full Stack Web Development", link: "MERN Certificate" },
-    { name: "Google Analytics for Beginners", link: "certificate" },
+    { name: "Full-Stack Web Development", link: "Certificate Link" },
+    { name: "Advanced JavaScript", link: "Certificate Link" },
 ];
 
 const initialActivities = [
-    { title: "NextGen Cloud Tech Club", role: "Technical Team Member", description: "Worked as a technical team member in the NextGen Cloud tech club for 6 months" },
-    { title: "IEI[Institution of Engineers) Chapter", role: "Technical Co-Lead", description: "We are the forming team members of the IEI chapter in our college" },
-    { title: "Research Paper", role: "", description: "Applied to present my research paper at the ICISML conference on meeting summarization using natural language processing." },
-    { title: "Community Volunteer", role: "", description: "Participated in organizing and managing various events during the college fest. Responsibilities included coordinating with different teams and ensuring smooth execution of activities. Developed strong organizational skills." }
+    { title: "Coding Club", role: "President", description: "Organized coding competitions and workshops for students." },
+    { title: "Hackathon Participant", role: "", description: "Participated in multiple hackathons and won 'Best Project Award' in one." },
 ]
 
 
@@ -323,6 +320,5 @@ export default function CoachPage() {
     </div>
   );
 }
-
 
     
