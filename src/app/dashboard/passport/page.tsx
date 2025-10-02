@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/hooks/use-auth";
 
 const initialSkills = [
     { name: "JavaScript", icon: "https://placehold.co/48x48.png", hint: "javascript logo" },
@@ -93,6 +94,7 @@ const initialTestimonials = [
 
 export default function PassportPage() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   
   // States for editable content
@@ -181,7 +183,7 @@ export default function PassportPage() {
         <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
             {/* Header */}
             <header className="flex justify-between items-center py-4">
-                <h2 className="text-xl font-bold font-code text-primary">{"<Sagar/>"}</h2>
+                <h2 className="text-xl font-bold font-code text-primary">{`<${user?.user_metadata.name || 'Sagar'}/>`}</h2>
                 <div className="flex items-center gap-2">
                     <Button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
                         {isEditing ? <Save className="mr-2 h-4 w-4" /> : <Edit className="mr-2 h-4 w-4" />}
@@ -213,12 +215,7 @@ export default function PassportPage() {
             {/* About Me */}
             <section className="py-16">
                 <Badge variant="outline" className="mb-4">About</Badge>
-                <div className="grid md:grid-cols-3 gap-12 items-center">
-                    <div className="md:col-span-1">
-                        <EditableImage src="https://placehold.co/400x600.png" alt="Sagar walking in a park" hint="man walking">
-                            <Image src="https://placehold.co/400x600.png" width={400} height={600} alt="Sagar walking in a park" className="rounded-lg shadow-md" data-ai-hint="man walking"/>
-                        </EditableImage>
-                    </div>
+                <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="md:col-span-2 space-y-4 text-muted-foreground">
                          {isEditing ? <Input value={aboutTitle} onChange={e => setAboutTitle(e.target.value)} className="text-3xl font-bold font-headline text-foreground h-auto" /> : <h3 className="text-3xl font-bold font-headline text-foreground">{aboutTitle}</h3>}
                          {aboutContent.map((paragraph, index) => (
