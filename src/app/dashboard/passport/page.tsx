@@ -111,6 +111,11 @@ export default function PassportPage() {
   const [experiences, setExperiences] = useState(initialExperiences);
   const [projects, setProjects] = useState(initialProjects);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
+  const [githubUrl, setGithubUrl] = useState("https://github.com/sagar-dev");
+  const [twitterUrl, setTwitterUrl] = useState("https://twitter.com/sagar_dev");
+  const [figmaUrl, setFigmaUrl] = useState("https://figma.com/@sagar-dev");
+  const [email, setEmail] = useState("sagar@example.com");
+  const [phone, setPhone] = useState("+91 98765 43210");
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -205,9 +210,19 @@ export default function PassportPage() {
                     {isEditing ? <Textarea value={heroSubtitle} onChange={e => setHeroSubtitle(e.target.value)} className="text-lg text-muted-foreground text-center" rows={4}/> : <p className="text-lg text-muted-foreground">{heroSubtitle}</p>}
                     
                     <div className="flex items-center justify-center gap-4 text-muted-foreground">
-                        <Github className="h-6 w-6 cursor-pointer hover:text-primary"/>
-                        <Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/>
-                        <Figma className="h-6 w-6 cursor-pointer hover:text-primary"/>
+                        {isEditing ? (
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
+                                <Input value={githubUrl} onChange={e => setGithubUrl(e.target.value)} placeholder="GitHub URL" />
+                                <Input value={twitterUrl} onChange={e => setTwitterUrl(e.target.value)} placeholder="Twitter URL" />
+                                <Input value={figmaUrl} onChange={e => setFigmaUrl(e.target.value)} placeholder="Figma URL" />
+                            </div>
+                        ) : (
+                            <>
+                                <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
@@ -348,19 +363,28 @@ export default function PassportPage() {
                 <Badge variant="outline" className="mb-4">Get in touch</Badge>
                 <h3 className="text-3xl font-bold font-headline mb-4">What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.</h3>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-lg mt-8">
-                    <div className="flex items-center gap-2">
-                        <Mail/>
-                        <a href="mailto:sagar@example.com" className="hover:text-primary">sagar@example.com</a>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Phone/>
-                        <a href="tel:+919876543210" className="hover:text-primary">+91 98765 43210</a>
-                    </div>
+                    {isEditing ? (
+                        <>
+                            <Input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email Address" />
+                            <Input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone Number" />
+                        </>
+                    ) : (
+                        <>
+                            <div className="flex items-center gap-2">
+                                <Mail/>
+                                <a href={`mailto:${email}`} className="hover:text-primary">{email}</a>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Phone/>
+                                <a href={`tel:${phone}`} className="hover:text-primary">{phone}</a>
+                            </div>
+                        </>
+                    )}
                 </div>
                 <div className="flex justify-center items-center gap-4 text-muted-foreground mt-8">
-                        <Github className="h-6 w-6 cursor-pointer hover:text-primary"/>
-                        <Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/>
-                        <Figma className="h-6 w-6 cursor-pointer hover:text-primary"/>
+                        <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                        <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                        <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
                     </div>
             </section>
 
@@ -371,8 +395,5 @@ export default function PassportPage() {
         </div>
     </div>
   );
-}
-
-    
 
     
