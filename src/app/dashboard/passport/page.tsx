@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/lib/supabase";
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
     if (isEditing) {
@@ -87,16 +88,10 @@ const initialTestimonials = [
     }
 ]
 
-export default function PassportPage() {
-  const { toast } = useToast();
-  const { user } = useAuth();
-  const [isEditing, setIsEditing] = useState(false);
-  
-  // States for editable content
-  const [heroTitle, setHeroTitle] = useState("Hi, I'm Sagar 👋");
-  const [heroSubtitle, setHeroSubtitle] = useState("I'm a full-stack developer with 5+ years of experience. I enjoy building solid and scalable frontend products with great user experiences.");
-  const [aboutContent, setAboutContent] = useState(
-`I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.
+const defaultData = {
+  heroTitle: "Hi, I'm Sagar 👋",
+  heroSubtitle: "I'm a full-stack developer with 5+ years of experience. I enjoy building solid and scalable frontend products with great user experiences.",
+  aboutContent: `I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.
 
 I began my journey as a web developer in 2015, and since then, I've continued to grow and evolve as a developer, taking on new challenges and learning the latest technologies along the way. Now, in my early thirties, 5 years after starting my web development journey, I'm building cutting-edge web applications using modern technologies such as Next.js, TypeScript, Nestjs, Tailwindcss, Supabase and much more.
 
@@ -108,18 +103,74 @@ Finally, some quick bits about me.
 - Avid learner
 - Basketball fan
 
-One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`
-  );
-  const [skills, setSkills] = useState("JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS");
-  const [experiences, setExperiences] = useState(initialExperiences);
-  const [projects, setProjects] = useState(initialProjects);
-  const [testimonials, setTestimonials] = useState(initialTestimonials);
-  const [githubUrl, setGithubUrl] = useState("https://github.com/sagar-dev");
-  const [twitterUrl, setTwitterUrl] = useState("https://twitter.com/sagar_dev");
-  const [figmaUrl, setFigmaUrl] = useState("https://figma.com/@sagar-dev");
-  const [email, setEmail] = useState("sagar@example.com");
-  const [phone, setPhone] = useState("+91 98765 43210");
-  const [contactHeading, setContactHeading] = useState("What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.");
+One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`,
+  skills: "JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS,figma,wordpress",
+  experiences: initialExperiences,
+  projects: initialProjects,
+  testimonials: initialTestimonials,
+  githubUrl: "https://github.com/sagar-dev",
+  twitterUrl: "https://twitter.com/sagar_dev",
+  figmaUrl: "https://figma.com/@sagar-dev",
+  email: "sagar@example.com",
+  phone: "+91 98765 43210",
+  contactHeading: "What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect."
+};
+
+export default function PassportPage() {
+  const { toast } = useToast();
+  const { user } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  
+  // States for editable content
+  const [heroTitle, setHeroTitle] = useState("");
+  const [heroSubtitle, setHeroSubtitle] = useState("");
+  const [aboutContent, setAboutContent] = useState("");
+  const [skills, setSkills] = useState("");
+  const [experiences, setExperiences] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [githubUrl, setGithubUrl] = useState("");
+  const [twitterUrl, setTwitterUrl] = useState("");
+  const [figmaUrl, setFigmaUrl] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [contactHeading, setContactHeading] = useState("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+        if (user) {
+            setLoading(true);
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('passport_data')
+                .eq('id', user.id)
+                .single();
+
+            if (error && error.code !== 'PGRST116') { // PGRST116: row not found
+                console.error('Error fetching profile:', error);
+                toast({ title: "Error", description: "Could not fetch your profile data.", variant: "destructive" });
+            }
+            
+            const profileData = data?.passport_data || defaultData;
+            setHeroTitle(profileData.heroTitle);
+            setHeroSubtitle(profileData.heroSubtitle);
+            setAboutContent(profileData.aboutContent);
+            setSkills(profileData.skills);
+            setExperiences(profileData.experiences);
+            setProjects(profileData.projects);
+            setTestimonials(profileData.testimonials);
+            setGithubUrl(profileData.githubUrl);
+            setTwitterUrl(profileData.twitterUrl);
+            setFigmaUrl(profileData.figmaUrl);
+            setEmail(profileData.email);
+            setPhone(profileData.phone);
+            setContactHeading(profileData.contactHeading);
+            setLoading(false);
+        }
+    };
+    fetchProfile();
+  }, [user, toast]);
 
   const publicProfileUrl = user ? `${window.location.origin}/p/${user.id}` : '';
 
@@ -151,12 +202,34 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!user) {
+        toast({ title: "Error", description: "You must be logged in to save.", variant: "destructive" });
+        return;
+    }
     setIsEditing(false);
-    toast({
-        title: "Profile Saved!",
-        description: "Your changes have been saved locally.",
-    });
+    const passport_data = {
+        heroTitle, heroSubtitle, aboutContent, skills, experiences, projects, testimonials,
+        githubUrl, twitterUrl, figmaUrl, email, phone, contactHeading
+    };
+
+    const { error } = await supabase
+        .from('profiles')
+        .upsert({ id: user.id, passport_data });
+
+    if (error) {
+        console.error("Error saving profile:", error);
+        toast({
+            title: "Save Failed",
+            description: "There was an error saving your portfolio.",
+            variant: "destructive"
+        });
+    } else {
+        toast({
+            title: "Profile Saved!",
+            description: "Your changes have been saved successfully.",
+        });
+    }
   }
   
   const handleExperienceChange = useCallback((index: number, field: string, value: string, descIndex?: number) => {
@@ -198,7 +271,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
       setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
   }, []);
-  
+
   const handleHeroTitleChange = useCallback((value: string) => setHeroTitle(value), []);
   const handleHeroSubtitleChange = useCallback((value: string) => setHeroSubtitle(value), []);
   const handleAboutContentChange = useCallback((value: string) => setAboutContent(value), []);
@@ -209,6 +282,10 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const handleEmailChange = useCallback((value: string) => setEmail(value), []);
   const handlePhoneChange = useCallback((value: string) => setPhone(value), []);
   const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
+
+  if (loading) {
+      return <div>Loading profile...</div>
+  }
 
   return (
     <div className="bg-background text-foreground font-body">
@@ -314,19 +391,10 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 </div>
                                 <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
-                            {isEditing ? (
-                                <EditableField 
-                                    isEditing={isEditing} 
-                                    value={exp.link} 
-                                    onChange={(newValue: string) => handleExperienceChange(index, 'link', newValue)} 
-                                    className="text-sm text-blue-500 hover:underline"
-                                    placeholder="Link to project/company"
-                                />
-                            ) : (
-                                exp.link && exp.link !== '#' && <a href={exp.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">{exp.link}</a>
-                            )}
+                             <EditableField isEditing={isEditing} value={exp.link} onChange={(newValue: string) => handleExperienceChange(index, 'link', newValue)} className="text-sm text-blue-500 hover:underline" placeholder="Link to project/company"/>
+
                             <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-2">
-                                {exp.description.map((d, i) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
+                                {exp.description.map((d: string, i: number) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
                             </ul>
                         </Card>
                     ))}
@@ -337,7 +405,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             <section className="py-16">
                 <div className="flex justify-between items-center mb-8">
                     <Badge variant="outline">Work</Badge>
-                    {isEditing && (
+                     {isEditing && (
                         <Button variant="outline" onClick={handleAddProject}><PlusCircle className="mr-2 h-4 w-4"/>Add Project</Button>
                     )}
                 </div>
@@ -353,7 +421,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                     {isEditing ? 
                                         <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} placeholder="Comma-separated tags" />
                                         :
-                                        project.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)
+                                        project.tags.map((tag:string) => <Badge key={tag} variant="secondary">{tag}</Badge>)
                                     }
                                 </div>
                                 <div className="flex items-center gap-4 mt-2">
@@ -453,5 +521,3 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
     </div>
   );
 }
-
-    
