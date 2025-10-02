@@ -108,7 +108,7 @@ Finally, some quick bits about me.
 
 One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`
   );
-  const [skills, setSkills] = useState("JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS");
+  const [skills, setSkills] = useState("JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS,figma,wordpress");
   const [experiences, setExperiences] = useState(initialExperiences);
   const [projects, setProjects] = useState(initialProjects);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
@@ -167,9 +167,25 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
     });
   }, []);
 
+  const handleAddExperience = () => {
+      setExperiences(prev => [...prev, { company: "New Company", role: "New Role", duration: "Present", description: ["Description point 1."] }]);
+  }
+
+  const handleRemoveExperience = (index: number) => {
+      setExperiences(prev => prev.filter((_, i) => i !== index));
+  }
+
   const handleProjectChange = useCallback((index: number, field: string, value: any) => {
       setProjects(prev => prev.map((p, i) => i === index ? { ...p, [field]: value } : p));
   }, []);
+
+  const handleAddProject = () => {
+      setProjects(prev => [...prev, { title: "New Project", description: "A brief description of your new project.", tags: ["New Tag"], liveLink: "#", codeLink: "#" }]);
+  }
+
+  const handleRemoveProject = (index: number) => {
+      setProjects(prev => prev.filter((_, i) => i !== index));
+  }
 
   const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
       setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
@@ -272,11 +288,17 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
 
             {/* Experience */}
             <section className="py-16">
-                <Badge variant="outline" className="mb-4">Experience</Badge>
+                <div className="flex justify-between items-center mb-8">
+                    <Badge variant="outline">Experience</Badge>
+                    {isEditing && (
+                        <Button variant="outline" onClick={handleAddExperience}><PlusCircle className="mr-2 h-4 w-4"/>Add Experience</Button>
+                    )}
+                </div>
                 <h3 className="text-2xl text-muted-foreground mb-8 text-center">Here is a quick summary of my most recent experiences:</h3>
                 <div className="space-y-8 max-w-3xl mx-auto">
                     {experiences.map((exp, index) => (
-                        <Card key={exp.company} className="p-6">
+                        <Card key={index} className="p-6 relative">
+                            {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7" onClick={() => handleRemoveExperience(index)}><Trash2 className="h-4 w-4"/></Button>}
                             <div className="flex justify-between items-start">
                                 <div>
                                     <EditableField isEditing={isEditing} value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
@@ -294,11 +316,17 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
 
             {/* Projects */}
             <section className="py-16">
-                <Badge variant="outline" className="mb-4">Work</Badge>
+                <div className="flex justify-between items-center mb-8">
+                    <Badge variant="outline">Work</Badge>
+                    {isEditing && (
+                        <Button variant="outline" onClick={handleAddProject}><PlusCircle className="mr-2 h-4 w-4"/>Add Project</Button>
+                    )}
+                </div>
                 <h3 className="text-2xl text-muted-foreground mb-8 text-center">Some of the noteworthy projects I have built:</h3>
                 <div className="space-y-12">
                     {projects.map((project, index) => (
-                        <Card key={project.title} className="overflow-hidden">
+                        <Card key={index} className="overflow-hidden relative">
+                             {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7 z-10" onClick={() => handleRemoveProject(index)}><Trash2 className="h-4 w-4"/></Button>}
                             <div className="p-8 flex flex-col justify-center">
                                 <EditableField isEditing={isEditing} value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
                                 <EditableField isEditing={isEditing} value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
@@ -324,7 +352,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                 <h3 className="text-2xl text-muted-foreground mb-8 text-center">Nice things people have said about me:</h3>
                 <div className="grid md:grid-cols-3 gap-8">
                     {testimonials.map((t, index) => (
-                        <Card key={t.name} className="p-6">
+                        <Card key={index} className="p-6">
                             <CardContent className="p-0 flex flex-col items-center text-center">
                                 <EditableField 
                                     isEditing={isEditing}
