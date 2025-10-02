@@ -115,7 +115,6 @@ export default function CoachPage() {
                 <p className="text-muted-foreground">Create a professional resume that stands out to employers</p>
             </div>
             <div className="flex items-center gap-2">
-                <Button variant="outline"><Upload className="mr-2"/> Import</Button>
                 <Button className="neon-glow" onClick={handleExportPdf}><Download className="mr-2"/> Export PDF</Button>
             </div>
         </header>
@@ -320,5 +319,7 @@ export default function CoachPage() {
     </div>
   );
 }
+
+    
 
     
