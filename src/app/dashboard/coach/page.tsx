@@ -77,7 +77,7 @@ export default function CoachPage() {
 
         html2canvas(resumePreviewRef.current, { scale: 2, useCORS: true, windowWidth: resumePreviewRef.current.scrollWidth, windowHeight: resumePreviewRef.current.scrollHeight  }).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new JSPDF('p', 'a4', true);
+            const pdf = new JSPDF('p', 'pt', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
