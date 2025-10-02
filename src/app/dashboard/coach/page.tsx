@@ -3,7 +3,7 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Upload, Download, Edit, Save, PlusCircle, Trash2, Mail, Phone, Linkedin, Github } from "lucide-react";
+import { Upload, Download, Edit, Save, PlusCircle, Trash2, Mail, Phone, Linkedin, Github, FileDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const initialDetails = {
     name: "Sagar",
@@ -71,43 +72,52 @@ export default function CoachPage() {
   const [certifications, setCertifications] = useState(initialCertifications);
   const [activities, setActivities] = useState(initialActivities);
 
-  const handleExportPdf = () => {
+  const handleExport = (format: 'pdf' | 'png' | 'jpg') => {
     const input = resumePreviewRef.current;
     if (input) {
-      // Temporarily increase the width of the preview element for capture
       const originalWidth = input.style.width;
-      input.style.width = '1024px';
-      
+      input.style.width = '1024px'; // A fixed width for consistent capture
+
       html2canvas(input, {
-        scale: 3, // Increased scale for better quality
+        scale: 3,
         useCORS: true,
         width: input.scrollWidth,
         height: input.scrollHeight,
         windowWidth: input.scrollWidth,
         windowHeight: input.scrollHeight,
       }).then(canvas => {
-        // Restore original width
-        input.style.width = originalWidth;
+        input.style.width = originalWidth; // Restore original width
 
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
+        const fileName = `${details.name.toLowerCase().replace(" ", "-")}-resume`;
+
+        if (format === 'pdf') {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`${fileName}.pdf`);
+        } else {
+            const imageType = format === 'png' ? 'image/png' : 'image/jpeg';
+            const dataUrl = canvas.toDataURL(imageType);
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `${fileName}.${format}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
         
         toast({
           title: "Resume Exported!",
-          description: "Your resume has been downloaded as a PDF.",
+          description: `Your resume has been downloaded as a ${format.toUpperCase()} file.`,
         });
       }).catch(err => {
-         // Restore original width even if there's an error
         input.style.width = originalWidth;
-        console.error("Could not generate PDF", err);
+        console.error("Could not generate file", err);
         toast({
           title: "Export Failed",
-          description: "There was an error generating the PDF.",
+          description: "There was an error generating the file.",
           variant: "destructive"
         })
       });
@@ -255,7 +265,16 @@ export default function CoachPage() {
                                 <CardTitle>Live Preview</CardTitle>
                                 <CardDescription>This is how your resume will look.</CardDescription>
                             </div>
-                            <Button className="neon-glow" onClick={handleExportPdf}><Download className="mr-2"/> Export as PDF</Button>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button className="neon-glow"><FileDown className="mr-2"/> Export</Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <DropdownMenuItem onSelect={() => handleExport('pdf')}>PDF</DropdownMenuItem>
+                                    <DropdownMenuItem onSelect={() => handleExport('png')}>PNG</DropdownMenuItem>
+                                    <DropdownMenuItem onSelect={() => handleExport('jpg')}>JPG</DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
                     </CardHeader>
                     <CardContent>
@@ -350,3 +369,4 @@ export default function CoachPage() {
   );
 }
 
+    
