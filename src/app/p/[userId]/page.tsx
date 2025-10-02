@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Figma, Copy, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/use-auth";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
@@ -115,17 +114,23 @@ export default function PublicPassportPage() {
                 setLoading(true);
                 const { data, error } = await supabase
                     .from('profiles')
-                    .select('passport_data, user_metadata')
+                    .select('passport_data, user_metadata:id(user_metadata)')
                     .eq('id', userId)
                     .single();
 
-                if (error || !data) {
-                    console.error('Error fetching profile:', error);
+                if (error && error.code !== 'PGRST116') {
+                    console.error('Error fetching public profile:', error);
                     setPassportData(defaultData);
                     setUserName(defaultData.name);
-                } else {
+                } else if (data) {
                     setPassportData(data.passport_data || defaultData);
-                    setUserName((data as any).user_metadata?.name || 'User');
+                    // Supabase returns an array for the joined table
+                    const metadata = Array.isArray(data.user_metadata) ? data.user_metadata[0] : data.user_metadata;
+                    setUserName((metadata as any)?.user_metadata?.name || 'User');
+                } else {
+                    // Handle case where no profile is found
+                    setPassportData(defaultData);
+                    setUserName('User');
                 }
                 setLoading(false);
             }
@@ -311,3 +316,5 @@ export default function PublicPassportPage() {
     </div>
   );
 }
+
+    
