@@ -81,6 +81,7 @@ const lessons = [
     icon: <Code className="h-8 w-8 text-primary" />,
     buttonText: "Start Learning",
     href: "/dashboard/lessons/python",
+    isUpcoming: true,
   },
    {
     title: "Java Fundamentals",
@@ -88,6 +89,7 @@ const lessons = [
     icon: <Code className="h-8 w-8 text-primary" />,
     buttonText: "Start Learning",
     href: "/dashboard/lessons/java",
+    isUpcoming: true,
   },
    {
     title: "C++ for Beginners",
@@ -95,6 +97,7 @@ const lessons = [
     icon: <Code className="h-8 w-8 text-primary" />,
     buttonText: "Start Learning",
     href: "/dashboard/lessons/c-plus-plus",
+    isUpcoming: true,
   },
 ]
 
@@ -146,7 +149,8 @@ export default function AptitudePage() {
             <TabsContent value="lessons" className="mt-6">
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {lessons.map((lesson, index) => (
-                      <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
+                      <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow relative">
+                        {lesson.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
                         <CardHeader className="flex flex-row items-center gap-4">
                           <div className="p-3 bg-primary/10 rounded-full">
                             {lesson.icon}
@@ -159,9 +163,15 @@ export default function AptitudePage() {
                           <CardDescription>{lesson.description}</CardDescription>
                         </CardContent>
                         <CardFooter>
-                          <Button className="w-full" asChild>
-                            <Link href={lesson.href}>{lesson.buttonText}</Link>
-                          </Button>
+                          {lesson.isUpcoming ? (
+                                <Button className="w-full" variant="secondary" disabled>
+                                    <Lock className="mr-2 h-4 w-4" /> Coming Soon
+                                </Button>
+                            ) : (
+                                <Button className="w-full" asChild>
+                                    <Link href={lesson.href}>{lesson.buttonText}</Link>
+                                </Button>
+                            )}
                         </CardFooter>
                       </Card>
                     ))}
