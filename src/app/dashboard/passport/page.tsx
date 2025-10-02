@@ -312,7 +312,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
                             <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
-                                {exp.description.map((d, i) => <EditableField key={i} isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)}/>)}
+                                {exp.description.map((d, i) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} className="w-full" /></li>)}
                             </ul>
                         </Card>
                     ))}
@@ -435,3 +435,5 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   );
 
 }
+
+    
