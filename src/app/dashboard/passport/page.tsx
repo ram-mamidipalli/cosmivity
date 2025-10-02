@@ -14,11 +14,26 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
 
+const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
+    if (isEditing) {
+        return isTextarea ? (
+            <Textarea value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} rows={rows} placeholder={placeholder} />
+        ) : (
+            <Input value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} placeholder={placeholder} />
+        );
+    }
+    if (isTextarea) {
+        return <div className={className}>{value.split('\n').map((line:string, i:number) => <p key={i}>{line}</p>)}</div>;
+    }
+    return <p className={className}>{value}</p>;
+};
+
 const initialExperiences = [
     {
         company: "Upwork",
         role: "Sr. Frontend Developer",
         duration: "Nov 2021 - Present",
+        link: "https://www.upwork.com/",
         description: [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -29,6 +44,7 @@ const initialExperiences = [
         company: "Company Two",
         role: "Team Lead",
         duration: "Jan 2018 - Oct 2021",
+        link: "#",
         description: [
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
             "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
@@ -71,20 +87,6 @@ const initialTestimonials = [
     }
 ]
 
-const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
-    if (isEditing) {
-        return isTextarea ? (
-            <Textarea value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} rows={rows} />
-        ) : (
-            <Input value={value} onChange={(e) => onChange(e.target.value)} className={`w-full ${className}`} />
-        );
-    }
-    if (isTextarea) {
-        return <div className={className}>{value.split('\n').map((line:string, i:number) => <p key={i}>{line}</p>)}</div>;
-    }
-    return <p className={className}>{value}</p>;
-};
-
 export default function PassportPage() {
   const { toast } = useToast();
   const { user } = useAuth();
@@ -108,7 +110,7 @@ Finally, some quick bits about me.
 
 One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`
   );
-  const [skills, setSkills] = useState("JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS,figma,wordpress");
+  const [skills, setSkills] = useState("JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS");
   const [experiences, setExperiences] = useState(initialExperiences);
   const [projects, setProjects] = useState(initialProjects);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
@@ -158,17 +160,21 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const handleExperienceChange = useCallback((index: number, field: string, value: string, descIndex?: number) => {
     setExperiences(prev => {
         const newExps = [...prev];
+        const experienceToUpdate = { ...newExps[index] };
         if (field === 'description' && descIndex !== undefined) {
-            newExps[index].description[descIndex] = value;
+            const newDesc = [...experienceToUpdate.description];
+            newDesc[descIndex] = value;
+            experienceToUpdate.description = newDesc;
         } else {
-            (newExps[index] as any)[field] = value;
+            (experienceToUpdate as any)[field] = value;
         }
+        newExps[index] = experienceToUpdate;
         return newExps;
     });
   }, []);
 
   const handleAddExperience = () => {
-      setExperiences(prev => [...prev, { company: "New Company", role: "New Role", duration: "Present", description: ["Description point 1."] }]);
+      setExperiences(prev => [...prev, { company: "New Company", role: "New Role", duration: "Present", link: "#", description: ["Description point 1."] }]);
   }
 
   const handleRemoveExperience = (index: number) => {
@@ -299,14 +305,24 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                     {experiences.map((exp, index) => (
                         <Card key={index} className="p-6 relative">
                             {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7" onClick={() => handleRemoveExperience(index)}><Trash2 className="h-4 w-4"/></Button>}
-                            <div className="flex justify-between items-start">
+                            <div className="flex justify-between items-start mb-4">
                                 <div>
                                     <EditableField isEditing={isEditing} value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
                                     <EditableField isEditing={isEditing} value={exp.company} onChange={(newValue: string) => handleExperienceChange(index, 'company', newValue)} className="text-primary font-semibold"/>
                                 </div>
                                 <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
-                            <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
+                            <div className="mb-4">
+                                <EditableField 
+                                    isEditing={isEditing} 
+                                    value={exp.link} 
+                                    onChange={(newValue: string) => handleExperienceChange(index, 'link', newValue)} 
+                                    className="text-sm text-blue-500 hover:underline"
+                                    placeholder="Link to project/company"
+                                />
+                                { !isEditing && exp.link && exp.link !== '#' && <a href={exp.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">{exp.link}</a>}
+                            </div>
+                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                                 {exp.description.map((d, i) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
                             </ul>
                         </Card>
@@ -332,13 +348,23 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 <EditableField isEditing={isEditing} value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {isEditing ? 
-                                        <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} />
+                                        <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} placeholder="Comma-separated tags" />
                                         :
                                         project.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)
                                     }
                                 </div>
-                                <div className="flex items-center gap-4">
-                                    <Button variant="ghost" size="icon"><ArrowUpRight/></Button>
+                                <div className="flex items-center gap-4 mt-2">
+                                    {isEditing ? (
+                                        <>
+                                            <Input value={project.liveLink} onChange={(e) => handleProjectChange(index, 'liveLink', e.target.value)} placeholder="Live URL"/>
+                                            <Input value={project.codeLink} onChange={(e) => handleProjectChange(index, 'codeLink', e.target.value)} placeholder="Code URL"/>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {project.liveLink && project.liveLink !== '#' && <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-blue-500 hover:underline"><ArrowUpRight className="h-4 w-4"/>Live Demo</a>}
+                                            {project.codeLink && project.codeLink !== '#' && <a href={project.codeLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-blue-500 hover:underline"><Github className="h-4 w-4"/>Source Code</a>}
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </Card>
@@ -423,7 +449,4 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
         </div>
     </div>
   );
-
 }
-
-    
