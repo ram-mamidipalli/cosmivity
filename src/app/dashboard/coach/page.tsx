@@ -13,6 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const initialDetails = {
     name: "Sagar",
@@ -72,23 +73,29 @@ export default function CoachPage() {
   const [activities, setActivities] = useState(initialActivities);
 
   const handleExportPdf = async () => {
-    if (resumePreviewRef.current) {
-        const pdf = new jsPDF('p', 'pt', 'a4');
+    const input = resumePreviewRef.current;
+    if (input) {
+      html2canvas(input, {
+          scale: 2, // Higher scale for better quality
+          useCORS: true,
+          width: input.scrollWidth,
+          height: input.scrollHeight,
+          windowWidth: input.scrollWidth,
+          windowHeight: input.scrollHeight
+      }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        pdf.html(resumePreviewRef.current, {
-            callback: function (doc) {
-                doc.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
-            },
-            autoPaging: 'text',
-            width: 595, // A4 width in points
-            windowWidth: resumePreviewRef.current.scrollWidth,
-            margin: [40, 40, 40, 40],
-        });
-
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
+        
         toast({
-            title: "Resume Exported!",
-            description: "Your resume has been downloaded as a PDF.",
+          title: "Resume Exported!",
+          description: "Your resume has been downloaded as a PDF.",
         });
+      });
     }
   };
 
@@ -328,3 +335,5 @@ export default function CoachPage() {
     </div>
   );
 }
+
+    
