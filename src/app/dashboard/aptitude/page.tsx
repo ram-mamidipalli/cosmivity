@@ -7,6 +7,7 @@ import { Calculator, Lightbulb, MessageCircle, Trophy, Code, Users, Brain, FileT
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 
 const modules = [
@@ -128,13 +129,15 @@ export default function AptitudePage() {
                           <CardDescription>{module.description}</CardDescription>
                         </CardContent>
                         <CardFooter>
-                          <Button className="w-full" asChild disabled={module.isUpcoming}>
-                            {module.isUpcoming ? (
-                                <div className="flex items-center"><Lock className="mr-2 h-4 w-4" /> Coming Soon</div>
+                           {module.isUpcoming ? (
+                                <Button className="w-full" variant="secondary" disabled>
+                                    <Lock className="mr-2 h-4 w-4" /> Coming Soon
+                                </Button>
                             ) : (
-                                <Link href={module.href}>{module.buttonText}</Link>
+                                <Button className="w-full" asChild>
+                                    <Link href={module.href}>{module.buttonText}</Link>
+                                </Button>
                             )}
-                          </Button>
                         </CardFooter>
                       </Card>
                     ))}
