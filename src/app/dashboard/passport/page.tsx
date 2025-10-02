@@ -121,11 +121,13 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const [phone, setPhone] = useState("+91 98765 43210");
   const [contactHeading, setContactHeading] = useState("What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.");
 
+  const publicProfileUrl = user ? `${window.location.origin}/p/${user.id}` : '';
+
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(publicProfileUrl);
     toast({
       title: "Link Copied!",
-      description: "Your Skill Passport link has been copied to your clipboard.",
+      description: "Your public Skill Passport link has been copied to your clipboard.",
     });
   };
 
@@ -135,7 +137,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
         await navigator.share({
           title: "My Skill Passport",
           text: "Check out my professional portfolio on Cosmivity!",
-          url: window.location.href,
+          url: publicProfileUrl,
         });
         toast({
           title: "Portfolio Shared!",
@@ -312,7 +314,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 </div>
                                 <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
-                            <div className="mb-4">
+                            {isEditing ? (
                                 <EditableField 
                                     isEditing={isEditing} 
                                     value={exp.link} 
@@ -320,9 +322,10 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                     className="text-sm text-blue-500 hover:underline"
                                     placeholder="Link to project/company"
                                 />
-                                { !isEditing && exp.link && exp.link !== '#' && <a href={exp.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">{exp.link}</a>}
-                            </div>
-                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                            ) : (
+                                exp.link && exp.link !== '#' && <a href={exp.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">{exp.link}</a>
+                            )}
+                            <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-2">
                                 {exp.description.map((d, i) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
                             </ul>
                         </Card>
@@ -450,3 +453,5 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
     </div>
   );
 }
+
+    
