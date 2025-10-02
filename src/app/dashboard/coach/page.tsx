@@ -74,13 +74,34 @@ export default function CoachPage() {
     if (resumePreviewRef.current) {
         const JSPDF = (await import('jspdf')).default;
         const html2canvas = (await import('html2canvas')).default;
+        const resumeElement = resumePreviewRef.current;
 
-        html2canvas(resumePreviewRef.current, { scale: 2, useCORS: true, windowWidth: resumePreviewRef.current.scrollWidth, windowHeight: resumePreviewRef.current.scrollHeight  }).then((canvas) => {
+        html2canvas(resumeElement, { 
+            scale: 2, 
+            useCORS: true,
+            width: resumeElement.offsetWidth,
+            height: resumeElement.offsetHeight,
+        }).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new JSPDF('p', 'pt', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            
+            // If the resume is longer than one page, we'll need to split it
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            let heightLeft = pdfHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft > 0) {
+                position = heightLeft - pdfHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                heightLeft -= pageHeight;
+            }
+            
             pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
         });
     }
@@ -319,7 +340,5 @@ export default function CoachPage() {
     </div>
   );
 }
-
-    
 
     
