@@ -41,8 +41,6 @@ const initialProjects = [
         title: "Project One",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         tags: ["React", "Next.js", "Tailwind CSS", "Figma", "Firebase"],
-        image: "https://placehold.co/600x400.png",
-        hint: "website screenshot",
         liveLink: "#",
         codeLink: "#"
     },
@@ -50,8 +48,6 @@ const initialProjects = [
         title: "Project Two",
         description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         tags: ["TypeScript", "Node.js", "MongoDB"],
-        image: "https://placehold.co/600x400.png",
-        hint: "dashboard interface",
         liveLink: "#",
         codeLink: "#"
     }
@@ -61,26 +57,19 @@ const initialTestimonials = [
     {
         name: "Client One",
         title: "CEO, Company A",
-        quote: "Sagar is a very talented developer. He delivered a high-quality product on time and was a pleasure to work with.",
-        avatar: "https://placehold.co/80x80.png",
-        hint: "man portrait"
+        quote: "Sagar is a very talented developer. He delivered a high-quality product on time and was a pleasure to work with."
     },
     {
         name: "Client Two",
         title: "CTO, Company B",
-        quote: "Excellent communication and technical skills. Sagar was instrumental in the success of our project.",
-        avatar: "https://placehold.co/80x80.png",
-        hint: "woman portrait"
+        quote: "Excellent communication and technical skills. Sagar was instrumental in the success of our project."
     },
      {
         name: "Client Three",
         title: "Lead Designer, Company C",
-        quote: "A true professional who understands design and user experience. Highly recommended.",
-        avatar: "https://placehold.co/80x80.png",
-        hint: "person smiling"
+        quote: "A true professional who understands design and user experience. Highly recommended."
     }
 ]
-
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
     if (isEditing) {
@@ -95,20 +84,6 @@ const EditableField = ({ isEditing, value, onChange, isTextarea = false, classNa
     }
     return <p className={className}>{value}</p>;
 };
-  
-const EditableImage = ({ src, alt, hint, children, isEditing }: any) => {
-    return (
-        <div className="relative group">
-            {children}
-            {isEditing && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
-                    <Button variant="outline"><Upload className="mr-2 h-4 w-4"/>Change</Button>
-                </div>
-            )}
-        </div>
-    )
-};
-
 
 export default function PassportPage() {
   const { toast } = useToast();
@@ -258,19 +233,17 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             {/* About Me */}
             <section className="py-16">
                 <Badge variant="outline" className="mb-4">About</Badge>
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div className="md:col-span-2 space-y-4 text-muted-foreground">
-                         <h3 className="text-3xl font-bold font-headline text-foreground">Curious about me? Here you have it:</h3>
-                         
-                         <EditableField
-                            isEditing={isEditing}
-                            value={aboutContent}
-                            onChange={handleAboutContentChange}
-                            isTextarea={true}
-                            className="text-muted-foreground whitespace-pre-line"
-                            rows={15}
-                          />
-                    </div>
+                <div className="space-y-4 text-muted-foreground">
+                     <h3 className="text-3xl font-bold font-headline text-foreground">Curious about me? Here you have it:</h3>
+                     
+                     <EditableField
+                        isEditing={isEditing}
+                        value={aboutContent}
+                        onChange={handleAboutContentChange}
+                        isTextarea={true}
+                        className="text-muted-foreground whitespace-pre-line"
+                        rows={15}
+                      />
                 </div>
             </section>
 
@@ -312,7 +285,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                                 <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
                             </div>
                             <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
-                                {exp.description.map((d, i) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} className="w-full" /></li>)}
+                                {exp.description.map((d, i) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
                             </ul>
                         </Card>
                     ))}
@@ -325,12 +298,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                 <h3 className="text-2xl text-muted-foreground mb-8 text-center">Some of the noteworthy projects I have built:</h3>
                 <div className="space-y-12">
                     {projects.map((project, index) => (
-                        <Card key={project.title} className="grid md:grid-cols-2 overflow-hidden">
-                            <div className={`p-8 bg-card ${index % 2 === 1 ? 'md:order-last' : ''}`}>
-                                <EditableImage isEditing={isEditing} src={project.image} alt={project.title} hint={project.hint}>
-                                    <Image src={project.image} alt={project.title} width={600} height={400} className="rounded-lg shadow-lg" data-ai-hint={project.hint}/>
-                                </EditableImage>
-                            </div>
+                        <Card key={project.title} className="overflow-hidden">
                             <div className="p-8 flex flex-col justify-center">
                                 <EditableField isEditing={isEditing} value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
                                 <EditableField isEditing={isEditing} value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
@@ -358,12 +326,6 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                     {testimonials.map((t, index) => (
                         <Card key={t.name} className="p-6">
                             <CardContent className="p-0 flex flex-col items-center text-center">
-                                <EditableImage isEditing={isEditing} src={t.avatar} alt={t.name} hint={t.hint}>
-                                    <Avatar className="w-20 h-20 mb-4">
-                                        <AvatarImage src={t.avatar} alt={t.name} data-ai-hint={t.hint}/>
-                                        <AvatarFallback>{t.name[0]}</AvatarFallback>
-                                    </Avatar>
-                                </EditableImage>
                                 <EditableField 
                                     isEditing={isEditing}
                                     value={`"${t.quote}"`}
