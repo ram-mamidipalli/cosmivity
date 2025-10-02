@@ -3,9 +3,10 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Lightbulb, MessageCircle, Trophy, Code, Users, Brain, FileText, Puzzle, BookOpen } from "lucide-react";
+import { Calculator, Lightbulb, MessageCircle, Trophy, Code, Users, Brain, FileText, Puzzle, BookOpen, Lock } from "lucide-react";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 
 const modules = [
@@ -36,6 +37,7 @@ const modules = [
     icon: <Users className="h-8 w-8 text-primary" />,
     buttonText: "View Topics",
     href: "/dashboard/aptitude/interview",
+    isUpcoming: true,
   },
   {
     title: "Programming",
@@ -115,7 +117,8 @@ export default function AptitudePage() {
             <TabsContent value="practice" className="mt-6">
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {modules.map((module, index) => (
-                      <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow">
+                      <Card key={index} className="flex flex-col hover:shadow-lg transition-shadow relative">
+                        {module.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
                         <CardHeader className="flex flex-row items-center gap-4">
                           <div className="p-3 bg-primary/10 rounded-full">
                             {module.icon}
@@ -128,8 +131,12 @@ export default function AptitudePage() {
                           <CardDescription>{module.description}</CardDescription>
                         </CardContent>
                         <CardFooter>
-                          <Button className="w-full" asChild>
-                            <Link href={module.href}>{module.buttonText}</Link>
+                          <Button className="w-full" asChild disabled={module.isUpcoming}>
+                            {module.isUpcoming ? (
+                                <div className="flex items-center"><Lock className="mr-2 h-4 w-4" /> Coming Soon</div>
+                            ) : (
+                                <Link href={module.href}>{module.buttonText}</Link>
+                            )}
                           </Button>
                         </CardFooter>
                       </Card>
