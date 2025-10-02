@@ -74,14 +74,12 @@ export default function CoachPage() {
   const handleExportPdf = () => {
     const input = resumePreviewRef.current;
     if (input) {
+      // Use scrollHeight and scrollWidth to capture the full content
       html2canvas(input, {
         useCORS: true,
         scale: 2,
-        // Set the width and height to capture the entire content
         width: input.scrollWidth,
         height: input.scrollHeight,
-        windowWidth: input.scrollWidth,
-        windowHeight: input.scrollHeight,
       }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -334,4 +332,3 @@ export default function CoachPage() {
     </div>
   );
 }
-
