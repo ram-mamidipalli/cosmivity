@@ -109,6 +109,10 @@ I began my journey as a web developer in 2015, and since then, I've continued to
 I am very much a person who loves to solve problems of others and loves to help people with their questions. I am also a great team player and always willing to learn from others.
 
 Finally, some quick bits about me.
+- B.E. in Computer Engineering
+- Full time freelancer
+- Avid learner
+- Basketball fan
 
 One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`
   );
@@ -169,7 +173,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
     }
     // For multiline text from textarea, we need to render newlines
     if (isTextarea) {
-        return <p className={className}>{value.split('\n').map((line:string, i:number) => <span key={i}>{line}<br/></span>)}</p>;
+        return <div className={className}>{value.split('\n').map((line:string, i:number) => <p key={i}>{line}</p>)}</div>;
     }
     return <p className={className}>{value}</p>;
   };
@@ -245,17 +249,6 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                             className="text-muted-foreground"
                             rows={15}
                           />
-
-                        <div className="flex gap-8">
-                            <ul className="list-disc list-inside">
-                                <li>B.E. in Computer Engineering</li>
-                                <li>Full time freelancer</li>
-                            </ul>
-                            <ul className="list-disc list-inside">
-                                <li>Avid learner</li>
-                                <li>Basketball fan</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -401,6 +394,6 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
     </div>
   );
 
-    
+}
 
     
