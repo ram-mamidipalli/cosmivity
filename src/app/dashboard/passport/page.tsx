@@ -89,7 +89,6 @@ export default function PassportPage() {
   // States for editable content
   const [heroTitle, setHeroTitle] = useState("Hi, I'm Sagar 👋");
   const [heroSubtitle, setHeroSubtitle] = useState("I'm a full-stack developer with 5+ years of experience. I enjoy building solid and scalable frontend products with great user experiences.");
-  const [aboutTitle, setAboutTitle] = useState("Curious about me? Here you have it:");
   const [aboutContent, setAboutContent] = useState(
 `I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.
 
@@ -173,6 +172,17 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
       setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
   }, []);
+  
+  const handleHeroTitleChange = useCallback((value: string) => setHeroTitle(value), []);
+  const handleHeroSubtitleChange = useCallback((value: string) => setHeroSubtitle(value), []);
+  const handleAboutContentChange = useCallback((value: string) => setAboutContent(value), []);
+  const handleSkillsChange = useCallback((value: string) => setSkills(value), []);
+  const handleGithubUrlChange = useCallback((value: string) => setGithubUrl(value), []);
+  const handleTwitterUrlChange = useCallback((value: string) => setTwitterUrl(value), []);
+  const handleFigmaUrlChange = useCallback((value: string) => setFigmaUrl(value), []);
+  const handleEmailChange = useCallback((value: string) => setEmail(value), []);
+  const handlePhoneChange = useCallback((value: string) => setPhone(value), []);
+  const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
 
 
   const EditableField = ({ value, onChange, isTextarea = false, className = '', rows = 3 }: any) => {
@@ -226,15 +236,15 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             {/* Hero Section */}
             <section className="py-16 md:py-24 text-center">
                 <div className="space-y-6 max-w-3xl mx-auto">
-                    {isEditing ? <Input value={heroTitle} onChange={e => setHeroTitle(e.target.value)} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" /> : <h1 className="text-5xl md:text-7xl font-bold font-headline">{heroTitle}</h1>}
-                    {isEditing ? <Textarea value={heroSubtitle} onChange={e => setHeroSubtitle(e.target.value)} className="text-lg text-muted-foreground text-center" rows={4}/> : <p className="text-lg text-muted-foreground">{heroSubtitle}</p>}
+                    <EditableField value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
+                    <EditableField value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
                     
                     <div className="flex items-center justify-center gap-4 text-muted-foreground">
                         {isEditing ? (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
-                                <Input value={githubUrl} onChange={e => setGithubUrl(e.target.value)} placeholder="GitHub URL" />
-                                <Input value={twitterUrl} onChange={e => setTwitterUrl(e.target.value)} placeholder="Twitter URL" />
-                                <Input value={figmaUrl} onChange={e => setFigmaUrl(e.target.value)} placeholder="Figma URL" />
+                                <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
+                                <Input value={twitterUrl} onChange={e => handleTwitterUrlChange(e.target.value)} placeholder="Twitter URL" />
+                                <Input value={figmaUrl} onChange={e => handleFigmaUrlChange(e.target.value)} placeholder="Figma URL" />
                             </div>
                         ) : (
                             <>
@@ -252,11 +262,11 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                 <Badge variant="outline" className="mb-4">About</Badge>
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="md:col-span-2 space-y-4 text-muted-foreground">
-                         {isEditing ? <Input value={aboutTitle} onChange={e => setAboutTitle(e.target.value)} className="text-3xl font-bold font-headline text-foreground h-auto" /> : <h3 className="text-3xl font-bold font-headline text-foreground">{aboutTitle}</h3>}
+                         <h3 className="text-3xl font-bold font-headline text-foreground">Curious about me? Here you have it:</h3>
                          
                          <EditableField
                             value={aboutContent}
-                            onChange={setAboutContent}
+                            onChange={handleAboutContentChange}
                             isTextarea={true}
                             className="text-muted-foreground whitespace-pre-line"
                             rows={15}
@@ -275,7 +285,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                         <Input 
                             id="skills-input"
                             value={skills} 
-                            onChange={(e) => setSkills(e.target.value)}
+                            onChange={(e) => handleSkillsChange(e.target.value)}
                             placeholder="e.g., React, Next.js, Figma"
                         />
                     </div>
@@ -382,7 +392,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                 <Badge variant="outline" className="mb-4">Get in touch</Badge>
                 <EditableField 
                     value={contactHeading}
-                    onChange={setContactHeading}
+                    onChange={handleContactHeadingChange}
                     isTextarea={true}
                     className="text-3xl font-bold font-headline mb-4"
                     rows={3}
@@ -390,8 +400,8 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-lg mt-8">
                     {isEditing ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
-                            <Input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email Address" />
-                            <Input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone Number" />
+                            <Input value={email} onChange={e => handleEmailChange(e.target.value)} placeholder="Email Address" />
+                            <Input value={phone} onChange={e => handlePhoneChange(e.target.value)} placeholder="Phone Number" />
                         </div>
                     ) : (
                         <>
