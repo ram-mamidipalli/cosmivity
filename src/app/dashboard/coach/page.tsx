@@ -74,21 +74,25 @@ export default function CoachPage() {
   const handleExportPdf = () => {
     const input = resumePreviewRef.current;
     if (input) {
+      // Temporarily increase the width of the preview element for capture
+      const originalWidth = input.style.width;
+      input.style.width = '1024px';
+      
       html2canvas(input, {
+        scale: 3, // Increased scale for better quality
         useCORS: true,
-        scale: 2, // Higher scale for better quality
-        logging: true,
         width: input.scrollWidth,
         height: input.scrollHeight,
         windowWidth: input.scrollWidth,
-        windowHeight: input.scrollHeight
+        windowHeight: input.scrollHeight,
       }).then(canvas => {
+        // Restore original width
+        input.style.width = originalWidth;
+
         const imgData = canvas.toDataURL('image/png');
-        const pdfWidth = 210; // A4 width in mm
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        
-        // Create a PDF with the calculated height
-        const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
         
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`${details.name.toLowerCase().replace(" ", "-")}-resume.pdf`);
@@ -98,6 +102,8 @@ export default function CoachPage() {
           description: "Your resume has been downloaded as a PDF.",
         });
       }).catch(err => {
+         // Restore original width even if there's an error
+        input.style.width = originalWidth;
         console.error("Could not generate PDF", err);
         toast({
           title: "Export Failed",
@@ -254,14 +260,14 @@ export default function CoachPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="h-[900px] overflow-y-auto border rounded-lg shadow-lg">
-                            <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm">
+                            <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm w-full">
                                 <header className="text-center mb-8">
-                                    <h1 className="text-3xl font-bold font-serif text-black">{details.name}</h1>
-                                    <div className="flex justify-center items-center gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 flex-wrap">
-                                        <span className="flex items-center gap-1.5"><Phone className="h-3 w-3"/>{details.phone}</span>
-                                        <a href={`mailto:${details.email}`} className="flex items-center gap-1.5 hover:text-primary"><Mail className="h-3 w-3"/>{details.email}</a>
-                                        <a href={`https://${details.linkedin}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary"><Linkedin className="h-3 w-3"/>{details.linkedin}</a>
-                                        <a href={`https://${details.github}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary"><Github className="h-3 w-3"/>{details.github}</a>
+                                    <h1 className="text-4xl font-bold font-serif text-black">{details.name}</h1>
+                                     <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 max-w-md mx-auto">
+                                        <a href={`tel:${details.phone}`} className="flex items-center gap-1.5 hover:text-primary justify-end"><Phone className="h-3 w-3"/>{details.phone}</a>
+                                        <a href={`mailto:${details.email}`} className="flex items-center gap-1.5 hover:text-primary justify-start"><Mail className="h-3 w-3"/>{details.email}</a>
+                                        <a href={`https://${details.linkedin}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary justify-end"><Linkedin className="h-3 w-3"/>{details.linkedin}</a>
+                                        <a href={`https://${details.github}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 hover:text-primary justify-start"><Github className="h-3 w-3"/>{details.github}</a>
                                     </div>
                                 </header>
                                 
@@ -344,4 +350,3 @@ export default function CoachPage() {
   );
 }
 
-    
