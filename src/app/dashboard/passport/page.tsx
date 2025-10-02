@@ -13,18 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 
-const initialSkills = [
-    { name: "JavaScript", icon: "https://placehold.co/48x48.png", hint: "javascript logo" },
-    { name: "TypeScript", icon: "https://placehold.co/48x48.png", hint: "typescript logo" },
-    { name: "React", icon: "https://placehold.co/48x48.png", hint: "react logo" },
-    { name: "Next.js", icon: "https://placehold.co/48x48.png", hint: "nextjs logo" },
-    { name: "Node.js", icon: "https://placehold.co/48x48.png", hint: "nodejs logo" },
-    { name: "Figma", icon: "https://placehold.co/48x48.png", hint: "figma logo" },
-    { name: "Firebase", icon: "https://placehold.co/48x48.png", hint: "firebase logo" },
-    { name: "MongoDB", icon: "https://placehold.co/48x48.png", hint: "mongodb logo" },
-    { name: "Tailwind CSS", icon: "https://placehold.co/48x48.png", hint: "tailwind css logo" },
-];
-
 const initialExperiences = [
     {
         company: "Upwork",
@@ -102,7 +90,7 @@ export default function PassportPage() {
   const [heroSubtitle, setHeroSubtitle] = useState("I'm a full-stack developer with 5+ years of experience. I enjoy building solid and scalable frontend products with great user experiences.");
   const [aboutTitle, setAboutTitle] = useState("Curious about me? Here you have it:");
   const [aboutContent, setAboutContent] = useState(
-    `I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.
+`I'm a passionate and self-proclaimed designer who specializes in full stack development (React.js & Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to life. User experience, pixel perfect design, and writing clear, readable, highly performant code matters to me.
 
 I began my journey as a web developer in 2015, and since then, I've continued to grow and evolve as a developer, taking on new challenges and learning the latest technologies along the way. Now, in my early thirties, 5 years after starting my web development journey, I'm building cutting-edge web applications using modern technologies such as Next.js, TypeScript, Nestjs, Tailwindcss, Supabase and much more.
 
@@ -116,6 +104,7 @@ Finally, some quick bits about me.
 
 One last thing, I'm available for freelance work, so feel free to reach out and say hello! I promise I don't bite 😉`
   );
+  const [skills, setSkills] = useState("JavaScript,TypeScript,React,Next.js,Node.js,Figma,Firebase,MongoDB,Tailwind CSS");
   const [experiences, setExperiences] = useState(initialExperiences);
   const [projects, setProjects] = useState(initialProjects);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
@@ -246,7 +235,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
                             value={aboutContent}
                             onChange={setAboutContent}
                             isTextarea={true}
-                            className="text-muted-foreground"
+                            className="text-muted-foreground whitespace-pre-line"
                             rows={15}
                           />
                     </div>
@@ -257,14 +246,23 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
             <section className="py-16 text-center">
                 <Badge variant="outline" className="mb-4">Skills</Badge>
                 <h3 className="text-2xl text-muted-foreground mb-8">The skills, tools, and technologies I am really good at:</h3>
-                <div className="flex flex-wrap justify-center items-center gap-8">
-                    {initialSkills.map(skill => (
-                        <div key={skill.name} className="flex flex-col items-center gap-2">
-                            <Image src={skill.icon} alt={skill.name} width={48} height={48} data-ai-hint={skill.hint}/>
-                            <span className="text-sm">{skill.name}</span>
-                        </div>
-                    ))}
-                </div>
+                {isEditing ? (
+                    <div className="max-w-2xl mx-auto">
+                        <Label htmlFor="skills-input">Enter skills separated by commas</Label>
+                        <Input 
+                            id="skills-input"
+                            value={skills} 
+                            onChange={(e) => setSkills(e.target.value)}
+                            placeholder="e.g., React, Next.js, Figma"
+                        />
+                    </div>
+                ) : (
+                    <div className="flex flex-wrap justify-center items-center gap-2">
+                        {skills.split(',').map(skill => (
+                            skill.trim() && <Badge key={skill.trim()} variant="secondary" className="text-lg px-4 py-1">{skill.trim()}</Badge>
+                        ))}
+                    </div>
+                )}
             </section>
 
             {/* Experience */}
@@ -396,4 +394,3 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
 
 }
 
-    
