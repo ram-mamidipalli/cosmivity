@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { quantitativeQuestions } from "@/lib/quantitative-questions";
 import { logicalQuestions } from "@/lib/logical-questions";
+import { verbalQuestions } from "@/lib/verbal-questions";
 
 export default function TestPage() {
   const params = useParams();
@@ -45,6 +46,8 @@ export default function TestPage() {
           testQuestions = (quantitativeQuestions as any)[test];
         } else if (category === 'logical' && test in logicalQuestions) {
           testQuestions = (logicalQuestions as any)[test];
+        } else if (category === 'verbal' && test in verbalQuestions) {
+            testQuestions = (verbalQuestions as any)[test];
         }
         setQuestions(testQuestions.slice(0, numberOfQuestions));
       } catch (error) {
@@ -183,3 +186,5 @@ export default function TestPage() {
     </div>
   );
 }
+
+    

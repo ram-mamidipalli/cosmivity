@@ -39,12 +39,17 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
   verbal: {
     title: "Verbal Ability",
     tests: [
-      ...Array.from({ length: 10 }, (_, i) => ({
-        id: `verbal-ability-${i + 1}`,
-        name: `Verbal Ability Practice ${i + 1}`,
-        questions: 25,
-        time: 20,
-      })),
+      { id: "synonym-antonym", name: "Synonym & Antonym", questions: 15, time: 10 },
+      { id: "fill-in-the-blanks", name: "Fill in the Blanks", questions: 15, time: 10 },
+      { id: "find-the-error", name: "Find the Error", questions: 15, time: 15 },
+      { id: "verbal-analogies", name: "Verbal Analogies", questions: 15, time: 10 },
+      { id: "sentence-correction", name: "Sentence Correction", questions: 15, time: 15 },
+      { id: "reading-comprehension", name: "Reading Comprehension", questions: 15, time: 20 },
+      { id: "parajumbles", name: "Parajumbles", questions: 15, time: 15 },
+      { id: "meanings-vocabulary", name: "Vocabulary / Meanings", questions: 15, time: 10 },
+      { id: "cloze-test", name: "Cloze Test", questions: 15, time: 15 },
+      { id: "idiom-phrases", name: "Idioms & Phrases", questions: 15, time: 10 },
+      { id: "critical-reasoning", name: "Critical Reasoning", questions: 15, time: 20 },
     ],
   },
   technical: {
@@ -145,3 +150,5 @@ export default function AptitudeCategoryPage() {
     </div>
   );
 }
+
+    
