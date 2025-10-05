@@ -145,9 +145,9 @@ export default function PassportPage() {
                 .from('profiles')
                 .select('passport_data')
                 .eq('id', user.id)
-                .single();
+                .maybeSingle();
 
-            if (error && error.code !== 'PGRST116') { // PGRST116: row not found
+            if (error) {
                 console.error('Error fetching profile:', error);
                 toast({ title: "Error", description: "Could not fetch your profile data.", variant: "destructive" });
             }
@@ -215,7 +215,8 @@ export default function PassportPage() {
 
     const { error } = await supabase
         .from('profiles')
-        .upsert({ id: user.id, passport_data });
+        .upsert({ id: user.id, passport_data, updated_at: new Date().toISOString() }, { onConflict: 'id' });
+
 
     if (error) {
         console.error("Error saving profile:", error);
@@ -521,3 +522,5 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
