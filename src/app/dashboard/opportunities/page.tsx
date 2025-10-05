@@ -182,12 +182,14 @@ export default function OpportunitiesPage() {
                 <aside className="lg:col-span-1">
                     <Card className="sticky top-24">
                         <div className="p-6">
-                            <h3 className="text-lg font-semibold mb-4">Get Opportunity Alerts</h3>
-                            <p className="text-muted-foreground text-sm mb-4">Create an alert to get notified of new opportunities.</p>
-                            <div className="space-y-4">
-                                <Input placeholder="your.email@example.com" />
-                                <Button className="w-full">Create Alert</Button>
-                            </div>
+                            <h3 className="text-lg font-semibold mb-4">Join our Community</h3>
+                            <p className="text-muted-foreground text-sm mb-4">Get instant job alerts and connect with peers by joining our WhatsApp community.</p>
+                            <Button className="w-full" asChild>
+                                <Link href="https://chat.whatsapp.com/J1tm3r08tAWELY0O6kEB0U?mode=ems_copy_t" target="_blank">
+                                    <MessageCircle className="mr-2 h-4 w-4" />
+                                    Join WhatsApp Community
+                                </Link>
+                            </Button>
                         </div>
                     </Card>
                 </aside>
