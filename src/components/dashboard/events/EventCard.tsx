@@ -9,7 +9,7 @@ import { Calendar, MapPin, User, Video, Lock } from "lucide-react";
 export default function EventCard({ event }: { event: any }) {
     return (
         <Card className="hover:shadow-lg transition-shadow flex flex-col relative">
-            {event.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
+            <Badge className="absolute top-4 right-4">Upcoming</Badge>
             <CardHeader>
                  <div className="flex items-center gap-2 mb-2">
                     <Badge variant={event.type === 'Bootcamp' ? "destructive" : "secondary"}>{event.type}</Badge>
@@ -38,13 +38,9 @@ export default function EventCard({ event }: { event: any }) {
                 </div>
             </CardContent>
             <CardFooter className="p-4 flex justify-between items-center">
-                 {event.isUpcoming ? (
-                    <Button className="w-full" variant="secondary" disabled>
-                        <Lock className="mr-2 h-4 w-4" /> Coming Soon
-                    </Button>
-                 ) : (
-                    <Button className="w-full">Register</Button>
-                 )}
+                 <Button className="w-full" variant="secondary" disabled>
+                    <Lock className="mr-2 h-4 w-4" /> Coming Soon
+                </Button>
             </CardFooter>
         </Card>
     )

@@ -11,7 +11,7 @@ import Image from "next/image";
 export default function JobCard({ job }: { job: any }) {
     return (
         <Card className="hover:shadow-lg transition-shadow relative">
-            {job.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
+            <Badge className="absolute top-4 right-4">Upcoming</Badge>
             <CardHeader>
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-4">
@@ -41,13 +41,9 @@ export default function JobCard({ job }: { job: any }) {
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                  <p className="text-sm text-muted-foreground">Posted {job.posted}</p>
-                 {job.isUpcoming ? (
-                    <Button variant="secondary" disabled>
-                        <Lock className="mr-2 h-4 w-4" /> Coming Soon
-                    </Button>
-                 ) : (
-                    <Button>Apply Now</Button>
-                 )}
+                 <Button variant="secondary" disabled>
+                    <Lock className="mr-2 h-4 w-4" /> Coming Soon
+                </Button>
             </CardFooter>
         </Card>
     )

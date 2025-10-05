@@ -18,10 +18,7 @@ const events = [
         format: "Online",
         type: "Workshop",
         speaker: "Siddharth Kshetrapal",
-        image: "https://placehold.co/600x400.png",
-        hint: "coding workshop",
         tags: ["React", "Frontend", "Advanced"],
-        isUpcoming: true,
     },
     {
         title: "Data Science Bootcamp",
@@ -30,10 +27,7 @@ const events = [
         location: "Bangalore, India",
         type: "Bootcamp",
         speaker: "AI Society of India",
-        image: "https://placehold.co/600x400.png",
-        hint: "data science students",
         tags: ["Data Science", "Python", "Machine Learning"],
-        isUpcoming: true,
     },
 ];
 

@@ -13,8 +13,6 @@ import Link from "next/link";
 
 const allOpportunities = [
   {
-    logo: "https://placehold.co/50x50.png",
-    hint: "google logo",
     title: "Software Engineer, Frontend",
     company: "Google",
     location: "Bangalore, India",
@@ -22,11 +20,8 @@ const allOpportunities = [
     type: "Full-time",
     posted: "2 days ago",
     tags: ["React", "TypeScript", "Next.js"],
-    isUpcoming: true,
   },
   {
-    logo: "https://placehold.co/50x50.png",
-    hint: "microsoft logo",
     title: "Product Manager",
     company: "Microsoft",
     location: "Hyderabad, India",
@@ -34,11 +29,8 @@ const allOpportunities = [
     type: "Full-time",
     posted: "5 days ago",
     tags: ["Product Strategy", "Agile", "Roadmap"],
-    isUpcoming: true,
   },
     {
-    logo: "https://placehold.co/50x50.png",
-    hint: "google logo",
     title: "Software Engineering Intern",
     company: "Google",
     location: "Remote",
@@ -46,7 +38,6 @@ const allOpportunities = [
     type: "Internship",
     posted: "1 day ago",
     tags: ["Summer", "C++", "Algorithms"],
-    isUpcoming: true,
   },
 ];
 
@@ -110,12 +101,12 @@ export default function OpportunitiesPage() {
                 <aside className="lg:col-span-1">
                     <Card className="sticky top-24">
                         <div className="p-6">
-                            <h3 className="text-lg font-semibold mb-4">Join our Community</h3>
-                            <p className="text-muted-foreground text-sm mb-4">Get instant job alerts and connect with peers by joining our WhatsApp community.</p>
+                            <h3 className="text-lg font-semibold mb-4">Get Opportunity Alerts</h3>
+                            <p className="text-muted-foreground text-sm mb-4">Join our WhatsApp community for instant alerts and peer connections.</p>
                             <Button className="w-full" asChild>
                                 <Link href="https://chat.whatsapp.com/J1tm3r08tAWELY0O6kEB0U?mode=ems_copy_t" target="_blank">
                                     <MessageCircle className="mr-2 h-4 w-4" />
-                                    Join WhatsApp Community
+                                    Join for Alerts
                                 </Link>
                             </Button>
                         </div>
