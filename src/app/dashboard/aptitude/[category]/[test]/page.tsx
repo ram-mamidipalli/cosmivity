@@ -1,8 +1,8 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,22 +14,15 @@ import { quantitativeQuestions } from "@/lib/quantitative-questions";
 import { logicalQuestions } from "@/lib/logical-questions";
 import { verbalQuestions } from "@/lib/verbal-questions";
 
-export default function TestPage() {
+function TestPageComponent() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const category = params.category as string;
   const test = params.test as string;
+  const numberOfQuestions = parseInt(searchParams.get('questions') || '10', 10);
   
-  // A check to ensure window is defined before using searchParams
-  const [numberOfQuestions, setNumberOfQuestions] = useState(10);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const searchParams = new URLSearchParams(window.location.search);
-      setNumberOfQuestions(parseInt(searchParams.get('questions') || '10', 10));
-    }
-  }, []);
-
-
   const testName = test.replace(/-/g, " ");
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -185,4 +178,12 @@ export default function TestPage() {
       </div>
     </div>
   );
+}
+
+export default function TestPage() {
+  return (
+    <Suspense fallback={<div>Loading test...</div>}>
+      <TestPageComponent />
+    </Suspense>
+  )
 }
