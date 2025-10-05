@@ -1,7 +1,6 @@
 
 "use client";
 
-import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,11 +10,8 @@ export default function EventCard({ event }: { event: any }) {
     return (
         <Card className="hover:shadow-lg transition-shadow flex flex-col relative">
             {event.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
-            <CardHeader className="p-0">
-                <Image src={event.image} alt={event.title} width={600} height={400} className="rounded-t-lg object-cover aspect-video" data-ai-hint={event.hint} />
-            </CardHeader>
-            <CardContent className="p-4 flex-grow">
-                <div className="flex items-center gap-2 mb-2">
+            <CardHeader>
+                 <div className="flex items-center gap-2 mb-2">
                     <Badge variant={event.type === 'Bootcamp' ? "destructive" : "secondary"}>{event.type}</Badge>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
                         {event.format === 'Online' ? <Video className="h-4 w-4" /> : <MapPin className="h-4 w-4" />}
@@ -33,19 +29,21 @@ export default function EventCard({ event }: { event: any }) {
                         <span>{event.speaker}</span>
                     </div>
                 </div>
-            </CardContent>
-            <CardFooter className="p-4 flex justify-between items-center">
+            </CardHeader>
+            <CardContent className="p-4 pt-0 flex-grow">
                  <div className="flex flex-wrap gap-1">
                     {event.tags.map((tag: string) => (
                         <Badge key={tag} variant="outline">{tag}</Badge>
                     ))}
                 </div>
+            </CardContent>
+            <CardFooter className="p-4 flex justify-between items-center">
                  {event.isUpcoming ? (
-                    <Button variant="secondary" disabled>
+                    <Button className="w-full" variant="secondary" disabled>
                         <Lock className="mr-2 h-4 w-4" /> Coming Soon
                     </Button>
                  ) : (
-                    <Button>Register</Button>
+                    <Button className="w-full">Register</Button>
                  )}
             </CardFooter>
         </Card>
