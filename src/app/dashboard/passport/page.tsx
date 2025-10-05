@@ -135,33 +135,37 @@ export default function PassportPage() {
   const [contactHeading, setContactHeading] = useState(defaultData.contactHeading);
   
   const handleDownload = () => {
-    const printableArea = portfolioRef.current;
-    if (!printableArea) return;
+    const portfolioElement = portfolioRef.current;
+    if (!portfolioElement) return;
 
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @media print {
-        body > *:not(.printable-area) {
-          display: none !important;
-        }
-        .printable-area {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-        }
-      }
-    `;
-    document.head.appendChild(style);
+    const originalDisplay: { element: HTMLElement, display: string }[] = [];
     
-    // Add a class to the printable area
-    printableArea.classList.add('printable-area');
-    
+    // Hide all other elements
+    document.body.childNodes.forEach(child => {
+        if (child.nodeType === 1 && child !== portfolioElement) {
+            const htmlChild = child as HTMLElement;
+            originalDisplay.push({ element: htmlChild, display: htmlChild.style.display });
+            htmlChild.style.display = 'none';
+        }
+    });
+
+    // Make portfolio element take full page
+    portfolioElement.style.position = 'absolute';
+    portfolioElement.style.left = '0';
+    portfolioElement.style.top = '0';
+    portfolioElement.style.width = '100%';
+
     window.print();
 
-    // Clean up after printing
-    document.head.removeChild(style);
-    printableArea.classList.remove('printable-area');
+    // Restore original display
+    originalDisplay.forEach(item => {
+        item.element.style.display = item.display;
+    });
+
+    portfolioElement.style.position = '';
+    portfolioElement.style.left = '';
+    portfolioElement.style.top = '';
+    portfolioElement.style.width = '';
   };
 
   const handleSave = () => {
@@ -209,7 +213,7 @@ export default function PassportPage() {
   }
 
   const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
-      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
+      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : p));
   }, []);
 
   const handleHeroTitleChange = useCallback((value: string) => setHeroTitle(value), []);
@@ -462,3 +466,5 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
