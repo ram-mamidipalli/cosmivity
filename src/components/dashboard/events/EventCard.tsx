@@ -5,11 +5,12 @@ import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, User, Video } from "lucide-react";
+import { Calendar, MapPin, User, Video, Lock } from "lucide-react";
 
 export default function EventCard({ event }: { event: any }) {
     return (
-        <Card className="hover:shadow-lg transition-shadow flex flex-col">
+        <Card className="hover:shadow-lg transition-shadow flex flex-col relative">
+            {event.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
             <CardHeader className="p-0">
                 <Image src={event.image} alt={event.title} width={600} height={400} className="rounded-t-lg object-cover aspect-video" data-ai-hint={event.hint} />
             </CardHeader>
@@ -39,7 +40,13 @@ export default function EventCard({ event }: { event: any }) {
                         <Badge key={tag} variant="outline">{tag}</Badge>
                     ))}
                 </div>
-                <Button>Register</Button>
+                 {event.isUpcoming ? (
+                    <Button variant="secondary" disabled>
+                        <Lock className="mr-2 h-4 w-4" /> Coming Soon
+                    </Button>
+                 ) : (
+                    <Button>Register</Button>
+                 )}
             </CardFooter>
         </Card>
     )

@@ -6,10 +6,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin, Briefcase, PlusCircle, Filter } from "lucide-react";
+import { Search, MapPin, Briefcase, PlusCircle, Filter, MessageCircle } from "lucide-react";
 import JobCard from "@/components/dashboard/jobs/JobCard";
 import PostJobDialog from "@/components/dashboard/jobs/PostJobDialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
 
 const initialJobs = [
   {
@@ -138,10 +139,17 @@ export default function OpportunitiesPage() {
                     <h1 className="text-3xl font-bold font-headline">Opportunities</h1>
                     <p className="text-muted-foreground">Find your next career move from thousands of openings.</p>
                 </div>
-                 <TabsList className="grid w-full grid-cols-2 max-w-sm">
-                    <TabsTrigger value="jobs">Jobs</TabsTrigger>
-                    <TabsTrigger value="internships">Internships</TabsTrigger>
-                </TabsList>
+                 <div className="flex items-center gap-2">
+                    <Button asChild>
+                        <Link href="https://chat.whatsapp.com/J1tm3r08tAWELY0O6kEB0U?mode=ems_copy_t" target="_blank">
+                            <MessageCircle className="mr-2"/> Join WhatsApp Community
+                        </Link>
+                    </Button>
+                    <TabsList className="grid w-full grid-cols-2 max-w-sm">
+                        <TabsTrigger value="jobs">Jobs</TabsTrigger>
+                        <TabsTrigger value="internships">Internships</TabsTrigger>
+                    </TabsList>
+                 </div>
             </header>
             
             <Card>

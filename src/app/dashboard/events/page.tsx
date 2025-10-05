@@ -6,9 +6,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin, Briefcase, PlusCircle, Filter, Calendar, Users, Video } from "lucide-react";
+import { Search, MapPin, Briefcase, PlusCircle, Filter, Calendar, Users, Video, MessageCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EventCard from "@/components/dashboard/events/EventCard";
+import Link from "next/link";
 
 const events = [
     {
@@ -20,6 +21,7 @@ const events = [
         image: "https://placehold.co/600x400.png",
         hint: "coding workshop",
         tags: ["React", "Frontend", "Advanced"],
+        isUpcoming: true,
     },
     {
         title: "Data Science Bootcamp",
@@ -31,6 +33,7 @@ const events = [
         image: "https://placehold.co/600x400.png",
         hint: "data science students",
         tags: ["Data Science", "Python", "Machine Learning"],
+        isUpcoming: true,
     },
     {
         title: "Webinar: The Future of UX/UI",
@@ -41,6 +44,7 @@ const events = [
         image: "https://placehold.co/600x400.png",
         hint: "ui design screen",
         tags: ["UX", "UI", "Design"],
+        isUpcoming: true,
     },
     {
         title: "Annual Developers Conference",
@@ -52,6 +56,7 @@ const events = [
         image: "https://placehold.co/600x400.png",
         hint: "conference hall",
         tags: ["Tech", "Networking", "Software"],
+        isUpcoming: true,
     },
      {
         title: "Interview Skills Masterclass",
@@ -62,6 +67,7 @@ const events = [
         image: "https://placehold.co/600x400.png",
         hint: "job interview",
         tags: ["Career", "Interview", "Soft Skills"],
+        isUpcoming: true,
     },
     {
         title: "Cybersecurity Essentials Bootcamp",
@@ -73,6 +79,7 @@ const events = [
         image: "https://placehold.co/600x400.png",
         hint: "cybersecurity code",
         tags: ["Security", "Networking", "Cyber"],
+        isUpcoming: true,
     },
 ];
 
@@ -84,7 +91,14 @@ export default function EventsPage() {
                 <h1 className="text-3xl font-bold font-headline">Events & Workshops</h1>
                 <p className="text-muted-foreground">Discover opportunities to learn, grow, and connect.</p>
             </div>
-            <Button className="w-full sm:w-auto neon-glow"><PlusCircle className="mr-2"/>Create Event</Button>
+            <div className="flex items-center gap-2">
+                <Button asChild>
+                    <Link href="https://chat.whatsapp.com/J1tm3r08tAWELY0O6kEB0U?mode=ems_copy_t" target="_blank">
+                        <MessageCircle className="mr-2"/> Join WhatsApp Community
+                    </Link>
+                </Button>
+                <Button className="w-full sm:w-auto neon-glow"><PlusCircle className="mr-2"/>Create Event</Button>
+            </div>
         </header>
 
         <Card>
