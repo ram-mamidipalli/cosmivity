@@ -1,12 +1,12 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma, Edit, Copy, Upload, Trash2, Save, PlusCircle, Share2 } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma, Edit, Copy, Upload, Trash2, Save, PlusCircle, Share2, Download } from "lucide-react";
 import Image from 'next/image';
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/lib/supabase";
+import html2canvas from "html2canvas";
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
     if (isEditing) {
@@ -121,6 +122,7 @@ export default function PassportPage() {
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const portfolioRef = useRef<HTMLDivElement>(null);
   
   // States for editable content
   const [heroTitle, setHeroTitle] = useState("");
@@ -137,6 +139,22 @@ export default function PassportPage() {
   const [phone, setPhone] = useState("");
   const [contactHeading, setContactHeading] = useState("");
 
+  const loadProfileData = useCallback((profileData: any) => {
+    setHeroTitle(profileData.heroTitle || defaultData.heroTitle);
+    setHeroSubtitle(profileData.heroSubtitle || defaultData.heroSubtitle);
+    setAboutContent(profileData.aboutContent || defaultData.aboutContent);
+    setSkills(profileData.skills || defaultData.skills);
+    setExperiences(profileData.experiences || defaultData.experiences);
+    setProjects(profileData.projects || defaultData.projects);
+    setTestimonials(profileData.testimonials || defaultData.testimonials);
+    setGithubUrl(profileData.githubUrl || defaultData.githubUrl);
+    setTwitterUrl(profileData.twitterUrl || defaultData.twitterUrl);
+    setFigmaUrl(profileData.figmaUrl || defaultData.figmaUrl);
+    setEmail(profileData.email || defaultData.email);
+    setPhone(profileData.phone || defaultData.phone);
+    setContactHeading(profileData.contactHeading || defaultData.contactHeading);
+  }, []);
+
   useEffect(() => {
     const fetchProfile = async () => {
         if (user) {
@@ -145,32 +163,22 @@ export default function PassportPage() {
                 .from('profiles')
                 .select('passport_data')
                 .eq('id', user.id)
-                .maybeSingle();
+                .single();
 
-            if (error) {
+            if (error && error.code !== 'PGRST116') { // PGRST116: row not found
                 console.error('Error fetching profile:', error);
                 toast({ title: "Error", description: "Could not fetch your profile data.", variant: "destructive" });
+                loadProfileData(defaultData);
+            } else {
+                loadProfileData(data?.passport_data || defaultData);
             }
             
-            const profileData = data?.passport_data || defaultData;
-            setHeroTitle(profileData.heroTitle);
-            setHeroSubtitle(profileData.heroSubtitle);
-            setAboutContent(profileData.aboutContent);
-            setSkills(profileData.skills);
-            setExperiences(profileData.experiences);
-            setProjects(profileData.projects);
-            setTestimonials(profileData.testimonials);
-            setGithubUrl(profileData.githubUrl);
-            setTwitterUrl(profileData.twitterUrl);
-            setFigmaUrl(profileData.figmaUrl);
-            setEmail(profileData.email);
-            setPhone(profileData.phone);
-            setContactHeading(profileData.contactHeading);
             setLoading(false);
         }
     };
     fetchProfile();
-  }, [user, toast]);
+  }, [user, toast, loadProfileData]);
+
 
   const publicProfileUrl = user ? `${window.location.origin}/p/${user.id}` : '';
 
@@ -180,6 +188,43 @@ export default function PassportPage() {
       title: "Link Copied!",
       description: "Your public Skill Passport link has been copied to your clipboard.",
     });
+  };
+  
+  const handleDownload = () => {
+    const input = portfolioRef.current;
+    if (input) {
+      toast({ title: "Generating PNG...", description: "Please wait a moment." });
+      html2canvas(input, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true,
+        backgroundColor: document.documentElement.classList.contains('dark') ? '#0A0A0A' : '#FFFFFF',
+        scrollX: -window.scrollX,
+        scrollY: -window.scrollY,
+        windowWidth: document.documentElement.offsetWidth,
+        windowHeight: document.documentElement.offsetHeight,
+      }).then(canvas => {
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        const fileName = `${(user?.user_metadata.name || 'user').toLowerCase().replace(" ", "-")}-portfolio.png`;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        toast({
+          title: "Portfolio Downloaded!",
+          description: `Your portfolio has been saved as ${fileName}.`,
+        });
+      }).catch(err => {
+        console.error("Could not generate file", err);
+        toast({
+          title: "Download Failed",
+          description: "There was an error generating the PNG file.",
+          variant: "destructive"
+        })
+      });
+    }
   };
 
   const handleShare = async () => {
@@ -213,9 +258,10 @@ export default function PassportPage() {
         githubUrl, twitterUrl, figmaUrl, email, phone, contactHeading
     };
 
-    const { error } = await supabase
-        .from('profiles')
-        .upsert({ id: user.id, passport_data, updated_at: new Date().toISOString() }, { onConflict: 'id' });
+     const { data, error } = await supabase
+      .from('profiles')
+      .upsert({ id: user.id, passport_data, updated_at: new Date().toISOString() }, { onConflict: 'id' })
+      .select()
 
 
     if (error) {
@@ -285,242 +331,245 @@ export default function PassportPage() {
   const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
 
   if (loading) {
-      return <div>Loading profile...</div>
+      return <div className="flex justify-center items-center h-screen">Loading profile...</div>
   }
 
   return (
-    <div className="bg-background text-foreground font-body">
-        <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
-            {/* Header */}
-            <header className="flex justify-between items-center py-4">
-                <h2 className="text-xl font-bold font-code text-primary">{`<${user?.user_metadata.name || 'Sagar'}/>`}</h2>
-                <div className="flex items-center gap-2">
-                    <Button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
-                        {isEditing ? <Save className="mr-2 h-4 w-4" /> : <Edit className="mr-2 h-4 w-4" />}
-                        {isEditing ? 'Save Profile' : 'Edit Profile'}
-                    </Button>
-                    <Button variant="outline" size="icon" onClick={handleCopyLink}>
-                        <Copy className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" size="icon" onClick={handleShare}>
-                        <Share2 className="h-4 w-4" />
-                    </Button>
-                </div>
-            </header>
+    <div ref={portfolioRef}>
+        <div className="bg-background text-foreground font-body">
+            <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
+                {/* Header */}
+                <header className="flex justify-between items-center py-4">
+                    <h2 className="text-xl font-bold font-code text-primary">{`<${user?.user_metadata.name || 'Sagar'}/>`}</h2>
+                    <div className="flex items-center gap-2">
+                        <Button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
+                            {isEditing ? <Save className="mr-2 h-4 w-4" /> : <Edit className="mr-2 h-4 w-4" />}
+                            {isEditing ? 'Save Profile' : 'Edit Profile'}
+                        </Button>
+                         <Button variant="outline" size="icon" onClick={handleDownload}>
+                            <Download className="h-4 w-4" />
+                        </Button>
+                        <Button variant="outline" size="icon" onClick={handleCopyLink}>
+                            <Copy className="h-4 w-4" />
+                        </Button>
+                        <Button variant="outline" size="icon" onClick={handleShare}>
+                            <Share2 className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </header>
 
-            {/* Hero Section */}
-            <section className="py-16 md:py-24 text-center">
-                <div className="space-y-6 max-w-3xl mx-auto">
-                    <EditableField isEditing={isEditing} value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
-                    <EditableField isEditing={isEditing} value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
-                    
-                    <div className="flex items-center justify-center gap-4 text-muted-foreground">
+                {/* Hero Section */}
+                <section className="py-16 md:py-24 text-center">
+                    <div className="space-y-6 max-w-3xl mx-auto">
+                        <EditableField isEditing={isEditing} value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
+                        <EditableField isEditing={isEditing} value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
+                        
+                        <div className="flex items-center justify-center gap-4 text-muted-foreground">
+                            {isEditing ? (
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
+                                    <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
+                                    <Input value={twitterUrl} onChange={e => handleTwitterUrlChange(e.target.value)} placeholder="Twitter URL" />
+                                    <Input value={figmaUrl} onChange={e => handleFigmaUrlChange(e.target.value)} placeholder="Figma URL" />
+                                </div>
+                            ) : (
+                                <>
+                                    <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                    <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                    <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                {/* About Me */}
+                <section className="py-16">
+                    <Badge variant="outline" className="mb-4">About</Badge>
+                    <div className="space-y-4 text-muted-foreground">
+                         <h3 className="text-3xl font-bold font-headline text-foreground">Curious about me? Here you have it:</h3>
+                         
+                         <EditableField
+                            isEditing={isEditing}
+                            value={aboutContent}
+                            onChange={handleAboutContentChange}
+                            isTextarea={true}
+                            className="text-muted-foreground whitespace-pre-line"
+                            rows={15}
+                          />
+                    </div>
+                </section>
+
+                {/* Skills */}
+                <section className="py-16 text-center">
+                    <Badge variant="outline" className="mb-4">Skills</Badge>
+                    <h3 className="text-2xl text-muted-foreground mb-8">The skills, tools, and technologies I am really good at:</h3>
+                    {isEditing ? (
+                        <div className="max-w-2xl mx-auto">
+                            <Label htmlFor="skills-input">Enter skills separated by commas</Label>
+                            <Input 
+                                id="skills-input"
+                                value={skills} 
+                                onChange={(e) => handleSkillsChange(e.target.value)}
+                                placeholder="e.g., React, Next.js, Figma"
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex flex-wrap justify-center items-center gap-2">
+                            {skills.split(',').map(skill => (
+                                skill.trim() && <Badge key={skill.trim()} variant="secondary" className="text-lg px-4 py-1">{skill.trim()}</Badge>
+                            ))}
+                        </div>
+                    )}
+                </section>
+
+                {/* Experience */}
+                <section className="py-16">
+                    <div className="flex justify-between items-center mb-8">
+                        <Badge variant="outline">Experience</Badge>
+                        {isEditing && (
+                            <Button variant="outline" onClick={handleAddExperience}><PlusCircle className="mr-2 h-4 w-4"/>Add Experience</Button>
+                        )}
+                    </div>
+                    <h3 className="text-2xl text-muted-foreground mb-8 text-center">Here is a quick summary of my most recent experiences:</h3>
+                    <div className="space-y-8 max-w-3xl mx-auto">
+                        {experiences.map((exp, index) => (
+                            <Card key={index} className="p-6 relative">
+                                {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7" onClick={() => handleRemoveExperience(index)}><Trash2 className="h-4 w-4"/></Button>}
+                                <div className="flex justify-between items-start mb-4">
+                                    <div>
+                                        <EditableField isEditing={isEditing} value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
+                                        <EditableField isEditing={isEditing} value={exp.company} onChange={(newValue: string) => handleExperienceChange(index, 'company', newValue)} className="text-primary font-semibold"/>
+                                    </div>
+                                    <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
+                                </div>
+                                 <EditableField isEditing={isEditing} value={exp.link} onChange={(newValue: string) => handleExperienceChange(index, 'link', newValue)} className="text-sm text-blue-500 hover:underline" placeholder="Link to project/company"/>
+
+                                <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-2">
+                                    {exp.description.map((d: string, i: number) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
+                                </ul>
+                            </Card>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Projects */}
+                <section className="py-16">
+                    <div className="flex justify-between items-center mb-8">
+                        <Badge variant="outline">Work</Badge>
+                         {isEditing && (
+                            <Button variant="outline" onClick={handleAddProject}><PlusCircle className="mr-2 h-4 w-4"/>Add Project</Button>
+                        )}
+                    </div>
+                    <h3 className="text-2xl text-muted-foreground mb-8 text-center">Some of the noteworthy projects I have built:</h3>
+                    <div className="space-y-12">
+                        {projects.map((project, index) => (
+                            <Card key={index} className="overflow-hidden relative">
+                                 {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7 z-10" onClick={() => handleRemoveProject(index)}><Trash2 className="h-4 w-4"/></Button>}
+                                <div className="p-8 flex flex-col justify-center">
+                                    <EditableField isEditing={isEditing} value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
+                                    <EditableField isEditing={isEditing} value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
+                                    <div className="flex flex-wrap gap-2 mb-4">
+                                        {isEditing ? 
+                                            <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} placeholder="Comma-separated tags" />
+                                            :
+                                            project.tags.map((tag:string) => <Badge key={tag} variant="secondary">{tag}</Badge>)
+                                        }
+                                    </div>
+                                    <div className="flex items-center gap-4 mt-2">
+                                        {isEditing ? (
+                                            <>
+                                                <Input value={project.liveLink} onChange={(e) => handleProjectChange(index, 'liveLink', e.target.value)} placeholder="Live URL"/>
+                                                <Input value={project.codeLink} onChange={(e) => handleProjectChange(index, 'codeLink', e.target.value)} placeholder="Code URL"/>
+                                            </>
+                                        ) : (
+                                            <>
+                                                {project.liveLink && project.liveLink !== '#' && <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-blue-500 hover:underline"><ArrowUpRight className="h-4 w-4"/>Live Demo</a>}
+                                                {project.codeLink && project.codeLink !== '#' && <a href={project.codeLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-blue-500 hover:underline"><Github className="h-4 w-4"/>Source Code</a>}
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Testimonials */}
+                <section className="py-16">
+                    <Badge variant="outline" className="mb-4">Testimonials</Badge>
+                    <h3 className="text-2xl text-muted-foreground mb-8 text-center">Nice things people have said about me:</h3>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {testimonials.map((t, index) => (
+                            <Card key={index} className="p-6">
+                                <CardContent className="p-0 flex flex-col items-center text-center">
+                                    <EditableField 
+                                        isEditing={isEditing}
+                                        value={`"${t.quote}"`}
+                                        onChange={(newValue: string) => handleTestimonialChange(index, 'quote', newValue.replace(/"/g, ''))}
+                                        isTextarea={true}
+                                        className="text-muted-foreground italic mb-4"
+                                    />
+                                    <EditableField 
+                                        isEditing={isEditing}
+                                        value={t.name}
+                                        onChange={(newValue: string) => handleTestimonialChange(index, 'name', newValue)}
+                                        className="font-bold text-primary"
+                                    />
+                                     <EditableField 
+                                        isEditing={isEditing}
+                                        value={t.title}
+                                        onChange={(newValue: string) => handleTestimonialChange(index, 'title', newValue)}
+                                        className="text-sm text-muted-foreground"
+                                    />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Contact */}
+                <section className="py-16 text-center">
+                    <Badge variant="outline" className="mb-4">Get in touch</Badge>
+                    <EditableField 
+                        isEditing={isEditing}
+                        value={contactHeading}
+                        onChange={handleContactHeadingChange}
+                        isTextarea={true}
+                        className="text-3xl font-bold font-headline mb-4"
+                        rows={3}
+                    />
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-lg mt-8">
                         {isEditing ? (
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
-                                <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
-                                <Input value={twitterUrl} onChange={e => handleTwitterUrlChange(e.target.value)} placeholder="Twitter URL" />
-                                <Input value={figmaUrl} onChange={e => handleFigmaUrlChange(e.target.value)} placeholder="Figma URL" />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
+                                <Input value={email} onChange={e => handleEmailChange(e.target.value)} placeholder="Email Address" />
+                                <Input value={phone} onChange={e => handlePhoneChange(e.target.value)} placeholder="Phone Number" />
                             </div>
                         ) : (
                             <>
-                                <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                                <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                                <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                <div className="flex items-center gap-2">
+                                    <Mail/>
+                                    <a href={`mailto:${email}`} className="hover:text-primary">{email}</a>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Phone/>
+                                    <a href={`tel:${phone}`} className="hover:text-primary">{phone}</a>
+                                </div>
                             </>
                         )}
                     </div>
-                </div>
-            </section>
-
-            {/* About Me */}
-            <section className="py-16">
-                <Badge variant="outline" className="mb-4">About</Badge>
-                <div className="space-y-4 text-muted-foreground">
-                     <h3 className="text-3xl font-bold font-headline text-foreground">Curious about me? Here you have it:</h3>
-                     
-                     <EditableField
-                        isEditing={isEditing}
-                        value={aboutContent}
-                        onChange={handleAboutContentChange}
-                        isTextarea={true}
-                        className="text-muted-foreground whitespace-pre-line"
-                        rows={15}
-                      />
-                </div>
-            </section>
-
-            {/* Skills */}
-            <section className="py-16 text-center">
-                <Badge variant="outline" className="mb-4">Skills</Badge>
-                <h3 className="text-2xl text-muted-foreground mb-8">The skills, tools, and technologies I am really good at:</h3>
-                {isEditing ? (
-                    <div className="max-w-2xl mx-auto">
-                        <Label htmlFor="skills-input">Enter skills separated by commas</Label>
-                        <Input 
-                            id="skills-input"
-                            value={skills} 
-                            onChange={(e) => handleSkillsChange(e.target.value)}
-                            placeholder="e.g., React, Next.js, Figma"
-                        />
-                    </div>
-                ) : (
-                    <div className="flex flex-wrap justify-center items-center gap-2">
-                        {skills.split(',').map(skill => (
-                            skill.trim() && <Badge key={skill.trim()} variant="secondary" className="text-lg px-4 py-1">{skill.trim()}</Badge>
-                        ))}
-                    </div>
-                )}
-            </section>
-
-            {/* Experience */}
-            <section className="py-16">
-                <div className="flex justify-between items-center mb-8">
-                    <Badge variant="outline">Experience</Badge>
-                    {isEditing && (
-                        <Button variant="outline" onClick={handleAddExperience}><PlusCircle className="mr-2 h-4 w-4"/>Add Experience</Button>
-                    )}
-                </div>
-                <h3 className="text-2xl text-muted-foreground mb-8 text-center">Here is a quick summary of my most recent experiences:</h3>
-                <div className="space-y-8 max-w-3xl mx-auto">
-                    {experiences.map((exp, index) => (
-                        <Card key={index} className="p-6 relative">
-                            {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7" onClick={() => handleRemoveExperience(index)}><Trash2 className="h-4 w-4"/></Button>}
-                            <div className="flex justify-between items-start mb-4">
-                                <div>
-                                    <EditableField isEditing={isEditing} value={exp.role} onChange={(newValue: string) => handleExperienceChange(index, 'role', newValue)} className="text-xl font-bold"/>
-                                    <EditableField isEditing={isEditing} value={exp.company} onChange={(newValue: string) => handleExperienceChange(index, 'company', newValue)} className="text-primary font-semibold"/>
-                                </div>
-                                <EditableField isEditing={isEditing} value={exp.duration} onChange={(newValue: string) => handleExperienceChange(index, 'duration', newValue)} className="text-muted-foreground text-sm"/>
-                            </div>
-                             <EditableField isEditing={isEditing} value={exp.link} onChange={(newValue: string) => handleExperienceChange(index, 'link', newValue)} className="text-sm text-blue-500 hover:underline" placeholder="Link to project/company"/>
-
-                            <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-2">
-                                {exp.description.map((d: string, i: number) => <li key={i}><EditableField isEditing={isEditing} value={d} onChange={(newValue: string) => handleExperienceChange(index, 'description', newValue, i)} isTextarea={true} className="w-full" /></li>)}
-                            </ul>
-                        </Card>
-                    ))}
-                </div>
-            </section>
-
-            {/* Projects */}
-            <section className="py-16">
-                <div className="flex justify-between items-center mb-8">
-                    <Badge variant="outline">Work</Badge>
-                     {isEditing && (
-                        <Button variant="outline" onClick={handleAddProject}><PlusCircle className="mr-2 h-4 w-4"/>Add Project</Button>
-                    )}
-                </div>
-                <h3 className="text-2xl text-muted-foreground mb-8 text-center">Some of the noteworthy projects I have built:</h3>
-                <div className="space-y-12">
-                    {projects.map((project, index) => (
-                        <Card key={index} className="overflow-hidden relative">
-                             {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7 z-10" onClick={() => handleRemoveProject(index)}><Trash2 className="h-4 w-4"/></Button>}
-                            <div className="p-8 flex flex-col justify-center">
-                                <EditableField isEditing={isEditing} value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
-                                <EditableField isEditing={isEditing} value={project.description} onChange={(newValue: string) => handleProjectChange(index, 'description', newValue)} isTextarea={true} className="text-muted-foreground mb-4"/>
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {isEditing ? 
-                                        <Input value={project.tags.join(', ')} onChange={(e) => handleProjectChange(index, 'tags', e.target.value.split(',').map(s => s.trim()))} placeholder="Comma-separated tags" />
-                                        :
-                                        project.tags.map((tag:string) => <Badge key={tag} variant="secondary">{tag}</Badge>)
-                                    }
-                                </div>
-                                <div className="flex items-center gap-4 mt-2">
-                                    {isEditing ? (
-                                        <>
-                                            <Input value={project.liveLink} onChange={(e) => handleProjectChange(index, 'liveLink', e.target.value)} placeholder="Live URL"/>
-                                            <Input value={project.codeLink} onChange={(e) => handleProjectChange(index, 'codeLink', e.target.value)} placeholder="Code URL"/>
-                                        </>
-                                    ) : (
-                                        <>
-                                            {project.liveLink && project.liveLink !== '#' && <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-blue-500 hover:underline"><ArrowUpRight className="h-4 w-4"/>Live Demo</a>}
-                                            {project.codeLink && project.codeLink !== '#' && <a href={project.codeLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-blue-500 hover:underline"><Github className="h-4 w-4"/>Source Code</a>}
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
-            </section>
-
-            {/* Testimonials */}
-            <section className="py-16">
-                <Badge variant="outline" className="mb-4">Testimonials</Badge>
-                <h3 className="text-2xl text-muted-foreground mb-8 text-center">Nice things people have said about me:</h3>
-                <div className="grid md:grid-cols-3 gap-8">
-                    {testimonials.map((t, index) => (
-                        <Card key={index} className="p-6">
-                            <CardContent className="p-0 flex flex-col items-center text-center">
-                                <EditableField 
-                                    isEditing={isEditing}
-                                    value={`"${t.quote}"`}
-                                    onChange={(newValue: string) => handleTestimonialChange(index, 'quote', newValue.replace(/"/g, ''))}
-                                    isTextarea={true}
-                                    className="text-muted-foreground italic mb-4"
-                                />
-                                <EditableField 
-                                    isEditing={isEditing}
-                                    value={t.name}
-                                    onChange={(newValue: string) => handleTestimonialChange(index, 'name', newValue)}
-                                    className="font-bold text-primary"
-                                />
-                                 <EditableField 
-                                    isEditing={isEditing}
-                                    value={t.title}
-                                    onChange={(newValue: string) => handleTestimonialChange(index, 'title', newValue)}
-                                    className="text-sm text-muted-foreground"
-                                />
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-            </section>
-
-            {/* Contact */}
-            <section className="py-16 text-center">
-                <Badge variant="outline" className="mb-4">Get in touch</Badge>
-                <EditableField 
-                    isEditing={isEditing}
-                    value={contactHeading}
-                    onChange={handleContactHeadingChange}
-                    isTextarea={true}
-                    className="text-3xl font-bold font-headline mb-4"
-                    rows={3}
-                />
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-lg mt-8">
-                    {isEditing ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
-                            <Input value={email} onChange={e => handleEmailChange(e.target.value)} placeholder="Email Address" />
-                            <Input value={phone} onChange={e => handlePhoneChange(e.target.value)} placeholder="Phone Number" />
+                    <div className="flex justify-center items-center gap-4 text-muted-foreground mt-8">
+                            <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                            <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                            <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
                         </div>
-                    ) : (
-                        <>
-                            <div className="flex items-center gap-2">
-                                <Mail/>
-                                <a href={`mailto:${email}`} className="hover:text-primary">{email}</a>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Phone/>
-                                <a href={`tel:${phone}`} className="hover:text-primary">{phone}</a>
-                            </div>
-                        </>
-                    )}
-                </div>
-                <div className="flex justify-center items-center gap-4 text-muted-foreground mt-8">
-                        <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                    </div>
-            </section>
+                </section>
 
-            {/* Footer */}
-            <footer className="text-center text-sm text-muted-foreground py-8">
-                <p>Powered by Cosmivity</p>
-            </footer>
+                {/* Footer */}
+                <footer className="text-center text-sm text-muted-foreground py-8">
+                    <p>Powered by Cosmivity</p>
+                </footer>
+            </div>
         </div>
     </div>
   );
 }
-
-    
