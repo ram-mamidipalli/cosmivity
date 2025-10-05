@@ -255,7 +255,7 @@ export default function PassportPage() {
                         <EditableField isEditing={isEditing} value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
                         <EditableField isEditing={isEditing} value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
                         
-                        <div className="flex items-center justify-center gap-4 text-muted-foreground">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-muted-foreground">
                             {isEditing ? (
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
                                     <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
@@ -264,9 +264,9 @@ export default function PassportPage() {
                                 </div>
                             ) : (
                                 <>
-                                    <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                                    <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                                    <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                    <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl}</a>
+                                    <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl}</a>
+                                    <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl}</a>
                                 </>
                             )}
                         </div>
@@ -448,11 +448,17 @@ export default function PassportPage() {
                             </>
                         )}
                     </div>
-                    <div className="flex justify-center items-center gap-4 text-muted-foreground mt-8">
-                            <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                            <a href={twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                            <a href={figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        </div>
+                     <div className="flex justify-center items-center gap-4 text-muted-foreground mt-8">
+                        {isEditing ? (
+                            <p className="text-sm">Social links can be edited in the hero section.</p>
+                        ) : (
+                            <>
+                                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl}</a>
+                                <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl}</a>
+                                <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl}</a>
+                            </>
+                        )}
+                    </div>
                 </section>
 
                 {/* Footer */}
