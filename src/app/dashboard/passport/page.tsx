@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
 import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
     if (isEditing) {
@@ -138,9 +139,9 @@ export default function PassportPage() {
   const handleDownload = () => {
     const input = portfolioRef.current;
     if (input) {
-      toast({ title: "Generating PNG...", description: "Please wait a moment." });
+      toast({ title: "Generating PDF...", description: "Please wait a moment." });
       html2canvas(input, {
-        scale: 2,
+        scale: 2, // Higher scale for better quality
         useCORS: true,
         backgroundColor: document.documentElement.classList.contains('dark') ? '#0A0A0A' : '#FFFFFF',
         width: input.scrollWidth,
@@ -148,14 +149,14 @@ export default function PassportPage() {
         windowWidth: input.scrollWidth,
         windowHeight: input.scrollHeight,
       }).then(canvas => {
-        const dataUrl = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        const fileName = `${(user?.user_metadata.name || 'user').toLowerCase().replace(" ", "-")}-portfolio.png`;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        const fileName = `${(user?.user_metadata.name || 'user').toLowerCase().replace(" ", "-")}-portfolio.pdf`;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(fileName);
         
         toast({
           title: "Portfolio Downloaded!",
@@ -165,7 +166,7 @@ export default function PassportPage() {
         console.error("Could not generate file", err);
         toast({
           title: "Download Failed",
-          description: "There was an error generating the PNG file.",
+          description: "There was an error generating the PDF file.",
           variant: "destructive"
         })
       });
@@ -232,8 +233,8 @@ export default function PassportPage() {
   const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
 
   return (
-    <div ref={portfolioRef} className="bg-background text-foreground">
-        <div className="font-body">
+    <div className="bg-background text-foreground">
+        <div ref={portfolioRef} className="bg-background text-foreground font-body">
             <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
                 {/* Header */}
                 <header className="flex justify-between items-center py-4">
@@ -470,3 +471,5 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
