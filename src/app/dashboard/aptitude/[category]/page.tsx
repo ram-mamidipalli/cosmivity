@@ -102,7 +102,7 @@ const categoryDetails: { [key: string]: { title: string; tests: any[] } } = {
 export default function AptitudeCategoryPage() {
   const params = useParams();
   const router = useRouter();
-  const category = Array.isArray(params.category) ? params.category[0] : params.category;
+  const category = params.category as string;
   const details = categoryDetails[category] || { title: "Practice Topics", tests: [] };
 
   const handleStartPractice = (testId: string, questions: number) => {

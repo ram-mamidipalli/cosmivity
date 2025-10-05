@@ -9,7 +9,7 @@ import { CheckCircle } from 'lucide-react';
 export default function InterviewReportPage() {
     const params = useParams();
     const router = useRouter();
-    const sessionId = Array.isArray(params.sessionId) ? params.sessionId[0] : params.sessionId;
+    const sessionId = params.sessionId as string;
 
     return (
         <div className="flex flex-col items-center justify-center min-h-full p-4">

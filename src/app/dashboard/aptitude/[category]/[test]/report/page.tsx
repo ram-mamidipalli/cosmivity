@@ -24,8 +24,8 @@ type Answers = { [key: number]: string };
 export default function TestReportPage() {
     const params = useParams();
     const router = useRouter();
-    const category = Array.isArray(params.category) ? params.category[0] : params.category;
-    const testName = (Array.isArray(params.test) ? params.test[0] : params.test).replace(/-/g, " ");
+    const category = params.category as string;
+    const testName = (params.test as string).replace(/-/g, " ");
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [userAnswers, setUserAnswers] = useState<Answers>({});

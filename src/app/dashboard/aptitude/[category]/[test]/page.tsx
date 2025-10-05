@@ -17,8 +17,8 @@ import { verbalQuestions } from "@/lib/verbal-questions";
 export default function TestPage() {
   const params = useParams();
   const router = useRouter();
-  const category = Array.isArray(params.category) ? params.category[0] : params.category;
-  const test = Array.isArray(params.test) ? params.test[0] : params.test;
+  const category = params.category as string;
+  const test = params.test as string;
   
   // A check to ensure window is defined before using searchParams
   const [numberOfQuestions, setNumberOfQuestions] = useState(10);
