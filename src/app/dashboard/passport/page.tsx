@@ -135,15 +135,33 @@ export default function PassportPage() {
   const [contactHeading, setContactHeading] = useState(defaultData.contactHeading);
   
   const handleDownload = () => {
-    const printContents = portfolioRef.current?.innerHTML;
-    if (printContents) {
-      const originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-      // We need to re-attach the event listeners after restoring the body
-      window.location.reload(); 
-    }
+    const printableArea = portfolioRef.current;
+    if (!printableArea) return;
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @media print {
+        body > *:not(.printable-area) {
+          display: none !important;
+        }
+        .printable-area {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Add a class to the printable area
+    printableArea.classList.add('printable-area');
+    
+    window.print();
+
+    // Clean up after printing
+    document.head.removeChild(style);
+    printableArea.classList.remove('printable-area');
   };
 
   const handleSave = () => {
@@ -191,7 +209,7 @@ export default function PassportPage() {
   }
 
   const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
-      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : p));
+      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
   }, []);
 
   const handleHeroTitleChange = useCallback((value: string) => setHeroTitle(value), []);
@@ -441,24 +459,6 @@ export default function PassportPage() {
                 </footer>
             </div>
         </div>
-        <style jsx global>{`
-            @media print {
-                body * {
-                    visibility: hidden;
-                }
-                .printable-area, .printable-area * {
-                    visibility: visible;
-                }
-                .printable-area {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                }
-            }
-        `}</style>
     </div>
   );
 }
-
-    
