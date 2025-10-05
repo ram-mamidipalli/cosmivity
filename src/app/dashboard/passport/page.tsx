@@ -140,13 +140,13 @@ export default function PassportPage() {
     if (input) {
       toast({ title: "Generating PNG...", description: "Please wait a moment." });
       html2canvas(input, {
-        scale: 2, // Higher scale for better quality
+        scale: 2,
         useCORS: true,
         backgroundColor: document.documentElement.classList.contains('dark') ? '#0A0A0A' : '#FFFFFF',
-        scrollX: -window.scrollX,
-        scrollY: -window.scrollY,
-        windowWidth: document.documentElement.offsetWidth,
-        windowHeight: document.documentElement.offsetHeight,
+        width: input.scrollWidth,
+        height: input.scrollHeight,
+        windowWidth: input.scrollWidth,
+        windowHeight: input.scrollHeight,
       }).then(canvas => {
         const dataUrl = canvas.toDataURL('image/png');
         const link = document.createElement('a');
@@ -470,5 +470,3 @@ export default function PassportPage() {
     </div>
   );
 }
-
-    
