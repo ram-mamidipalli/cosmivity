@@ -9,10 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search, MapPin, Briefcase, PlusCircle, Filter, MessageCircle } from "lucide-react";
 import JobCard from "@/components/dashboard/jobs/JobCard";
 import PostJobDialog from "@/components/dashboard/jobs/PostJobDialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 
-const initialJobs = [
+const allOpportunities = [
   {
     logo: "https://placehold.co/50x50.png",
     hint: "google logo",
@@ -35,6 +34,18 @@ const initialJobs = [
     type: "Full-time",
     posted: "5 days ago",
     tags: ["Product Strategy", "Agile", "Roadmap"],
+    isUpcoming: true,
+  },
+    {
+    logo: "https://placehold.co/50x50.png",
+    hint: "google logo",
+    title: "Software Engineering Intern",
+    company: "Google",
+    location: "Remote",
+    salary: "₹80,000/month stipend",
+    type: "Internship",
+    posted: "1 day ago",
+    tags: ["Summer", "C++", "Algorithms"],
     isUpcoming: true,
   },
   {
@@ -61,6 +72,18 @@ const initialJobs = [
     tags: ["Node.js", "Express", "MongoDB", "REST APIs"],
     isUpcoming: true,
   },
+    {
+    logo: "https://placehold.co/50x50.png",
+    hint: "meta logo",
+    title: "Data Science Intern",
+    company: "Meta",
+    location: "Bangalore, India",
+    salary: "₹90,000/month stipend",
+    type: "Internship",
+    posted: "3 days ago",
+    tags: ["Python", "PyTorch", "6 Months"],
+    isUpcoming: true,
+  },
   {
     logo: "https://placehold.co/50x50.png",
     hint: "tcs logo",
@@ -71,33 +94,6 @@ const initialJobs = [
     type: "Full-time",
     posted: "10 days ago",
     tags: ["Selenium", "JIRA", "API Testing"],
-    isUpcoming: true,
-  },
-];
-
-const initialInternships = [
-  {
-    logo: "https://placehold.co/50x50.png",
-    hint: "google logo",
-    title: "Software Engineering Intern",
-    company: "Google",
-    location: "Remote",
-    salary: "₹80,000/month stipend",
-    type: "Internship",
-    posted: "1 day ago",
-    tags: ["Summer", "C++", "Algorithms"],
-    isUpcoming: true,
-  },
-  {
-    logo: "https://placehold.co/50x50.png",
-    hint: "meta logo",
-    title: "Data Science Intern",
-    company: "Meta",
-    location: "Bangalore, India",
-    salary: "₹90,000/month stipend",
-    type: "Internship",
-    posted: "3 days ago",
-    tags: ["Python", "PyTorch", "6 Months"],
     isUpcoming: true,
   },
   {
@@ -128,12 +124,10 @@ const initialInternships = [
 
 
 export default function OpportunitiesPage() {
-  const [jobs, setJobs] = useState(initialJobs);
-  const [internships, setInternships] = useState(initialInternships);
+  const [opportunities, setOpportunities] = useState(allOpportunities);
 
   return (
     <div className="flex flex-col gap-8">
-        <Tabs defaultValue="jobs">
             <header className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold font-headline">Opportunities</h1>
@@ -145,10 +139,6 @@ export default function OpportunitiesPage() {
                             <MessageCircle className="mr-2"/> Join WhatsApp Community
                         </Link>
                     </Button>
-                    <TabsList className="grid w-full grid-cols-2 max-w-sm">
-                        <TabsTrigger value="jobs">Jobs</TabsTrigger>
-                        <TabsTrigger value="internships">Internships</TabsTrigger>
-                    </TabsList>
                  </div>
             </header>
             
@@ -182,56 +172,32 @@ export default function OpportunitiesPage() {
                     <Button className="w-full lg:w-auto"><Filter className="mr-2"/>Search</Button>
                 </div>
                 <div className="p-4 flex justify-between items-center">
-                    <p className="text-sm text-muted-foreground">Showing <span className="font-bold text-foreground">{jobs.length}</span> results</p>
+                    <p className="text-sm text-muted-foreground">Showing <span className="font-bold text-foreground">{opportunities.length}</span> results</p>
                     <PostJobDialog>
                         <Button className="w-full sm:w-auto neon-glow"><PlusCircle className="mr-2"/>Post an Opportunity</Button>
                     </PostJobDialog>
                 </div>
             </Card>
 
-            <TabsContent value="jobs">
-                <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-2 space-y-6">
-                        {jobs.map((job, index) => (
-                            <JobCard key={index} job={job} />
-                        ))}
-                    </div>
-                    <aside className="lg:col-span-1">
-                        <Card className="sticky top-24">
-                            <div className="p-6">
-                                <h3 className="text-lg font-semibold mb-4">Get Job Alerts</h3>
-                                <p className="text-muted-foreground text-sm mb-4">Create a job alert to get notified of new opportunities.</p>
-                                <div className="space-y-4">
-                                    <Input placeholder="your.email@example.com" />
-                                    <Button className="w-full">Create Alert</Button>
-                                </div>
+            <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-6">
+                    {opportunities.map((job, index) => (
+                        <JobCard key={index} job={job} />
+                    ))}
+                </div>
+                <aside className="lg:col-span-1">
+                    <Card className="sticky top-24">
+                        <div className="p-6">
+                            <h3 className="text-lg font-semibold mb-4">Get Opportunity Alerts</h3>
+                            <p className="text-muted-foreground text-sm mb-4">Create an alert to get notified of new opportunities.</p>
+                            <div className="space-y-4">
+                                <Input placeholder="your.email@example.com" />
+                                <Button className="w-full">Create Alert</Button>
                             </div>
-                        </Card>
-                    </aside>
-                </main>
-            </TabsContent>
-            <TabsContent value="internships">
-                <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-2 space-y-6">
-                        {internships.map((internship, index) => (
-                            <JobCard key={index} job={internship} />
-                        ))}
-                    </div>
-                    <aside className="lg:col-span-1">
-                        <Card className="sticky top-24">
-                            <div className="p-6">
-                                <h3 className="text-lg font-semibold mb-4">Get Internship Alerts</h3>
-                                <p className="text-muted-foreground text-sm mb-4">Create an alert to get notified of new internship opportunities.</p>
-                                <div className="space-y-4">
-                                    <Input placeholder="your.email@example.com" />
-                                    <Button className="w-full">Create Alert</Button>
-                                </div>
-                            </div>
-                        </Card>
-                    </aside>
-                </main>
-            </TabsContent>
-        </Tabs>
+                        </div>
+                    </Card>
+                </aside>
+            </main>
     </div>
   );
 }
