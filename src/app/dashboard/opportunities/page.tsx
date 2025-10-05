@@ -21,7 +21,8 @@ const initialJobs = [
     salary: "₹15 - 25 LPA",
     type: "Full-time",
     posted: "2 days ago",
-    tags: ["React", "TypeScript", "Next.js"]
+    tags: ["React", "TypeScript", "Next.js"],
+    isUpcoming: true,
   },
   {
     logo: "https://placehold.co/50x50.png",
@@ -32,7 +33,8 @@ const initialJobs = [
     salary: "₹20 - 30 LPA",
     type: "Full-time",
     posted: "5 days ago",
-    tags: ["Product Strategy", "Agile", "Roadmap"]
+    tags: ["Product Strategy", "Agile", "Roadmap"],
+    isUpcoming: true,
   },
   {
     logo: "https://placehold.co/50x50.png",
@@ -43,7 +45,8 @@ const initialJobs = [
     salary: "₹8 - 12 LPA",
     type: "Full-time",
     posted: "3 days ago",
-    tags: ["Figma", "User Research", "Prototyping"]
+    tags: ["Figma", "User Research", "Prototyping"],
+    isUpcoming: true,
   },
    {
     logo: "https://placehold.co/50x50.png",
@@ -54,7 +57,8 @@ const initialJobs = [
     salary: "₹12 - 18 LPA",
     type: "Full-time",
     posted: "1 day ago",
-    tags: ["Node.js", "Express", "MongoDB", "REST APIs"]
+    tags: ["Node.js", "Express", "MongoDB", "REST APIs"],
+    isUpcoming: true,
   },
   {
     logo: "https://placehold.co/50x50.png",
@@ -65,7 +69,8 @@ const initialJobs = [
     salary: "₹7 - 10 LPA",
     type: "Full-time",
     posted: "10 days ago",
-    tags: ["Selenium", "JIRA", "API Testing"]
+    tags: ["Selenium", "JIRA", "API Testing"],
+    isUpcoming: true,
   },
 ];
 
@@ -79,7 +84,8 @@ const initialInternships = [
     salary: "₹80,000/month stipend",
     type: "Internship",
     posted: "1 day ago",
-    tags: ["Summer", "C++", "Algorithms"]
+    tags: ["Summer", "C++", "Algorithms"],
+    isUpcoming: true,
   },
   {
     logo: "https://placehold.co/50x50.png",
@@ -90,7 +96,8 @@ const initialInternships = [
     salary: "₹90,000/month stipend",
     type: "Internship",
     posted: "3 days ago",
-    tags: ["Python", "PyTorch", "6 Months"]
+    tags: ["Python", "PyTorch", "6 Months"],
+    isUpcoming: true,
   },
   {
     logo: "https://placehold.co/50x50.png",
@@ -101,7 +108,8 @@ const initialInternships = [
     salary: "₹65,000/month stipend",
     type: "Internship",
     posted: "1 week ago",
-    tags: ["Figma", "User Research", "3 Months"]
+    tags: ["Figma", "User Research", "3 Months"],
+    isUpcoming: true,
   },
    {
     logo: "https://placehold.co/50x50.png",
@@ -112,7 +120,8 @@ const initialInternships = [
     salary: "₹75,000/month stipend",
     type: "Internship",
     posted: "4 days ago",
-    tags: ["Product", "Agile", "Summer"]
+    tags: ["Product", "Agile", "Summer"],
+    isUpcoming: true,
   },
 ];
 

@@ -5,12 +5,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MapPin, Briefcase, Bookmark, Building, DollarSign } from "lucide-react";
+import { MapPin, Briefcase, Bookmark, Building, DollarSign, Lock } from "lucide-react";
 import Image from "next/image";
 
 export default function JobCard({ job }: { job: any }) {
     return (
-        <Card className="hover:shadow-lg transition-shadow">
+        <Card className="hover:shadow-lg transition-shadow relative">
+            {job.isUpcoming && <Badge className="absolute top-4 right-4">Upcoming</Badge>}
             <CardHeader>
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-4">
@@ -43,7 +44,13 @@ export default function JobCard({ job }: { job: any }) {
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                  <p className="text-sm text-muted-foreground">Posted {job.posted}</p>
-                 <Button>Apply Now</Button>
+                 {job.isUpcoming ? (
+                    <Button variant="secondary" disabled>
+                        <Lock className="mr-2 h-4 w-4" /> Coming Soon
+                    </Button>
+                 ) : (
+                    <Button>Apply Now</Button>
+                 )}
             </CardFooter>
         </Card>
     )
