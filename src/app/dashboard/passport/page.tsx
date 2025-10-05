@@ -139,7 +139,7 @@ export default function PassportPage() {
     if (!portfolioElement) return;
 
     const content = portfolioElement.innerHTML;
-    const printWindow = window.open('', '', 'height=600,width=800');
+    const printWindow = window.open('', '', 'height=800,width=800');
     
     if (printWindow) {
       printWindow.document.write('<html><head><title>My Portfolio</title>');
@@ -155,28 +155,31 @@ export default function PassportPage() {
                 max-width: 800px;
                 margin: 2rem auto;
                 padding: 2rem;
-                border: 1px solid #ddd;
             }
-            .print-links {
+            .hero-section {
+                text-align: center;
+            }
+            .contact-info {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 0.5rem;
                 margin-top: 1rem;
             }
-            .print-links a {
+            .contact-info a {
                 text-decoration: none;
                 color: #007bff;
             }
             /* Font size adjustments */
-            .hero-title { font-size: 2.5rem; font-weight: bold; text-align: center; }
-            .hero-subtitle { font-size: 1.1rem; text-align: center; color: #555; }
+            .hero-title { font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; }
+            .hero-subtitle { font-size: 1.1rem; color: #555; margin-bottom: 1rem; }
             .section-badge { display: inline-block; margin-bottom: 1rem; border: 1px solid #ccc; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; }
-            .section-heading { font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center; color: #444; }
+            .section-heading { font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; }
             .card { border: 1px solid #eee; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px; }
             .card-title { font-size: 1.25rem; font-weight: bold; }
             .card-subtitle { font-size: 1rem; font-weight: 600; color: #663399; }
             .card-text { font-size: 0.9rem; color: #666; }
+            .project-card, .experience-card, .testimonial-card { margin-bottom: 2rem; }
         </style>
       `);
       printWindow.document.write('</head><body>');
@@ -184,6 +187,7 @@ export default function PassportPage() {
       const clonedContent = portfolioElement.cloneNode(true) as HTMLElement;
       
       // Add classes for styling
+      clonedContent.querySelector('.py-16.md\\:py-24.text-center')?.classList.add('hero-section');
       clonedContent.querySelector('.font-headline.text-5xl')?.classList.add('hero-title');
       clonedContent.querySelector('.text-lg.text-muted-foreground')?.classList.add('hero-subtitle');
       clonedContent.querySelectorAll('section > .badge').forEach(el => el.classList.add('section-badge'));
@@ -198,8 +202,14 @@ export default function PassportPage() {
       
       const linksContainer = clonedContent.querySelector('.hero-links');
       if (linksContainer) {
-          linksContainer.classList.add('print-links');
+          linksContainer.classList.add('contact-info');
       }
+
+      const getInTouchLinks = clonedContent.querySelector('.flex.justify-center.items-center.gap-4.text-muted-foreground.mt-8');
+      if(getInTouchLinks) {
+          getInTouchLinks.classList.add('contact-info');
+      }
+
 
       printWindow.document.write('<div class="print-container">');
       printWindow.document.write(clonedContent.innerHTML);
@@ -216,6 +226,7 @@ export default function PassportPage() {
       }, 250);
     }
   };
+
 
   const handleSave = () => {
     setIsEditing(false);
