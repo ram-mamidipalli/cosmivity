@@ -135,7 +135,15 @@ export default function PassportPage() {
   const [contactHeading, setContactHeading] = useState(defaultData.contactHeading);
   
   const handleDownload = () => {
-    window.print();
+    const printContents = portfolioRef.current?.innerHTML;
+    if (printContents) {
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      // We need to re-attach the event listeners after restoring the body
+      window.location.reload(); 
+    }
   };
 
   const handleSave = () => {
@@ -183,7 +191,7 @@ export default function PassportPage() {
   }
 
   const handleTestimonialChange = useCallback((index: number, field: string, value: string) => {
-      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
+      setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : p));
   }, []);
 
   const handleHeroTitleChange = useCallback((value: string) => setHeroTitle(value), []);
@@ -199,7 +207,7 @@ export default function PassportPage() {
 
   return (
     <div className="bg-background text-foreground">
-        <div ref={portfolioRef} className="bg-background text-foreground font-body printable-area">
+        <div ref={portfolioRef} className="bg-background text-foreground font-body">
             <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
                 {/* Header */}
                 <header className="flex justify-between items-center py-4 print:hidden">
@@ -452,3 +460,5 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
