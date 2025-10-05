@@ -167,7 +167,7 @@ export default function DashboardPage() {
                     </div>
                     <div>
                         <CardTitle>Daily Quick Test</CardTitle>
-                        <CardDescription className="mt-1">A quick 10-question revision to keep you sharp.</CardDescription>
+                        <CardDescription className="mt-1">A quick 5-question revision to keep you sharp.</CardDescription>
                     </div>
                 </CardHeader>
                 <CardContent className="flex items-center justify-between">
@@ -234,5 +234,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

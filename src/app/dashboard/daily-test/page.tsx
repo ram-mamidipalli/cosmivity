@@ -4,54 +4,53 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, Code2, Play } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import QuestionView from "@/components/dashboard/aptitude/QuestionView";
 import { cn } from "@/lib/utils";
-import { generateTestQuestions } from "@/ai/flows/generate-test-questions";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
+import { quantitativeQuestions } from "@/lib/quantitative-questions";
+import { logicalQuestions } from "@/lib/logical-questions";
+import { verbalQuestions } from "@/lib/verbal-questions";
 
-const initialCode = `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!";\n    return 0;\n}`;
+const allQuestions = [
+    ...Object.values(quantitativeQuestions).flat(),
+    ...Object.values(logicalQuestions).flat(),
+    ...Object.values(verbalQuestions).flat()
+];
+
+const shuffleArray = (array: any[]) => {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
 
 export default function DailyTestPage() {
   const router = useRouter();
   
   const [questions, setQuestions] = useState<any[]>([]);
-  const [codingQuestion, setCodingQuestion] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
   const [visited, setVisited] = useState<number[]>([0]);
-  const [code, setCode] = useState(initialCode);
-  const [output, setOutput] = useState('');
-  const [isLoadingCode, setIsLoadingCode] = useState(false);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
+    const fetchQuestions = () => {
         setLoading(true);
-        // This is a placeholder. In a real app, you would create a new flow 
-        // to generate a mix of questions including a coding one.
-        const response = await generateTestQuestions({ topic: "General Aptitude Mix", numberOfQuestions: 9 });
-        setQuestions(response.questions);
-        setCodingQuestion({
-            id: 10,
-            question: "Write a program to check if a number is a palindrome.",
-            description: "A palindrome is a number that reads the same backward as forward. For example, 121 is a palindrome, but 123 is not."
-        });
-      } catch (error) {
-        console.error("Failed to generate test questions:", error);
-      } finally {
+        const shuffled = shuffleArray([...allQuestions]);
+        setQuestions(shuffled.slice(0, 5));
         setLoading(false);
-      }
     };
 
     fetchQuestions();
   }, []);
 
-  const totalQuestions = questions.length + (codingQuestion ? 1 : 0);
+  const totalQuestions = questions.length;
 
   const handleSetCurrentQuestion = (index: number) => {
     setCurrentQuestionIndex(index);
@@ -77,21 +76,20 @@ export default function DailyTestPage() {
   }
 
   const handleSubmit = () => {
-    // Navigate to report page
+    const correctAnswers = questions.reduce((acc, q) => {
+        if (answers[q.id] === q.answer) {
+            return acc + 1;
+        }
+        return acc;
+    }, 0);
+    
+    // In a real app, you would save this score to the backend.
+    // For now, let's just navigate to the dashboard.
+    console.log(`Score: ${correctAnswers}/${questions.length}`);
     router.push(`/dashboard`);
   }
 
-  const handleRunCode = () => {
-        setIsLoadingCode(true);
-        setOutput("Running your code...");
-        setTimeout(() => {
-            setOutput("Test Case 1: Passed\nTest Case 2: Passed\nTest Case 3: Failed");
-            setIsLoadingCode(false);
-        }, 1500);
-    }
-
   const isLastQuestion = currentQuestionIndex >= totalQuestions - 1;
-  const isCodingQuestion = codingQuestion && currentQuestionIndex === questions.length;
 
   return (
     <div className="flex flex-col gap-8 p-8">
@@ -100,7 +98,7 @@ export default function DailyTestPage() {
           <ChevronLeft className="h-4 w-4" />
           Back to Dashboard
         </Link>
-        <h1 className="text-3xl font-bold font-headline mt-2 capitalize">Daily Quick Practice</h1>
+        <h1 className="text-3xl font-bold font-headline mt-2 capitalize">Daily Quick Test</h1>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -118,33 +116,7 @@ export default function DailyTestPage() {
                         <Skeleton className="h-8 w-full" />
                     </CardContent>
                  </Card>
-            ) : isCodingQuestion ? (
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="font-code">Question {codingQuestion.id}</CardTitle>
-                        <CardDescription className="text-lg text-foreground">{codingQuestion.question}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex flex-col gap-4">
-                        <p>{codingQuestion.description}</p>
-                         <Textarea 
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                            placeholder="Write your code here..."
-                            className="h-64 w-full rounded-lg resize-none font-code text-base"
-                        />
-                        <div className="flex items-center justify-between">
-                            <Button onClick={handleRunCode} disabled={isLoadingCode}>
-                                <Play className="mr-2"/>{isLoadingCode ? 'Running...' : 'Run Code'}
-                            </Button>
-                        </div>
-                        <Card className="h-32">
-                            <CardContent className="p-4">
-                                <pre className="text-sm text-wrap">{output || 'Output will be displayed here.'}</pre>
-                            </CardContent>
-                        </Card>
-                    </CardContent>
-                </Card>
-            ) : questions.length > 0 && currentQuestionIndex < questions.length ? (
+            ) : questions.length > 0 ? (
                  <QuestionView 
                     question={questions[currentQuestionIndex]}
                     selectedOption={answers[questions[currentQuestionIndex].id]}
@@ -165,7 +137,7 @@ export default function DailyTestPage() {
                 Previous
                 </Button>
                 {isLastQuestion ? (
-                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading}>
+                    <Button onClick={handleSubmit} className="bg-green-500 hover:bg-green-600 text-white" disabled={loading || questions.length === 0}>
                         Submit
                     </Button>
                 ) : (
@@ -182,7 +154,7 @@ export default function DailyTestPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-5 gap-2">
-                        {[...questions, codingQuestion].filter(Boolean).map((q, index) => {
+                        {questions.map((q, index) => {
                             const isCurrent = index === currentQuestionIndex;
                             const isAnswered = answers[q.id];
                             const isVisited = visited.includes(index);
