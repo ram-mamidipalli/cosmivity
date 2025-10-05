@@ -53,9 +53,9 @@ export default function TestReportPage() {
             setScore(correctAnswers);
         } else {
             // Handle case where data is not found, maybe redirect
-            router.push(`/dashboard/aptitude/${params.category}`);
+            router.push(`/dashboard/aptitude/${category}`);
         }
-    }, [params.category, router]);
+    }, [category, router]);
 
     const scorePercentage = questions.length > 0 ? (score / questions.length) * 100 : 0;
 
