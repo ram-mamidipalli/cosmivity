@@ -97,7 +97,6 @@ export default function EventsPage() {
                         <MessageCircle className="mr-2"/> Join WhatsApp Community
                     </Link>
                 </Button>
-                <Button className="w-full sm:w-auto neon-glow"><PlusCircle className="mr-2"/>Create Event</Button>
             </div>
         </header>
 
