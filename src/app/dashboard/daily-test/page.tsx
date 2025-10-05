@@ -99,6 +99,7 @@ export default function DailyTestPage() {
           Back to Dashboard
         </Link>
         <h1 className="text-3xl font-bold font-headline mt-2 capitalize">Daily Quick Test</h1>
+        <p className="text-muted-foreground">A quick 5-question revision to keep you sharp. (Est. time: 5 mins)</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -158,10 +159,12 @@ export default function DailyTestPage() {
                             const isCurrent = index === currentQuestionIndex;
                             const isAnswered = answers[q.id];
                             const isVisited = visited.includes(index);
+                            // Create a more unique key
+                            const uniqueKey = `${q.question.substring(0, 10)}-${q.id}-${index}`;
 
                             return (
                                 <Button 
-                                    key={q.id}
+                                    key={uniqueKey}
                                     variant={'outline'}
                                     className={cn("w-full h-10", 
                                         isCurrent && 'bg-primary/80 text-primary-foreground',

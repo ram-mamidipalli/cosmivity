@@ -184,7 +184,7 @@ export default function DashboardPage() {
             <div>
                 <CardTitle className="mb-4">Explore Features</CardTitle>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {presentFeatures.slice(1).map((feature, i) => (
+                    {presentFeatures.map((feature, i) => (
                         <Card key={i} className={`bg-gradient-to-br ${feature.color} p-4 flex flex-col gap-4 transition-transform hover:scale-105 cursor-pointer`} onClick={() => router.push(feature.href)}>
                             <div className="flex justify-end items-center">
                                 {feature.icon}
