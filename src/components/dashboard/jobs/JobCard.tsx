@@ -15,9 +15,6 @@ export default function JobCard({ job }: { job: any }) {
             <CardHeader>
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-4">
-                        <Avatar className="h-12 w-12 rounded-md">
-                            <Image src={job.logo} alt={`${job.company} logo`} width={50} height={50} data-ai-hint={job.hint} />
-                        </Avatar>
                         <div>
                             <CardTitle className="text-xl">{job.title}</CardTitle>
                             <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
