@@ -171,12 +171,6 @@ export default function OpportunitiesPage() {
                     </div>
                     <Button className="w-full lg:w-auto"><Filter className="mr-2"/>Search</Button>
                 </div>
-                <div className="p-4 flex justify-between items-center">
-                    <p className="text-sm text-muted-foreground">Showing <span className="font-bold text-foreground">{opportunities.length}</span> results</p>
-                    <PostJobDialog>
-                        <Button className="w-full sm:w-auto neon-glow"><PlusCircle className="mr-2"/>Post an Opportunity</Button>
-                    </PostJobDialog>
-                </div>
             </Card>
 
             <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
