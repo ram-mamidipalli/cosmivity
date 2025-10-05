@@ -199,7 +199,7 @@ export default function PassportPage() {
 
   return (
     <div className="bg-background text-foreground">
-        <div ref={portfolioRef} className="bg-background text-foreground font-body">
+        <div ref={portfolioRef} className="bg-background text-foreground font-body printable-area">
             <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
                 {/* Header */}
                 <header className="flex justify-between items-center py-4 print:hidden">
