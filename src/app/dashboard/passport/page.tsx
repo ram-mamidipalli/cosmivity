@@ -1,19 +1,16 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState, useCallback, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Dribbble, Figma, Edit, Copy, Upload, Trash2, Save, PlusCircle, Share2, Download } from "lucide-react";
-import Image from 'next/image';
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Figma, Edit, Upload, Trash2, Save, PlusCircle, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/lib/supabase";
 import html2canvas from "html2canvas";
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
@@ -121,74 +118,22 @@ export default function PassportPage() {
   const { toast } = useToast();
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
   const portfolioRef = useRef<HTMLDivElement>(null);
   
-  // States for editable content
-  const [heroTitle, setHeroTitle] = useState("");
-  const [heroSubtitle, setHeroSubtitle] = useState("");
-  const [aboutContent, setAboutContent] = useState("");
-  const [skills, setSkills] = useState("");
-  const [experiences, setExperiences] = useState<any[]>([]);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [testimonials, setTestimonials] = useState<any[]>([]);
-  const [githubUrl, setGithubUrl] = useState("");
-  const [twitterUrl, setTwitterUrl] = useState("");
-  const [figmaUrl, setFigmaUrl] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [contactHeading, setContactHeading] = useState("");
-
-  const loadProfileData = useCallback((profileData: any) => {
-    setHeroTitle(profileData.heroTitle || defaultData.heroTitle);
-    setHeroSubtitle(profileData.heroSubtitle || defaultData.heroSubtitle);
-    setAboutContent(profileData.aboutContent || defaultData.aboutContent);
-    setSkills(profileData.skills || defaultData.skills);
-    setExperiences(profileData.experiences || defaultData.experiences);
-    setProjects(profileData.projects || defaultData.projects);
-    setTestimonials(profileData.testimonials || defaultData.testimonials);
-    setGithubUrl(profileData.githubUrl || defaultData.githubUrl);
-    setTwitterUrl(profileData.twitterUrl || defaultData.twitterUrl);
-    setFigmaUrl(profileData.figmaUrl || defaultData.figmaUrl);
-    setEmail(profileData.email || defaultData.email);
-    setPhone(profileData.phone || defaultData.phone);
-    setContactHeading(profileData.contactHeading || defaultData.contactHeading);
-  }, []);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-        if (user) {
-            setLoading(true);
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('passport_data')
-                .eq('id', user.id)
-                .single();
-
-            if (error && error.code !== 'PGRST116') { // PGRST116: row not found
-                console.error('Error fetching profile:', error);
-                toast({ title: "Error", description: "Could not fetch your profile data.", variant: "destructive" });
-                loadProfileData(defaultData);
-            } else {
-                loadProfileData(data?.passport_data || defaultData);
-            }
-            
-            setLoading(false);
-        }
-    };
-    fetchProfile();
-  }, [user, toast, loadProfileData]);
-
-
-  const publicProfileUrl = user ? `${window.location.origin}/p/${user.id}` : '';
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(publicProfileUrl);
-    toast({
-      title: "Link Copied!",
-      description: "Your public Skill Passport link has been copied to your clipboard.",
-    });
-  };
+  // States for editable content, initialized with default data
+  const [heroTitle, setHeroTitle] = useState(defaultData.heroTitle);
+  const [heroSubtitle, setHeroSubtitle] = useState(defaultData.heroSubtitle);
+  const [aboutContent, setAboutContent] = useState(defaultData.aboutContent);
+  const [skills, setSkills] = useState(defaultData.skills);
+  const [experiences, setExperiences] = useState<any[]>(defaultData.experiences);
+  const [projects, setProjects] = useState<any[]>(defaultData.projects);
+  const [testimonials, setTestimonials] = useState<any[]>(defaultData.testimonials);
+  const [githubUrl, setGithubUrl] = useState(defaultData.githubUrl);
+  const [twitterUrl, setTwitterUrl] = useState(defaultData.twitterUrl);
+  const [figmaUrl, setFigmaUrl] = useState(defaultData.figmaUrl);
+  const [email, setEmail] = useState(defaultData.email);
+  const [phone, setPhone] = useState(defaultData.phone);
+  const [contactHeading, setContactHeading] = useState(defaultData.contactHeading);
   
   const handleDownload = () => {
     const input = portfolioRef.current;
@@ -227,56 +172,12 @@ export default function PassportPage() {
     }
   };
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "My Skill Passport",
-          text: "Check out my professional portfolio on Cosmivity!",
-          url: publicProfileUrl,
-        });
-        toast({
-          title: "Portfolio Shared!",
-        });
-      } catch (error) {
-        console.error("Error sharing:", error);
-        handleCopyLink();
-      }
-    } else {
-      handleCopyLink();
-    }
-  };
-
-  const handleSave = async () => {
-    if (!user) {
-        toast({ title: "Error", description: "You must be logged in to save.", variant: "destructive" });
-        return;
-    }
+  const handleSave = () => {
     setIsEditing(false);
-    const passport_data = {
-        heroTitle, heroSubtitle, aboutContent, skills, experiences, projects, testimonials,
-        githubUrl, twitterUrl, figmaUrl, email, phone, contactHeading
-    };
-
-     const { data, error } = await supabase
-      .from('profiles')
-      .upsert({ id: user.id, passport_data, updated_at: new Date().toISOString() }, { onConflict: 'id' })
-      .select()
-
-
-    if (error) {
-        console.error("Error saving profile:", error);
-        toast({
-            title: "Save Failed",
-            description: "There was an error saving your portfolio.",
-            variant: "destructive"
-        });
-    } else {
-        toast({
-            title: "Profile Saved!",
-            description: "Your changes have been saved successfully.",
-        });
-    }
+    toast({
+        title: "Edits Finalized",
+        description: "You have exited edit mode. Your changes are ready for download.",
+    });
   }
   
   const handleExperienceChange = useCallback((index: number, field: string, value: string, descIndex?: number) => {
@@ -330,10 +231,6 @@ export default function PassportPage() {
   const handlePhoneChange = useCallback((value: string) => setPhone(value), []);
   const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
 
-  if (loading) {
-      return <div className="flex justify-center items-center h-screen">Loading profile...</div>
-  }
-
   return (
     <div ref={portfolioRef}>
         <div className="bg-background text-foreground font-body">
@@ -344,16 +241,10 @@ export default function PassportPage() {
                     <div className="flex items-center gap-2">
                         <Button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
                             {isEditing ? <Save className="mr-2 h-4 w-4" /> : <Edit className="mr-2 h-4 w-4" />}
-                            {isEditing ? 'Save Profile' : 'Edit Profile'}
+                            {isEditing ? 'Done Editing' : 'Edit Profile'}
                         </Button>
                          <Button variant="outline" size="icon" onClick={handleDownload}>
                             <Download className="h-4 w-4" />
-                        </Button>
-                        <Button variant="outline" size="icon" onClick={handleCopyLink}>
-                            <Copy className="h-4 w-4" />
-                        </Button>
-                        <Button variant="outline" size="icon" onClick={handleShare}>
-                            <Share2 className="h-4 w-4" />
                         </Button>
                     </div>
                 </header>
@@ -573,3 +464,6 @@ export default function PassportPage() {
     </div>
   );
 }
+
+
+    

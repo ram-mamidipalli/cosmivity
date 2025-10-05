@@ -3,10 +3,8 @@
 
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Figma, Copy, Share2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Figma } from "lucide-react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
@@ -99,7 +97,6 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
 };
 
 export default function PublicPassportPage() {
-    const { toast } = useToast();
     const params = useParams();
     const userId = params.userId as string;
     const [loading, setLoading] = useState(true);
@@ -114,7 +111,7 @@ export default function PublicPassportPage() {
                 setLoading(true);
                 const { data, error } = await supabase
                     .from('profiles')
-                    .select('passport_data, user_metadata:id(user_metadata)')
+                    .select('passport_data, user_metadata:users(user_metadata)')
                     .eq('id', userId)
                     .single();
 
@@ -124,7 +121,6 @@ export default function PublicPassportPage() {
                     setUserName(defaultData.name);
                 } else if (data) {
                     setPassportData(data.passport_data || defaultData);
-                    // Supabase returns an array for the joined table
                     const metadata = Array.isArray(data.user_metadata) ? data.user_metadata[0] : data.user_metadata;
                     setUserName((metadata as any)?.user_metadata?.name || 'User');
                 } else {
@@ -138,30 +134,6 @@ export default function PublicPassportPage() {
         fetchProfile();
     }, [userId]);
 
-    const handleCopyLink = () => {
-        navigator.clipboard.writeText(window.location.href);
-        toast({
-            title: "Link Copied!",
-            description: "The portfolio link has been copied to your clipboard.",
-        });
-    };
-
-    const handleShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: `${userName}'s Skill Passport`,
-                    text: `Check out ${userName}'s professional portfolio on Cosmivity!`,
-                    url: window.location.href,
-                });
-            } catch (error) {
-                console.error("Error sharing:", error);
-                handleCopyLink();
-            }
-        } else {
-            handleCopyLink();
-        }
-    };
 
     if (loading || !passportData) {
         return <div className="flex justify-center items-center h-screen">Loading profile...</div>;
@@ -173,14 +145,6 @@ export default function PublicPassportPage() {
             {/* Header */}
             <header className="flex justify-between items-center py-4">
                 <h2 className="text-xl font-bold font-code text-primary">{`<${userName}/>`}</h2>
-                <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon" onClick={handleCopyLink}>
-                        <Copy className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" size="icon" onClick={handleShare}>
-                        <Share2 className="h-4 w-4" />
-                    </Button>
-                </div>
             </header>
 
             {/* Hero Section */}
