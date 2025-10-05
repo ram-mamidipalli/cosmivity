@@ -143,11 +143,50 @@ export default function PassportPage() {
     
     if (printWindow) {
       printWindow.document.write('<html><head><title>My Portfolio</title>');
-      // A little bit of inline style to make it look good
-      printWindow.document.write('<style>body { font-family: sans-serif; } .print-container { padding: 2rem; }</style>');
+      printWindow.document.write(`
+        <style>
+            body { 
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                color: #333;
+            }
+            .print-container { 
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                border: 1px solid #ddd;
+                text-align: center;
+            }
+            .print-links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 1rem;
+            }
+            .print-links a {
+                text-decoration: none;
+                color: #007bff;
+            }
+        </style>
+      `);
       printWindow.document.write('</head><body>');
       printWindow.document.write('<div class="print-container">');
-      printWindow.document.write(content);
+      
+      const clonedContent = portfolioElement.cloneNode(true) as HTMLElement;
+      
+      // Modify links for better PDF view
+      const linkContainer = clonedContent.querySelector('.hero-links');
+      if (linkContainer) {
+          linkContainer.classList.add('print-links');
+          linkContainer.querySelectorAll('a').forEach(a => {
+              a.style.display = 'block';
+          });
+      }
+
+      printWindow.document.write(clonedContent.innerHTML);
+
       printWindow.document.write('</div>');
       printWindow.document.write('</body></html>');
       
@@ -229,8 +268,8 @@ export default function PassportPage() {
                   {isEditing ? <Save className="mr-2 h-4 w-4" /> : <Edit className="mr-2 h-4 w-4" />}
                   {isEditing ? 'Done Editing' : 'Edit Profile'}
               </Button>
-               <Button variant="outline" size="icon" onClick={handleDownload}>
-                  <Download className="h-4 w-4" />
+               <Button variant="outline" onClick={handleDownload}>
+                  <Download className="mr-2 h-4 w-4" /> Download PDF
               </Button>
           </div>
       </header>
@@ -243,7 +282,7 @@ export default function PassportPage() {
                           <EditableField isEditing={isEditing} value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
                           <EditableField isEditing={isEditing} value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
                           
-                          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-muted-foreground">
+                          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-muted-foreground hero-links">
                               {isEditing ? (
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
                                       <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
@@ -252,9 +291,9 @@ export default function PassportPage() {
                                   </div>
                               ) : (
                                   <>
-                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl}</a>
-                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl}</a>
-                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl}</a>
+                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Github className="h-4 w-4"/> {githubUrl}</a>
+                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Twitter className="h-4 w-4"/> {twitterUrl}</a>
+                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Figma className="h-4 w-4"/> {figmaUrl}</a>
                                   </>
                               )}
                           </div>
