@@ -156,7 +156,6 @@ export default function PassportPage() {
                 margin: 2rem auto;
                 padding: 2rem;
                 border: 1px solid #ddd;
-                text-align: center;
             }
             .print-links {
                 display: flex;
@@ -169,25 +168,43 @@ export default function PassportPage() {
                 text-decoration: none;
                 color: #007bff;
             }
+            /* Font size adjustments */
+            .hero-title { font-size: 2.5rem; font-weight: bold; text-align: center; }
+            .hero-subtitle { font-size: 1.1rem; text-align: center; color: #555; }
+            .section-badge { display: inline-block; margin-bottom: 1rem; border: 1px solid #ccc; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; }
+            .section-heading { font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center; color: #444; }
+            .card { border: 1px solid #eee; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px; }
+            .card-title { font-size: 1.25rem; font-weight: bold; }
+            .card-subtitle { font-size: 1rem; font-weight: 600; color: #663399; }
+            .card-text { font-size: 0.9rem; color: #666; }
         </style>
       `);
       printWindow.document.write('</head><body>');
-      printWindow.document.write('<div class="print-container">');
       
       const clonedContent = portfolioElement.cloneNode(true) as HTMLElement;
       
-      // Modify links for better PDF view
-      const linkContainer = clonedContent.querySelector('.hero-links');
-      if (linkContainer) {
-          linkContainer.classList.add('print-links');
-          linkContainer.querySelectorAll('a').forEach(a => {
-              a.style.display = 'block';
-          });
+      // Add classes for styling
+      clonedContent.querySelector('.font-headline.text-5xl')?.classList.add('hero-title');
+      clonedContent.querySelector('.text-lg.text-muted-foreground')?.classList.add('hero-subtitle');
+      clonedContent.querySelectorAll('section > .badge').forEach(el => el.classList.add('section-badge'));
+      clonedContent.querySelectorAll('section > h3').forEach(el => el.classList.add('section-heading'));
+      
+      clonedContent.querySelectorAll('.experience-card, .project-card, .testimonial-card').forEach(card => {
+        card.classList.add('card');
+        card.querySelector('.text-xl.font-bold')?.classList.add('card-title');
+        card.querySelector('.text-primary.font-semibold')?.classList.add('card-subtitle');
+        card.querySelectorAll('ul li, .text-muted-foreground').forEach(p => p.classList.add('card-text'));
+      });
+      
+      const linksContainer = clonedContent.querySelector('.hero-links');
+      if (linksContainer) {
+          linksContainer.classList.add('print-links');
       }
 
+      printWindow.document.write('<div class="print-container">');
       printWindow.document.write(clonedContent.innerHTML);
-
       printWindow.document.write('</div>');
+
       printWindow.document.write('</body></html>');
       
       printWindow.document.close();
@@ -291,9 +308,9 @@ export default function PassportPage() {
                                   </div>
                               ) : (
                                   <>
-                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Github className="h-4 w-4"/> {githubUrl}</a>
-                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Twitter className="h-4 w-4"/> {twitterUrl}</a>
-                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Figma className="h-4 w-4"/> {figmaUrl}</a>
+                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Github className="h-4 w-4"/> {githubUrl.replace('https://', '')}</a>
+                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Twitter className="h-4 w-4"/> {twitterUrl.replace('https://', '')}</a>
+                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Figma className="h-4 w-4"/> {figmaUrl.replace('https://', '')}</a>
                                   </>
                               )}
                           </div>
@@ -351,7 +368,7 @@ export default function PassportPage() {
                       <h3 className="text-2xl text-muted-foreground mb-8 text-center">Here is a quick summary of my most recent experiences:</h3>
                       <div className="space-y-8 max-w-3xl mx-auto">
                           {experiences.map((exp, index) => (
-                              <Card key={index} className="p-6 relative">
+                              <Card key={index} className="p-6 relative experience-card">
                                   {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7" onClick={() => handleRemoveExperience(index)}><Trash2 className="h-4 w-4"/></Button>}
                                   <div className="flex justify-between items-start mb-4">
                                       <div>
@@ -381,7 +398,7 @@ export default function PassportPage() {
                       <h3 className="text-2xl text-muted-foreground mb-8 text-center">Some of the noteworthy projects I have built:</h3>
                       <div className="space-y-12">
                           {projects.map((project, index) => (
-                              <Card key={index} className="overflow-hidden relative">
+                              <Card key={index} className="overflow-hidden relative project-card">
                                    {isEditing && <Button variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7 z-10" onClick={() => handleRemoveProject(index)}><Trash2 className="h-4 w-4"/></Button>}
                                   <div className="p-8 flex flex-col justify-center">
                                       <EditableField isEditing={isEditing} value={project.title} onChange={(newValue: string) => handleProjectChange(index, 'title', newValue)} className="text-2xl font-bold mb-4"/>
@@ -418,7 +435,7 @@ export default function PassportPage() {
                       <h3 className="text-2xl text-muted-foreground mb-8 text-center">Nice things people have said about me:</h3>
                       <div className="grid md:grid-cols-3 gap-8">
                           {testimonials.map((t, index) => (
-                              <Card key={index} className="p-6">
+                              <Card key={index} className="p-6 testimonial-card">
                                   <CardContent className="p-0 flex flex-col items-center text-center">
                                       <EditableField 
                                           isEditing={isEditing}
@@ -480,9 +497,9 @@ export default function PassportPage() {
                               <p className="text-sm">Social links can be edited in the hero section.</p>
                           ) : (
                               <>
-                                  <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl}</a>
-                                  <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl}</a>
-                                  <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl}</a>
+                                  <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl.replace('https://','')}</a>
+                                  <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl.replace('https://','')}</a>
+                                  <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl.replace('https://','')}</a>
                               </>
                           )}
                       </div>
@@ -498,3 +515,5 @@ export default function PassportPage() {
     </div>
   );
 }
+
+    
