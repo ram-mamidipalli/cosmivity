@@ -11,8 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
     if (isEditing) {
@@ -137,40 +135,7 @@ export default function PassportPage() {
   const [contactHeading, setContactHeading] = useState(defaultData.contactHeading);
   
   const handleDownload = () => {
-    const input = portfolioRef.current;
-    if (input) {
-      toast({ title: "Generating PDF...", description: "Please wait a moment." });
-      html2canvas(input, {
-        scale: 2, // Higher scale for better quality
-        useCORS: true,
-        backgroundColor: document.documentElement.classList.contains('dark') ? '#0A0A0A' : '#FFFFFF',
-        width: input.scrollWidth,
-        height: input.scrollHeight,
-        windowWidth: input.scrollWidth,
-        windowHeight: input.scrollHeight,
-      }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        const fileName = `${(user?.user_metadata.name || 'user').toLowerCase().replace(" ", "-")}-portfolio.pdf`;
-
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(fileName);
-        
-        toast({
-          title: "Portfolio Downloaded!",
-          description: `Your portfolio has been saved as ${fileName}.`,
-        });
-      }).catch(err => {
-        console.error("Could not generate file", err);
-        toast({
-          title: "Download Failed",
-          description: "There was an error generating the PDF file.",
-          variant: "destructive"
-        })
-      });
-    }
+    window.print();
   };
 
   const handleSave = () => {
@@ -237,7 +202,7 @@ export default function PassportPage() {
         <div ref={portfolioRef} className="bg-background text-foreground font-body">
             <div className="container mx-auto p-4 md:p-8 animate-in fade-in duration-500">
                 {/* Header */}
-                <header className="flex justify-between items-center py-4">
+                <header className="flex justify-between items-center py-4 print:hidden">
                     <h2 className="text-xl font-bold font-code text-primary">{`<${user?.user_metadata.name || 'Sagar'}/>`}</h2>
                     <div className="flex items-center gap-2">
                         <Button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
@@ -468,8 +433,22 @@ export default function PassportPage() {
                 </footer>
             </div>
         </div>
+        <style jsx global>{`
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                .printable-area, .printable-area * {
+                    visibility: visible;
+                }
+                .printable-area {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+            }
+        `}</style>
     </div>
   );
 }
-
-    
