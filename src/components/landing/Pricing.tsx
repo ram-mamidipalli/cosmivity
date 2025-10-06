@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, Lock } from "lucide-react";
 import Link from "next/link";
 
 const freeFeatures = [
@@ -48,8 +48,8 @@ export default function Pricing() {
                 ))}
               </ul>
             </CardContent>
-            <Button variant="outline" className="w-full mt-6" asChild>
-              <Link href="/auth">Get Started</Link>
+            <Button variant="secondary" className="w-full mt-6" disabled>
+                <Lock className="mr-2 h-4 w-4" /> Coming Soon
             </Button>
           </Card>
           
@@ -69,8 +69,8 @@ export default function Pricing() {
                 ))}
               </ul>
             </CardContent>
-            <Button variant="outline" className="w-full mt-6" asChild>
-              <Link href="/auth">Choose Monthly</Link>
+            <Button variant="secondary" className="w-full mt-6" disabled>
+                <Lock className="mr-2 h-4 w-4" /> Coming Soon
             </Button>
           </Card>
 
@@ -93,8 +93,8 @@ export default function Pricing() {
                 ))}
               </ul>
             </CardContent>
-            <Button className="w-full mt-6 neon-glow" asChild>
-              <Link href="/auth">Join Now</Link>
+            <Button variant="secondary" className="w-full mt-6" disabled>
+                <Lock className="mr-2 h-4 w-4" /> Coming Soon
             </Button>
           </Card>
         </div>
