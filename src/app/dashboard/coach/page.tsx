@@ -14,6 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Lightbulb } from "lucide-react";
 
 const initialDetails = {
     name: "Sagar",
@@ -278,7 +280,14 @@ export default function CoachPage() {
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[900px] overflow-y-auto border rounded-lg shadow-lg">
+                        <Alert>
+                            <Lightbulb className="h-4 w-4" />
+                            <AlertTitle>Pro Tip!</AlertTitle>
+                            <AlertDescription>
+                                Copy the resume format and make your own resume by maintaining proper alignment to ensure professionalism.
+                            </AlertDescription>
+                        </Alert>
+                        <div className="h-[900px] overflow-y-auto border rounded-lg shadow-lg mt-4">
                             <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm w-full">
                                 <header className="text-center mb-8">
                                     <h1 className="text-4xl font-bold font-serif text-black">{details.name}</h1>
@@ -368,3 +377,5 @@ export default function CoachPage() {
     </div>
   );
 }
+
+    
