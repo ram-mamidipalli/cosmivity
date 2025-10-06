@@ -282,11 +282,11 @@ export default function CoachPage() {
                             <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm w-full">
                                 <header className="text-center mb-8">
                                     <h1 className="text-4xl font-bold font-serif text-black">{details.name}</h1>
-                                     <div className="flex flex-wrap justify-center items-baseline gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 max-w-lg mx-auto">
-                                        <a href={`tel:${details.phone}`} className="inline-flex items-baseline gap-1.5 hover:text-primary"><Phone className="h-4 w-4"/>{details.phone}</a>
-                                        <a href={`mailto:${details.email}`} className="inline-flex items-baseline gap-1.5 hover:text-primary"><Mail className="h-4 w-4"/>{details.email}</a>
-                                        <a href={`https://${details.linkedin}`} target="_blank" rel="noreferrer" className="inline-flex items-baseline gap-1.5 hover:text-primary"><Linkedin className="h-4 w-4"/>{details.linkedin}</a>
-                                        <a href={`https://${details.github}`} target="_blank" rel="noreferrer" className="inline-flex items-baseline gap-1.5 hover:text-primary"><Github className="h-4 w-4"/>{details.github}</a>
+                                     <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 max-w-lg mx-auto">
+                                        <a href={`tel:${details.phone}`} className="inline-flex items-center gap-1.5 hover:text-primary"><Phone className="h-4 w-4"/>{details.phone}</a>
+                                        <a href={`mailto:${details.email}`} className="inline-flex items-center gap-1.5 hover:text-primary"><Mail className="h-4 w-4"/>{details.email}</a>
+                                        <a href={`https://${details.linkedin}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary"><Linkedin className="h-4 w-4"/>{details.linkedin}</a>
+                                        <a href={`https://${details.github}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary"><Github className="h-4 w-4"/>{details.github}</a>
                                     </div>
                                 </header>
                                 
