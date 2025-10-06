@@ -79,7 +79,7 @@ export default function CoachPage() {
       input.style.width = '1024px'; // A fixed width for consistent capture
 
       html2canvas(input, {
-        scale: 3,
+        scale: 1.5, // Reduced scale for smaller file size
         useCORS: true,
         width: input.scrollWidth,
         height: input.scrollHeight,
@@ -91,11 +91,11 @@ export default function CoachPage() {
         const fileName = `${details.name.toLowerCase().replace(" ", "-")}-resume`;
 
         if (format === 'pdf') {
-            const imgData = canvas.toDataURL('image/png');
+            const imgData = canvas.toDataURL('image/jpeg', 0.9); // Use JPEG with compression
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
             pdf.save(`${fileName}.pdf`);
         } else {
             const imageType = format === 'png' ? 'image/png' : 'image/jpeg';
@@ -368,5 +368,7 @@ export default function CoachPage() {
     </div>
   );
 }
+
+    
 
     
