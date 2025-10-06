@@ -79,7 +79,7 @@ export default function CoachPage() {
       input.style.width = '1024px'; // A fixed width for consistent capture
 
       html2canvas(input, {
-        scale: 1.5, // Reduced scale for smaller file size
+        scale: 1.5, // Keep scale reasonable
         useCORS: true,
         width: input.scrollWidth,
         height: input.scrollHeight,
@@ -368,3 +368,6 @@ export default function CoachPage() {
     </div>
   );
 }
+
+
+    
