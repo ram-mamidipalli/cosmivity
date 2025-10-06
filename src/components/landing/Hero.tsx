@@ -31,7 +31,7 @@ export default function Hero() {
                 <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
                     An AI-powered platform to sharpen your aptitude, boost communication, and ace interviews — all in one place.
                 </p>
-                <div className="flex justify-center gap-4 pt-4">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                     <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full transition-transform duration-300 hover:scale-105 neon-glow" asChild>
                         <Link href="/auth">Start Learning</Link>
                     </Button>
@@ -46,6 +46,7 @@ export default function Hero() {
     </section>
   );
 }
+
 
 
 
