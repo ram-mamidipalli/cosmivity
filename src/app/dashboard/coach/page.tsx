@@ -290,8 +290,8 @@ export default function CoachPage() {
                         <div className="h-[900px] overflow-y-auto border rounded-lg shadow-lg mt-4">
                             <div ref={resumePreviewRef} className="bg-white p-8 text-gray-800 font-sans text-sm w-full">
                                 <header className="text-center mb-8">
-                                    <h1 className="text-4xl font-bold font-serif text-black">{details.name}</h1>
-                                     <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-xs mt-2 text-gray-600 max-w-lg mx-auto">
+                                    <h1 className="text-3xl font-bold font-serif text-black">{details.name}</h1>
+                                     <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-xs mt-4 text-gray-600 max-w-lg mx-auto">
                                         <a href={`tel:${details.phone}`} className="hover:text-primary">{details.phone}</a>
                                         <a href={`mailto:${details.email}`} className="hover:text-primary">{details.email}</a>
                                         <a href={`https://${details.linkedin}`} target="_blank" rel="noreferrer" className="hover:text-primary">{details.linkedin}</a>
@@ -377,5 +377,7 @@ export default function CoachPage() {
     </div>
   );
 }
+
+    
 
     
