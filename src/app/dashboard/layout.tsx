@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
@@ -39,6 +39,10 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="p-0">
+                    <SheetHeader className="sr-only">
+                        <SheetTitle>Navigation Menu</SheetTitle>
+                        <SheetDescription>Main navigation links for the dashboard.</SheetDescription>
+                    </SheetHeader>
                     <DashboardSidebar isMobile onLinkClick={() => setMobileMenuOpen(false)} />
                 </SheetContent>
             </Sheet>
