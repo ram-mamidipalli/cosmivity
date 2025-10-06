@@ -228,7 +228,7 @@ export default function DashboardSidebar({ isMobile = false, onLinkClick }: { is
                     {!(isMobile ? false : isCollapsed) && (
                         <div className="text-left">
                         <p className="font-semibold text-sm">{isAdmin ? "Admin" : user?.user_metadata.name || "Aakash"}</p>
-                        <p className="text-xs text-muted-foreground font-code">{isAdmin ? "Institution" : "2,650 XP"}</p>
+                        <p className="text-xs text-muted-foreground">{isAdmin ? "Institution" : user?.email}</p>
                         </div>
                     )}
                 </Button>

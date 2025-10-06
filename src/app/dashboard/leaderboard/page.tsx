@@ -162,5 +162,3 @@ function LeaderboardTable({ data, type }: { data: any[], type: 'student' | 'inst
         </Table>
     );
 }
-
-    
