@@ -1,9 +1,8 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Book, HelpCircle } from "lucide-react";
+import { Book } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
@@ -131,7 +130,6 @@ export default function AptitudeCategoryPage() {
                                 <h3 className="font-semibold text-lg">{test.name}</h3>
                                 <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
                                     <div className="flex items-center gap-1.5">
-                                        <HelpCircle className="h-4 w-4" />
                                         <span className="font-code">{test.questions} Questions</span>
                                     </div>
                                 </div>
