@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -31,12 +32,6 @@ export default function Footer() {
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               Privacy
-            </Link>
-            <Link
-              href="#"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Contact
             </Link>
           </div>
           <div className="flex items-center space-x-2">
