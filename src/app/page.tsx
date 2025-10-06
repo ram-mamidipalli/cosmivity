@@ -17,7 +17,7 @@ import Partners from "@/components/landing/Partners";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground dark">
+    <div className="flex flex-col min-h-screen bg-background text-foreground dark overflow-x-hidden">
       <Header />
       <main className="flex-grow">
         <Hero />
