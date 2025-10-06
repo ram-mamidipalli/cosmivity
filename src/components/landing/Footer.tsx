@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Linkedin, Twitter, Instagram } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -39,16 +39,14 @@ export default function Footer() {
               Contact
             </Link>
           </div>
-          <div className="flex items-center space-x-4">
-            <Link href="#" aria-label="LinkedIn">
-              <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
-            </Link>
-            <Link href="#" aria-label="Instagram">
-              <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
-            </Link>
-             <Link href="#" aria-label="Twitter">
-              <Twitter className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
-            </Link>
+          <div className="flex items-center space-x-2">
+            <Mail className="h-4 w-4 text-muted-foreground" />
+            <a
+              href="mailto:cosmivity@gmail.com"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              cosmivity@gmail.com
+            </a>
           </div>
         </div>
       </div>
