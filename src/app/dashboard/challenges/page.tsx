@@ -112,14 +112,14 @@ export default function ChallengesPage() {
                 <h1 className="text-3xl font-bold font-headline">Live Debate Rooms</h1>
                 <p className="text-muted-foreground">Join real-time discussions to build communication confidence and critical thinking skills.</p>
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="relative flex-1 min-w-64">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="relative flex-1 w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input placeholder="Search topics or rooms..." className="pl-10 pr-4 py-2 w-full" />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex w-full md:w-auto items-center gap-2 flex-wrap">
                      <Select defaultValue="all">
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="flex-1 md:w-[180px]">
                             <SelectValue placeholder="All Levels" />
                         </SelectTrigger>
                         <SelectContent>
@@ -130,7 +130,7 @@ export default function ChallengesPage() {
                         </SelectContent>
                     </Select>
                      <Select defaultValue="trending">
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="flex-1 md:w-[180px]">
                             <SelectValue placeholder="Trending" />
                         </SelectTrigger>
                         <SelectContent>
@@ -139,12 +139,14 @@ export default function ChallengesPage() {
                             <SelectItem value="popular">Popular</SelectItem>
                         </SelectContent>
                     </Select>
-                    <JoinRoomDialog>
-                        <Button variant="outline"><KeyRound className="mr-2"/>Join Room</Button>
-                    </JoinRoomDialog>
-                    <CreateRoomDialog>
-                        <Button className="neon-glow"><PlusCircle className="mr-2"/>Create Room</Button>
-                    </CreateRoomDialog>
+                    <div className="flex w-full md:w-auto gap-2">
+                        <JoinRoomDialog>
+                            <Button variant="outline" className="flex-1"><KeyRound className="mr-2 h-4 w-4"/>Join</Button>
+                        </JoinRoomDialog>
+                        <CreateRoomDialog>
+                            <Button className="neon-glow flex-1"><PlusCircle className="mr-2 h-4 w-4"/>Create</Button>
+                        </CreateRoomDialog>
+                    </div>
                 </div>
             </div>
         </header>

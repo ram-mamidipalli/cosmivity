@@ -111,11 +111,11 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <header className="flex flex-wrap items-center justify-between gap-4">
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold font-headline">Welcome, {user?.user_metadata.name || 'Aakash'}</h1>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-end sm:self-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
