@@ -1,17 +1,16 @@
-
 "use client";
 
-import { XCircle } from "lucide-react";
+import { BrainCircuit, Briefcase, MessageSquare, FileX2, Clock, PenSquare } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 
 const painPoints = [
-  "Weak aptitude & reasoning",
-  "Nervous in interviews",
-  "Poor spoken English",
-  "No structured practice",
-  "Generic feedback",
-  "Resume not shortlisted",
+  { text: "Weak Aptitude & Reasoning", icon: <BrainCircuit className="w-6 h-6 text-primary mr-3 flex-shrink-0" /> },
+  { text: "Nervous in Interviews", icon: <Briefcase className="w-6 h-6 text-primary mr-3 flex-shrink-0" /> },
+  { text: "Poor Spoken English", icon: <MessageSquare className="w-6 h-6 text-primary mr-3 flex-shrink-0" /> },
+  { text: "Resume Not Shortlisted", icon: <FileX2 className="w-6 h-6 text-primary mr-3 flex-shrink-0" /> },
+  { text: "No Structured Practice", icon: <Clock className="w-6 h-6 text-primary mr-3 flex-shrink-0" /> },
+  { text: "Generic Feedback", icon: <PenSquare className="w-6 h-6 text-primary mr-3 flex-shrink-0" /> },
 ];
 
 export default function Problem() {
@@ -28,22 +27,20 @@ export default function Problem() {
       >
         <div className="text-center space-y-4 mb-12 max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-headline font-bold text-foreground">
-            You’ve got the degree. But not the confidence.
+            You've got the degree. Now, get the confidence.
           </h2>
+          <p className="text-lg text-muted-foreground">Is something holding you back from landing your dream job?</p>
         </div>
         <div className="flex flex-col items-center gap-12">
           <div className="max-w-5xl">
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {painPoints.map((point, i) => (
                 <li key={i} className="flex items-center text-center justify-center text-lg p-3 rounded-lg h-full border bg-card text-card-foreground shadow-sm">
-                  <XCircle className="w-6 h-6 text-destructive mr-3 flex-shrink-0" />
-                  <span>{point}</span>
+                  {point.icon}
+                  <span>{point.text}</span>
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="p-8 rounded-lg max-w-2xl text-center border bg-card text-card-foreground shadow-sm">
-            <h3 className="text-2xl font-bold text-primary font-headline">“7 out of 10 students feel unprepared — until they try Cosmivity.”</h3>
           </div>
         </div>
       </div>
