@@ -27,7 +27,7 @@ export default function Problem() {
         )}
       >
         <div className="text-center space-y-4 mb-12 max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
+          <h2 className="text-3xl md:text-4xl font-headline font-bold text-foreground">
             You’ve got the degree. But not the confidence.
           </h2>
         </div>
