@@ -26,7 +26,7 @@ export default function Gamification() {
     <section id="gamification" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-6">
-          <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
+          <h2 className="text-3xl md:text-4xl font-headline font-bold text-white">
             Track Your Progress, Skill by Skill
           </h2>
           <div className="grid md:grid-cols-3 gap-8 items-start max-w-4xl mx-auto">
