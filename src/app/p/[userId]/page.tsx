@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Figma } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, Phone } from "lucide-react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
@@ -88,8 +88,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   projects: initialProjects,
   testimonials: initialTestimonials,
   githubUrl: "https://github.com/sagar-dev",
-  twitterUrl: "https://twitter.com/sagar_dev",
-  figmaUrl: "https://figma.com/@sagar-dev",
+  linkedinUrl: "https://linkedin.com/in/sagar-dev",
   email: "sagar@example.com",
   phone: "+91 98765 43210",
   contactHeading: "What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect.",
@@ -154,9 +153,8 @@ export default function PublicPassportPage() {
                     <div className="text-lg text-muted-foreground text-center">{passportData.heroSubtitle}</div>
                     
                     <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-muted-foreground">
-                        <a href={passportData.githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{passportData.githubUrl.replace('https://', '')}</a>
-                        <a href={passportData.twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{passportData.twitterUrl.replace('https://', '')}</a>
-                        <a href={passportData.figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{passportData.figmaUrl.replace('https://', '')}</a>
+                        <a href={passportData.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm hover:text-primary"><Github className="h-4 w-4"/>{passportData.githubUrl.replace('https://', '')}</a>
+                        <a href={passportData.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm hover:text-primary"><Linkedin className="h-4 w-4"/>{passportData.linkedinUrl.replace('https://', '')}</a>
                     </div>
                 </div>
             </section>
@@ -267,8 +265,7 @@ export default function PublicPassportPage() {
                 </div>
                 <div className="flex justify-center items-center gap-4 text-muted-foreground mt-8">
                         <a href={passportData.githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        <a href={passportData.twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        <a href={passportData.figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                        <a href={passportData.linkedinUrl} target="_blank" rel="noopener noreferrer"><Linkedin className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
                 </div>
             </section>
 

@@ -5,7 +5,7 @@ import { useState, useCallback, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone, Figma, Edit, Upload, Trash2, Save, PlusCircle, Download } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, Phone, Edit, Upload, Trash2, Save, PlusCircle, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -108,8 +108,7 @@ One last thing, I'm available for freelance work, so feel free to reach out and 
   projects: initialProjects,
   testimonials: initialTestimonials,
   githubUrl: "https://github.com/sagar-dev",
-  twitterUrl: "https://twitter.com/sagar_dev",
-  figmaUrl: "https://figma.com/@sagar-dev",
+  linkedinUrl: "https://linkedin.com/in/sagar-dev",
   email: "sagar@example.com",
   phone: "+91 98765 43210",
   contactHeading: "What’s next? Feel free to reach out to me if you're looking for a developer, have a query, or simply want to connect."
@@ -130,8 +129,7 @@ export default function PassportPage() {
   const [projects, setProjects] = useState<any[]>(defaultData.projects);
   const [testimonials, setTestimonials] = useState<any[]>(defaultData.testimonials);
   const [githubUrl, setGithubUrl] = useState(defaultData.githubUrl);
-  const [twitterUrl, setTwitterUrl] = useState(defaultData.twitterUrl);
-  const [figmaUrl, setFigmaUrl] = useState(defaultData.figmaUrl);
+  const [linkedinUrl, setLinkedinUrl] = useState(defaultData.linkedinUrl);
   const [email, setEmail] = useState(defaultData.email);
   const [phone, setPhone] = useState(defaultData.phone);
   const [contactHeading, setContactHeading] = useState(defaultData.contactHeading);
@@ -236,8 +234,7 @@ export default function PassportPage() {
   const handleAboutContentChange = useCallback((value: string) => setAboutContent(value), []);
   const handleSkillsChange = useCallback((value: string) => setSkills(value), []);
   const handleGithubUrlChange = useCallback((value: string) => setGithubUrl(value), []);
-  const handleTwitterUrlChange = useCallback((value: string) => setTwitterUrl(value), []);
-  const handleFigmaUrlChange = useCallback((value: string) => setFigmaUrl(value), []);
+  const handleLinkedinUrlChange = useCallback((value: string) => setLinkedinUrl(value), []);
   const handleEmailChange = useCallback((value: string) => setEmail(value), []);
   const handlePhoneChange = useCallback((value: string) => setPhone(value), []);
   const handleContactHeadingChange = useCallback((value: string) => setContactHeading(value), []);
@@ -267,16 +264,14 @@ export default function PassportPage() {
                           
                           <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-muted-foreground hero-links">
                               {isEditing ? (
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
                                       <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
-                                      <Input value={twitterUrl} onChange={e => handleTwitterUrlChange(e.target.value)} placeholder="Twitter URL" />
-                                      <Input value={figmaUrl} onChange={e => handleFigmaUrlChange(e.target.value)} placeholder="Figma URL" />
+                                      <Input value={linkedinUrl} onChange={e => handleLinkedinUrlChange(e.target.value)} placeholder="LinkedIn URL" />
                                   </div>
                               ) : (
                                   <>
-                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl.replace('https://', '')}</a>
-                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl.replace('https://', '')}</a>
-                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl.replace('https://', '')}</a>
+                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm hover:text-primary"><Github className="h-4 w-4"/>{githubUrl.replace('https://', '')}</a>
+                                      <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm hover:text-primary"><Linkedin className="h-4 w-4"/>{linkedinUrl.replace('https://', '')}</a>
                                   </>
                               )}
                           </div>
@@ -463,9 +458,8 @@ export default function PassportPage() {
                               <p className="text-sm">Social links can be edited in the hero section.</p>
                           ) : (
                               <>
-                                  <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl.replace('https://','')}</a>
-                                  <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl.replace('https://','')}</a>
-                                  <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl.replace('https://','')}</a>
+                                  <a href={githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                                  <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"><Linkedin className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
                               </>
                           )}
                       </div>
@@ -481,5 +475,3 @@ export default function PassportPage() {
     </div>
   );
 }
-
-    
