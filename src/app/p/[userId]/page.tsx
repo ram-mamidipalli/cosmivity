@@ -153,10 +153,10 @@ export default function PublicPassportPage() {
                     <p className="text-5xl md:text-7xl font-bold font-headline h-auto text-center">{passportData.heroTitle}</p>
                     <div className="text-lg text-muted-foreground text-center">{passportData.heroSubtitle}</div>
                     
-                    <div className="flex items-center justify-center gap-4 text-muted-foreground">
-                        <a href={passportData.githubUrl} target="_blank" rel="noopener noreferrer"><Github className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        <a href={passportData.twitterUrl} target="_blank" rel="noopener noreferrer"><Twitter className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
-                        <a href={passportData.figmaUrl} target="_blank" rel="noopener noreferrer"><Figma className="h-6 w-6 cursor-pointer hover:text-primary"/></a>
+                    <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-muted-foreground">
+                        <a href={passportData.githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{passportData.githubUrl.replace('https://', '')}</a>
+                        <a href={passportData.twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{passportData.twitterUrl.replace('https://', '')}</a>
+                        <a href={passportData.figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{passportData.figmaUrl.replace('https://', '')}</a>
                     </div>
                 </div>
             </section>

@@ -265,7 +265,7 @@ export default function PassportPage() {
                           <EditableField isEditing={isEditing} value={heroTitle} onChange={handleHeroTitleChange} className="text-5xl md:text-7xl font-bold font-headline h-auto text-center" />
                           <EditableField isEditing={isEditing} value={heroSubtitle} onChange={handleHeroSubtitleChange} isTextarea={true} className="text-lg text-muted-foreground text-center" rows={4}/>
                           
-                          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-muted-foreground hero-links">
+                          <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-muted-foreground hero-links">
                               {isEditing ? (
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mx-auto">
                                       <Input value={githubUrl} onChange={e => handleGithubUrlChange(e.target.value)} placeholder="GitHub URL" />
