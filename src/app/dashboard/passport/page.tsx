@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/use-auth";
 import { Label } from "@/components/ui/label";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const EditableField = ({ isEditing, value, onChange, isTextarea = false, className = '', rows = 3, placeholder = "" }: any) => {
     if (isEditing) {
@@ -150,67 +152,20 @@ export default function PassportPage() {
                 margin: 0;
                 padding: 0;
                 color: #333;
+                background-color: white;
             }
             .print-container { 
                 max-width: 800px;
                 margin: 2rem auto;
                 padding: 2rem;
             }
-            .hero-section {
-                text-align: center;
-            }
-            .contact-info {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-                margin-top: 1rem;
-            }
-            .contact-info a {
-                text-decoration: none;
-                color: #007bff;
-            }
-            /* Font size adjustments */
-            .hero-title { font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; }
-            .hero-subtitle { font-size: 1.1rem; color: #555; margin-bottom: 1rem; }
-            .section-badge { display: inline-block; margin-bottom: 1rem; border: 1px solid #ccc; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; }
-            .section-heading { font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; }
-            .card { border: 1px solid #eee; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px; }
-            .card-title { font-size: 1.25rem; font-weight: bold; }
-            .card-subtitle { font-size: 1rem; font-weight: 600; color: #663399; }
-            .card-text { font-size: 0.9rem; color: #666; }
-            .project-card, .experience-card, .testimonial-card { margin-bottom: 2rem; }
+            /* Add more print-specific styles here if needed */
         </style>
       `);
       printWindow.document.write('</head><body>');
       
       const clonedContent = portfolioElement.cloneNode(true) as HTMLElement;
       
-      // Add classes for styling
-      clonedContent.querySelector('.py-16.md\\:py-24.text-center')?.classList.add('hero-section');
-      clonedContent.querySelector('.font-headline.text-5xl')?.classList.add('hero-title');
-      clonedContent.querySelector('.text-lg.text-muted-foreground')?.classList.add('hero-subtitle');
-      clonedContent.querySelectorAll('section > .badge').forEach(el => el.classList.add('section-badge'));
-      clonedContent.querySelectorAll('section > h3').forEach(el => el.classList.add('section-heading'));
-      
-      clonedContent.querySelectorAll('.experience-card, .project-card, .testimonial-card').forEach(card => {
-        card.classList.add('card');
-        card.querySelector('.text-xl.font-bold')?.classList.add('card-title');
-        card.querySelector('.text-primary.font-semibold')?.classList.add('card-subtitle');
-        card.querySelectorAll('ul li, .text-muted-foreground').forEach(p => p.classList.add('card-text'));
-      });
-      
-      const linksContainer = clonedContent.querySelector('.hero-links');
-      if (linksContainer) {
-          linksContainer.classList.add('contact-info');
-      }
-
-      const getInTouchLinks = clonedContent.querySelector('.flex.justify-center.items-center.gap-4.text-muted-foreground.mt-8');
-      if(getInTouchLinks) {
-          getInTouchLinks.classList.add('contact-info');
-      }
-
-
       printWindow.document.write('<div class="print-container">');
       printWindow.document.write(clonedContent.innerHTML);
       printWindow.document.write('</div>');
@@ -319,9 +274,9 @@ export default function PassportPage() {
                                   </div>
                               ) : (
                                   <>
-                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Github className="h-4 w-4"/> {githubUrl.replace('https://', '')}</a>
-                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Twitter className="h-4 w-4"/> {twitterUrl.replace('https://', '')}</a>
-                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary flex items-center gap-1"><Figma className="h-4 w-4"/> {figmaUrl.replace('https://', '')}</a>
+                                      <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{githubUrl.replace('https://', '')}</a>
+                                      <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{twitterUrl.replace('https://', '')}</a>
+                                      <a href={figmaUrl} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary">{figmaUrl.replace('https://', '')}</a>
                                   </>
                               )}
                           </div>
